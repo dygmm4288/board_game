@@ -16,5 +16,6 @@ async def login() :
   pass
 
 @router.post('/regist')
-def regist_user(_user_create: UserCreate, db:AsyncSession=Depends(get_db)) :
+async def regist_user(_user_create: UserCreate, db:AsyncSession=Depends(get_db)) :
   create_user(db=db, user_create=_user_create)
+  await db.commit()
