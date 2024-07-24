@@ -13,6 +13,7 @@ async def create_user(user_create:UserCreate, db:AsyncSession):
   db.add(user)
   return user
 
-async def get_user(db:AsyncSession, id: int) :
-  return await db.get(User, id)
+async def get_user(db:AsyncSession, username: str) :
+  result = await db.execute(select(User).filter(User.username == username))
+  return result
   
