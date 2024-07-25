@@ -7,11 +7,13 @@ from schemas import UserCreate, User
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional
-from router.auth import SECRET_KEY, ALGORITHM
 from jose import jwt, JWTError
+from os import environ
 
 pwd_context = CryptContext(schemes=['bcrypt'])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+SECRET_KEY = environ.get('SECRET_KEY', None) 
+ALGORITHM = "HS256"
 
 async def create_user(user_create:UserCreate, db:AsyncSession):
   user = User(

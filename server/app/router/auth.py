@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from os import environ
 from schemas import UserCreate, Token
-from server.app.crud.user_crud import create_user, get_user
+from crud.user_crud import create_user, get_user
 from database import get_db
 from crud.user_crud import authenticate_user,create_access_token
 from datetime import timedelta
