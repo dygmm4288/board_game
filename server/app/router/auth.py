@@ -21,6 +21,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
 
 @router.post('/regist')
 async def regist_user(_user_create: UserCreate, db:AsyncSession=Depends(get_db)) :
+  user = await get_user(db,_user_create.username)
+  if user :
+      raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="이미 존재하는 사용자입니다.")
   create_user(db=db, user_create=_user_create)
   await db.commit()
 

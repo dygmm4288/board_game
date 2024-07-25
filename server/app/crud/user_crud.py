@@ -3,7 +3,8 @@ from fastapi.security import OAuth2PasswordBearer
 from database import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from schemas import UserCreate, User
+from schemas import UserCreate
+from models import User
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional
@@ -81,3 +82,4 @@ async def get_current_user(db:AsyncSession=Depends(get_db), token:str=Depends(oa
 
 async def get_current_active_user(current_user: User =Depends(get_current_user)):
   return current_user
+  

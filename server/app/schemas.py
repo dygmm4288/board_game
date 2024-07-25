@@ -4,9 +4,6 @@ from pydantic_core.core_schema import FieldValidationInfo
 class User(BaseModel) :
   username: str
   password: str
-  
-  class Config :
-    orm_mode = True
 
 class UserCreate(BaseModel) :
   username: str
@@ -15,7 +12,7 @@ class UserCreate(BaseModel) :
 
   @field_validator('username', 'password', 'password_confirm')
   def not_empty(cls, v) :
-    if not v or v.strip() :
+    if not v or not v.strip() :
       raise ValueError('빈 값은 허용되지 않습니다.')
     return v
   
