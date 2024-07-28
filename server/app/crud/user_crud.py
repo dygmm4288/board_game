@@ -16,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 SECRET_KEY = environ.get('SECRET_KEY', None) 
 ALGORITHM = "HS256"
 
-async def create_user(user_create:UserCreate, db:Session):
+def create_user(user_create:UserCreate, db:Session):
   user = User(
     username=user_create.username,
     password=pwd_context.has(user_create.password),
@@ -24,8 +24,8 @@ async def create_user(user_create:UserCreate, db:Session):
   db.add(user)
   return user
 
-async def get_user(db:Session, username: str) :
-  result = await db.execute(select(User).filter(User.username == username))
+def get_user(db:Session, username: str) :
+  result = db.execute(select(User).filter(User.username == username))
   return result
 
 def verify_password(plain_password, hashed_password) :
@@ -34,8 +34,8 @@ def verify_password(plain_password, hashed_password) :
 def get_password_hash(password) :
   return pwd_context.hash(password)
 
-async def authenticate_user(db:Session, username: str, password: str) :
-  user = await get_user(db, username=username)
+def authenticate_user(db:Session, username: str, password: str) :
+  user = get_user(db, username=username)
   
   if not user :
     return False
@@ -56,7 +56,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) :
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithms=[ALGORITHM])
   return encoded_jwt
 
-async def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
+def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
   credential_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="inactive user",
@@ -73,13 +73,13 @@ async def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_
   except JWTError :
     raise credential_exception
   
-  user = await get_user(db, username)
+  user = get_user(db, username)
 
   if user is None :
     raise credential_exception
   
   return user
 
-async def get_current_active_user(current_user: User =Depends(get_current_user)):
+def get_current_active_user(current_user: User =Depends(get_current_user)):
   return current_user
   
