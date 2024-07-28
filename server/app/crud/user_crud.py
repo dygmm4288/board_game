@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from database import get_db
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from sqlalchemy import select
 from schemas import UserCreate
 from models import User
@@ -16,7 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 SECRET_KEY = environ.get('SECRET_KEY', None) 
 ALGORITHM = "HS256"
 
-async def create_user(user_create:UserCreate, db:AsyncSession):
+async def create_user(user_create:UserCreate, db:Session):
   user = User(
     username=user_create.username,
     password=pwd_context.has(user_create.password),
@@ -24,7 +24,7 @@ async def create_user(user_create:UserCreate, db:AsyncSession):
   db.add(user)
   return user
 
-async def get_user(db:AsyncSession, username: str) :
+async def get_user(db:Session, username: str) :
   result = await db.execute(select(User).filter(User.username == username))
   return result
 
@@ -34,7 +34,7 @@ def verify_password(plain_password, hashed_password) :
 def get_password_hash(password) :
   return pwd_context.hash(password)
 
-async def authenticate_user(db:AsyncSession, username: str, password: str) :
+async def authenticate_user(db:Session, username: str, password: str) :
   user = await get_user(db, username=username)
   
   if not user :
@@ -56,7 +56,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) :
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithms=[ALGORITHM])
   return encoded_jwt
 
-async def get_current_user(db:AsyncSession=Depends(get_db), token:str=Depends(oauth2_scheme)):
+async def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
   credential_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="inactive user",

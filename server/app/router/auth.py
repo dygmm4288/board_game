@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session
 from os import environ
 from schemas import UserCreate, Token
 from crud.user_crud import create_user, get_user
@@ -14,22 +15,17 @@ ALGORITHM = "HS256"
 
 router = APIRouter(prefix='/api/auth')
 
-@router.post('/login')
-async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)) :
-  user = get_user(db, form_data.username)
-  pass
-
 @router.post('/regist')
-async def regist_user(_user_create: UserCreate, db:AsyncSession=Depends(get_db)) :
-  user = await get_user(db,_user_create.username)
+def regist_user(_user_create: UserCreate, db:Session=Depends(get_db)) :
+  user = get_user(db,_user_create.username)
   if user :
       raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="이미 존재하는 사용자입니다.")
   create_user(db=db, user_create=_user_create)
-  await db.commit()
+  db.commit()
 
-@router.post('/token', response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_db)) :
-  user = await authenticate_user(db, form_data.username,form_data.password)
+@router.post('/login', response_model=Token)
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)) :
+  user = authenticate_user(db, form_data.username,form_data.password)
   if not user :
     raise HTTPException(
       status_code=status.HTTP_401_UNAUTHORIZED,
