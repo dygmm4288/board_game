@@ -11,7 +11,7 @@ from typing import Optional
 from jose import jwt, JWTError
 from os import environ
 
-pwd_context = CryptContext(schemes=['bcrypt'])
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 SECRET_KEY = environ.get('SECRET_KEY', None) 
 ALGORITHM = "HS256"
@@ -19,13 +19,13 @@ ALGORITHM = "HS256"
 def create_user(user_create:UserCreate, db:Session):
   user = User(
     username=user_create.username,
-    password=pwd_context.has(user_create.password),
+    password=pwd_context.hash(user_create.password),
   )
   db.add(user)
   return user
 
 def get_user(db:Session, username: str) :
-  result = db.execute(select(User).filter(User.username == username))
+  result = db.query(User).filter(User.username == username).first()
   return result
 
 def verify_password(plain_password, hashed_password) :
@@ -39,6 +39,7 @@ def authenticate_user(db:Session, username: str, password: str) :
   
   if not user :
     return False
+  
   if not verify_password(password, user.password) :
     return False
   return user
