@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import Session
-from os import environ
 from schemas import UserCreate, Token
 from crud.user_crud import create_user, get_user
 from database import get_db
@@ -10,8 +9,6 @@ from crud.user_crud import authenticate_user,create_access_token
 from datetime import timedelta
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
-SECRET_KEY = environ.get('SECRET_KEY', None) 
-ALGORITHM = "HS256"
 
 router = APIRouter(prefix='/api/auth')
 
@@ -37,4 +34,8 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
   access_token = create_access_token(
     data={'sub':user.id}, expires_delta=access_token_expires
   )
-  return {'access_token':access_token, 'token_type':'bearer'}
+  return {
+     'access_token':access_token,
+     'token_type':'bearer',
+     'username' : user.username
+    }

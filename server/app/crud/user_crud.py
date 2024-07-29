@@ -2,18 +2,20 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from database import get_db
 from sqlalchemy.orm import Session
-from sqlalchemy import select
 from schemas import UserCreate
 from models import User
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import jwt, JWTError
-from os import environ
+import os
+from dotenv import load_dotenv
+
+load_dotenv(os.path.join(os.path.dirname(__file__), '../../portal.env'))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
-SECRET_KEY = environ.get('SECRET_KEY', None) 
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = "HS256"
 
 def create_user(user_create:UserCreate, db:Session):
@@ -53,8 +55,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) :
     expire = datetime.utcnow() + timedelta(minutes=60)
     
   to_encode['exp'] = expire
-  
-  encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithms=[ALGORITHM])
+  print('SECRET_KEY: ', SECRET_KEY)
+
+  encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
   return encoded_jwt
 
 def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
@@ -63,7 +66,6 @@ def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme
     detail="inactive user",
     headers={'WWW-Authenticate': "Bearer"}
   )
-  
   try :
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     username: str = payload.get('sub')
