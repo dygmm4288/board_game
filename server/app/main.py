@@ -5,6 +5,7 @@ import os
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '../portal.env'))
 
+print(os.getenv('SYNC_DATABASE_URL'), os.getenv('SECRET_KEY'))
 app = FastAPI()
 
 app.include_router(auth.router)
