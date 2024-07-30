@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "pretendard/dist/web/static/pretendard.css";
+
+@layer base {
+  :root {
+    --primary-color: #113cb4;
+    --primary-background-color: #f9f9f9;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "pretendard";
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0 auto;
+  min-width: 360px;
+  max-width: 450px;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+&::-webkit-scrollbar {
+  display: none;
+}
