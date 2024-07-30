@@ -15,7 +15,7 @@ def get_room(r_id: str, db:Session=Depends(get_db)):
 
 
 @router.post('/')
-def create_room(db:Session=Depends(get_db)) :
+def post_room(db:Session=Depends(get_db)) :
   pass
 
 @router.put('/')
