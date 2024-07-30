@@ -26,3 +26,14 @@ class Token(BaseModel) :
   access_token : str
   token_type: str
   username: str
+
+class Room(BaseModel) :
+  name: str
+  status: str
+  max_players: int
+
+  @field_validator('max_players')
+  def validate_max_players(cls, v) :
+    if v <= 0 :
+      raise ValueError('최대 플레이어 수는 1 이상이어야 합니다.')
+    return v
