@@ -22,6 +22,7 @@ body {
   max-width: 450px;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  list-style: none;
 }
 
 &::-webkit-scrollbar {
