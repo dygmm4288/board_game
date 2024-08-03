@@ -10,6 +10,7 @@ export const Modal = () => {
     if (!isCloseEscKey) return;
 
     const key = e.key;
+
     if (key === "Escape") {
       hide();
     }
@@ -17,10 +18,17 @@ export const Modal = () => {
 
   return (
     <div
-      className='w-full h-full bg-opacity-50 blur-md bg-gray-600'
+      className='w-screen h-screen flex justify-center items-center  z-50 absolute inset-0'
       onClick={() => hide()}
       onKeyDown={handleKeyDown}>
-      {component}
+      <div
+        className='z-10'
+        onClick={(e) => {
+          e.stopPropagation();
+        }}>
+        {component}
+      </div>
+      <div className='backdrop-blur-sm bg-white/30 absolute inset-0 z-0'></div>
     </div>
   );
 };
