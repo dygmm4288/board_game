@@ -28,7 +28,7 @@ export const Modal = () => {
         }}>
         {component}
       </div>
-      <div className='backdrop-blur-sm bg-white/30 absolute inset-0 z-0'></div>
+      <div className='backdrop-blur-sm bg-black/50 absolute inset-0 z-0'></div>
     </div>
   );
 };
