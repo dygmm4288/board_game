@@ -1,8 +1,15 @@
+import useModal from "../zustand/modal";
+import RoomModal from "./common/modal/RoomCreateModal";
 import React from "react";
 import PlusBtnIcon from "../assets/svg/PlusBtnIcon";
 import RollIcon from "../assets/svg/RollIcon";
 
 const Home = () => {
+  const { show } = useModal();
+  const handleClickCreateRoom = () => {
+    show({ component: <RoomModal /> });
+  };
+
   const rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const RoomList = ({ gameName = "miniville" }) => {
     if (rooms.length > 0) {
@@ -25,10 +32,13 @@ const Home = () => {
       );
     }
   };
+
   return (
     <div className='w-full h-screen bg-primary-background-color flex flex-col items-center'>
       <div>
-        <button className='mt-[20px] mb-[20px] bg-white w-[315px] h-[50px] flex items-center justify-center gap-[10px] border border-solid border-primary-font-color rounded-10'>
+        <button
+          onClick={handleClickCreateRoom}
+          className='mt-[20px] mb-[20px] bg-white w-[315px] h-[50px] flex items-center justify-center gap-[10px] border border-solid border-primary-font-color rounded-10'>
           <PlusBtnIcon />
           <p>방만들기</p>
         </button>
