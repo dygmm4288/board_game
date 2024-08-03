@@ -37,7 +37,7 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
   
 
 @router.post('/')
-def rest_post_room(max_players:str=None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)) :
+def rest_post_room(max_players:int=None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)) :
   if not max_players :
     max_players = 4
   room = create_room(max_players=max_players, db=db)
