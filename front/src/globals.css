@@ -28,3 +28,9 @@ body {
 &::-webkit-scrollbar {
   display: none;
 }
+
+input[type="number"]::-webkit-inner-spin-button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}

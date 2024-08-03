@@ -1,5 +1,5 @@
 import useModal from "../zustand/modal";
-import RoomModal from "./common/modal/RoomModal";
+import RoomModal from "./common/modal/RoomCreateModal";
 
 const Home = () => {
   const { show } = useModal();
