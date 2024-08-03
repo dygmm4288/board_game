@@ -1,9 +1,12 @@
-import FirstVisit from "./_components/FirstVisit";
+import "pretendard/dist/web/static/pretendard.css";
+
+import router from "./router";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <FirstVisit />
+      <RouterProvider router={router} />
     </>
   );
 }
