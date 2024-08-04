@@ -4,6 +4,7 @@ type Props = {
   options: string[];
   setSelectValue: (option: string) => void;
 };
+
 const Select = ({ options, setSelectValue }: Props) => {
   const [selectedOption, setOption] = useState(options[0]);
 
