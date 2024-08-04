@@ -2,35 +2,13 @@ import useModal from "../zustand/modal";
 import RoomModal from "./common/modal/RoomCreateModal";
 import React from "react";
 import PlusBtnIcon from "../assets/svg/PlusBtnIcon";
-import RollIcon from "../assets/svg/RollIcon";
+
+import RoomList from "./common/RoomList";
 
 const Home = () => {
   const { show } = useModal();
   const handleClickCreateRoom = () => {
     show({ component: <RoomModal /> });
-  };
-
-  const rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const RoomList = ({ gameName = "miniville" }) => {
-    if (rooms.length > 0) {
-      return (
-        <ul className='w-[315px] flex flex-wrap justify-between gap-y-[20px]'>
-          {rooms.map((room) => (
-            <li
-              key={room}
-              className='w-[150px] h-[80px] bg-white border border-solid border-primary-font-color rounded-10 p-[10px]'>
-              <h3>room number {room}</h3>
-              <div>
-                <div className='flex'>
-                  <RollIcon />
-                  <p>{gameName}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      );
-    }
   };
 
   return (
