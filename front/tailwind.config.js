@@ -8,6 +8,8 @@ const config = {
       colors: {
         ["primary-color"]: "var(--primary-color)",
         ["primary-background-color"]: "var(--primary-background-color)",
+        'secondary-bg-color' : 'var(--secondary-background-color)',
+        'primary-border-color': 'var(--primary-border-color)',
         "primary-font-color": "#767676",
       },
       boxShadow: {

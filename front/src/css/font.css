@@ -1,0 +1,13 @@
+.title {
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.5px;
+}
+
+.label {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14.4px;
+  letter-spacing : -.3px;
+}
