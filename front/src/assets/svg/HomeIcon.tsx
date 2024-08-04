@@ -1,8 +1,6 @@
-type Props = {
-  width: string | number;
-  height: string | number;
-};
-const HomeIcon = ({ width, height }: Props) => {
+import { BaseIconType } from "./icon.type";
+
+const HomeIcon = ({ width, height }: BaseIconType) => {
   return (
     <svg
       width={width}
