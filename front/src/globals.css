@@ -25,6 +25,10 @@ body {
   list-style: none;
 }
 
+body > div#root {
+  overflow: hidden;
+}
+
 &::-webkit-scrollbar {
   display: none;
 }
