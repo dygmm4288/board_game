@@ -2,7 +2,7 @@ import PersonIcon from "../../assets/svg/PersonIcon";
 import RollIcon from "../../assets/svg/RollIcon";
 
 const rooms = [1];
-const RoomList = ({ gameName = "miniville" }, { number = 4 }) => {
+const RoomList = ({ gameName = "miniville", number = 4 }) => {
   if (rooms.length > 0) {
     return (
       <ul className='w-[315px] flex flex-wrap justify-between gap-y-[20px]'>
