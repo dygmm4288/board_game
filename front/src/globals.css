@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./css/font.css";
+
 @layer base {
   :root {
     --primary-color: #113cb4;
     --primary-background-color: #f9f9f9;
+    --secondary-background-color: #eee;
+    --primary-border-color: #767676;
   }
 }
 
@@ -22,8 +26,19 @@ body {
   max-width: 450px;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  list-style: none;
+}
+
+body > div#root {
+  overflow: hidden;
 }
 
 &::-webkit-scrollbar {
   display: none;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
