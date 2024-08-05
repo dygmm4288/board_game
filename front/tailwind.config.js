@@ -4,12 +4,13 @@ const config = {
     extend: {
       fontSize: {
         10: "10px",
+        14: "14px",
       },
       colors: {
         ["primary-color"]: "var(--primary-color)",
         ["primary-background-color"]: "var(--primary-background-color)",
-        'secondary-bg-color' : 'var(--secondary-background-color)',
-        'primary-border-color': 'var(--primary-border-color)',
+        "secondary-bg-color": "var(--secondary-background-color)",
+        "primary-border-color": "var(--primary-border-color)",
         "primary-font-color": "#767676",
       },
       boxShadow: {
