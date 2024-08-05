@@ -1,6 +1,7 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import AuthBtn from "./AuthBtn";
+import AuthBtn from "./ui/AuthBtn";
+import Input from "./ui/Input";
 
 type LoginType = {
   username: string;
@@ -8,7 +9,7 @@ type LoginType = {
   passwordConfirm: string;
 }
 const LoginForm = () => {
-  const [{username, password, passwordConfirm}, setLoginFormData] = useState<LoginType>({
+  const [loginFormData, setLoginFormData] = useState<LoginType>({
     username:'',
     password: '',
     passwordConfirm: '',
@@ -25,11 +26,17 @@ const LoginForm = () => {
     setLoginFormData(prev => ({...prev, [type]: e.target.value}));
   };
 
+  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    console.log(loginFormData);
+  };
 
-  return <form>
-    <input id="username" type="text" value={username} onChange={handleChangeValue('username')}/>
-    <input id="password" type='password' value={password} onChange={handleChangeValue('password')}/>
-    {!isLoginMode && <input id="password-confirm" type='password' value={passwordConfirm} onChange={handleChangeValue('passwordConfirm')}/>}
+
+  return <form onSubmit={handleSubmit}>
+    <Input type="text" id="username" onChange={handleChangeValue('username')}/>
+    <Input type="password" id="password" onChange={handleChangeValue('password')}/>
+    {!isLoginMode && <Input id="password-confirm" type='password'  onChange={handleChangeValue('passwordConfirm')}/>}
     <AuthBtn isLoginMode={isLoginMode}/>
   </form>
 };
