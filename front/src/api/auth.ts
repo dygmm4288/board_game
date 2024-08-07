@@ -2,6 +2,9 @@ import axios, { toFormData } from "axios";
 
 const authInstance = axios.create({
   baseURL: "http://localhost:8000/api/auth",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
 });
 
 export type LoginType = {
@@ -23,7 +26,7 @@ const login = (dict: LoginType) => {
   return authInstance.post<Token>("/login", formData);
 };
 
-const regist = authInstance.post("/regist");
+const regist = () => authInstance.post("/regist");
 
 const authApi = {
   login,
