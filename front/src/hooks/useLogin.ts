@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import authApi, { LoginType } from "../api/auth";
 import useStorage, { AUTH } from "./useStorage";
 
@@ -12,6 +12,7 @@ const useLogin = () => {
   const { setStorage } = useStorage();
   const [isLoginMode, setLoginMode] = useState(false);
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -25,12 +26,12 @@ const useLogin = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     authApi
       .login(loginFormData)
       .then((res) => {
-        const data = res.data;
-        setStorage(AUTH, data);
+        setLoginFormData({ password: "", passwordConfirm: "", username: "" });
+        setStorage(AUTH, res.data);
+        navigate("/");
       })
       .catch((err) => {
         console.error(err);
