@@ -21,6 +21,16 @@ const PlayerHeader = () => {
           <div key={player} className='w-[60px] flex flex-col items-center'>
             <p className='w-full text-center text-14 truncate ...'>{player}</p>
             <p className='text-14 text-[#E18F00]'>3$</p>
+            {isOpen ? (
+              ""
+            ) : (
+              <div className='flex flex-col gap-[4px]'>
+                <div className='w-[60px] h-[14px] bg-[#d9d9d9] rounded-[5px]'></div>
+                <div className='w-[60px] h-[14px] bg-[#d9d9d9] rounded-[5px]'></div>
+                <div className='w-[60px] h-[14px] bg-[#d9d9d9] rounded-[5px]'></div>
+                <div className='w-[60px] h-[14px] bg-[#d9d9d9] rounded-[5px]'></div>
+              </div>
+            )}
           </div>
         ))}
       </div>
