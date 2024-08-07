@@ -1,7 +1,7 @@
-import { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import authApi, { SignupType } from "../api/auth";
+import authApi, { LoginType, SignupType } from "../api/auth";
 import useStorage, { AUTH } from "./useStorage";
 
 const useLogin = () => {
@@ -30,49 +30,49 @@ const useLogin = () => {
   const resetData = () =>
     setLoginFormData({ password: "", passwordConfirm: "", username: "" });
 
-  const login = () => {
-    return authApi
-      .login({
-        username: loginFormData.username,
-        password: loginFormData.password,
-      })
-      .then((res) => {
-        resetData();
-        setStorage(AUTH, res.data);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.error(err);
+  const { mutate: login, error: loginError } = useMutation({
+    mutationFn(data: LoginType) {
+      return authApi.login({
+        username: data.username,
+        password: data.password,
       });
-  };
+    },
+    onSuccess(res) {
+      setStorage(AUTH, res.data);
+      navigate("/");
+    },
+    onSettled() {
+      resetData();
+    },
+  });
 
-  const signup = () => {
-    return authApi
-      .regist(loginFormData)
-      .then(() => {
-        resetData();
-        navigate("/login");
-      })
-      .catch((err: AxiosError) => {
-        console.error(err);
-      });
-  };
+  const { mutate: signup, error: signupError } = useMutation({
+    mutationFn: (data: SignupType) => authApi.regist(data),
+    onSuccess() {
+      navigate("/login");
+    },
+    onSettled() {
+      resetData();
+    },
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (isLoginMode) {
-      login();
+      login(loginFormData);
       return;
     }
 
-    signup();
+    signup(loginFormData);
   };
 
   return {
     isLoginMode,
     handleChangeValue,
     handleSubmit,
+    signupError,
+    loginError,
   };
 };
 
