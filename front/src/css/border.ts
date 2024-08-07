@@ -1,3 +1,12 @@
+import { cn } from "../util/cn";
+
+const border_solid = () => {
+  return "border border-solid";
+};
 export const border_primary = () => {
-  return 'border border-primary-border-color border-solid';
+  return cn(border_solid, "border-primary-border");
+};
+
+export const border_black = () => {
+  return cn(border_solid, "border-black");
 };
