@@ -1,4 +1,5 @@
 import PlayerHeader from "./common/PlayerHeader";
+import CardSection from "./section/CardSection";
 import RollSection from "./section/RollSection";
 
 const MinivilleRoom = () => {
@@ -6,7 +7,7 @@ const MinivilleRoom = () => {
     <div>
       <PlayerHeader />
       <RollSection />
-      <div>카드 섹션</div>
+      <CardSection />
       <div>게임 로그</div>
     </div>
   );
