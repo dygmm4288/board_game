@@ -5,16 +5,16 @@ import PolygonIcon from "../../assets/svg/PolygonIcon";
 const PlayerHeader = () => {
   const players = ["mirae", "mirae2", "mirae3", "player123456789"];
 
-  const [nabla, setNabla] = useState(true);
+  const [isOpen, setOpen] = useState(true);
   const isClicked = () => {
-    setNabla(!nabla);
+    setOpen(!isOpen);
   };
 
   return (
     <header
       className={
-        "relative top-0 w-full bg-[#f5f5f5] shadow-header-nav mb-[10px] pt-[8px] " +
-        (nabla ? "h-[72px]" : "h-[420px]")
+        "relative top-0 w-full bg-[#f5f5f5] shadow-header-nav pt-[8px] " +
+        (isOpen ? "h-[72px]" : "h-[420px]")
       }>
       <div className='w-[250px] mx-auto flex justify-between'>
         {players.map((player) => (
@@ -27,7 +27,7 @@ const PlayerHeader = () => {
       <div className='absolute left-[50%] translate-x-[-50%] bottom-0 w-[326px] h-[22px] flex flex-col items-center gap-[4px] '>
         <hr className='w-full' />
         <button onClick={isClicked}>
-          {nabla ? <NablaIcon /> : <PolygonIcon />}
+          {isOpen ? <NablaIcon /> : <PolygonIcon />}
         </button>
       </div>
     </header>

@@ -7,7 +7,7 @@ import { items_center } from "../../css/flex";
 import { cn } from "../../util/cn";
 
 const MIN = 2;
-const MAX = 6;
+const MAX = 4;
 
 const NumberInput = () => {
   const [value, setValue] = useState(2);
@@ -21,11 +21,18 @@ const NumberInput = () => {
   const minus = () => updateValue(-1);
 
   return (
-    <div className="flex flex-row justify-between items-center">
-      <label htmlFor='max-players' className="label text-primary-font-color">최대인원</label>
-      <div className={cn('max-w-[52px] min-w-[52px] justify-evenly label text-primary-font-color', items_center, border_primary)}>
+    <div className='flex flex-row justify-between items-center'>
+      <label htmlFor='max-players' className='label text-primary-font-color'>
+        최대인원
+      </label>
+      <div
+        className={cn(
+          "max-w-[52px] min-w-[52px] justify-evenly label text-primary-font-color",
+          items_center,
+          border_primary
+        )}>
         <button onClick={minus}>
-          <MinusIcon/>
+          <MinusIcon />
         </button>
         <input
           className='cursor-default text-center '
