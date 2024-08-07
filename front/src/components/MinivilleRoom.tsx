@@ -4,7 +4,7 @@ import RollSection from "./section/RollSection";
 
 const MinivilleRoom = () => {
   return (
-    <div>
+    <div className='relative'>
       <PlayerHeader />
       <RollSection />
       <CardSection />
