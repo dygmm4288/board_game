@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import MinivilleRoom from "../components/MinivilleRoom";
 import Login from "../components/routes/Login";
+import Signup from "../components/routes/Signup";
 import HomeLayout from "../layouts/HomeLayout";
 
 const router = createBrowserRouter(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<HomeLayout />}>
       <Route path='/' element={<MinivilleRoom />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/signup' element={<Signup />} />
     </Route>,
   ),
 );

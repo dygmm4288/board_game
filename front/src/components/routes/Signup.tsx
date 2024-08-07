@@ -3,15 +3,15 @@ import { border_black } from "../../css/border";
 import { cn } from "../../util/cn";
 import LoginForm from "../login/LoginForm";
 
-const Login = () => {
+const Signup = () => {
   return (
     <article className='flex flex-col'>
       <div className='basis-[500px] p-5 bg-slate-400'>
-        <h1 className='text-center'>로그인</h1>
+        <h1 className='text-center'>회원가입</h1>
       </div>
       <div className={cn(border_black, "rounded-lg flex flex-col")}>
-        <Link className='text-center w-full' to='/signup'>
-          회원가입 하러가기
+        <Link to='/login' className='text-center w-full'>
+          로그인 하러가기
         </Link>
         <LoginForm />
       </div>
@@ -19,4 +19,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
