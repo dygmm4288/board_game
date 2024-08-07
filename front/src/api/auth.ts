@@ -7,13 +7,13 @@ const authInstance = axios.create({
   },
 });
 
-export type LoginType = {
+export type SignupType = {
   username: string;
   password: string;
   passwordConfirm: string;
 };
 
-export type SignUpType = Omit<LoginType, "passwordConfirm">;
+export type LoginType = Omit<SignupType, "passwordConfirm">;
 
 export type Token = {
   access_token: string;
@@ -26,7 +26,10 @@ const login = (dict: LoginType) => {
   return authInstance.post<Token>("/login", formData);
 };
 
-const regist = () => authInstance.post("/regist");
+const regist = (dict: SignupType) => {
+  const formData = toFormData(dict);
+  return authInstance.post("/regist", formData);
+};
 
 const authApi = {
   login,
