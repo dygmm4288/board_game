@@ -22,14 +22,35 @@ const useLogin = () => {
     if (location.pathname.includes("login")) setLoginMode(true);
   }, [location.pathname]);
 
+  //-----------------------------
+  // relate state...
+  //-----------------------------
+
+  const resetData = () =>
+    setLoginFormData({ password: "", passwordConfirm: "", username: "" });
+
+  //-----------------------------
+  // event handlers...
+  //-----------------------------
   const handleChangeValue =
     (type: keyof SignupType) => (e: ChangeEvent<HTMLInputElement>) => {
       setLoginFormData((prev) => ({ ...prev, [type]: e.target.value }));
     };
 
-  const resetData = () =>
-    setLoginFormData({ password: "", passwordConfirm: "", username: "" });
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    if (isLoginMode) {
+      login(loginFormData);
+      return;
+    }
+
+    signup(loginFormData);
+  };
+
+  //-----------------------------
+  // mutations...
+  //-----------------------------
   const { mutate: login, error: loginError } = useMutation({
     mutationFn(data: LoginType) {
       return authApi.login({
@@ -55,17 +76,6 @@ const useLogin = () => {
       resetData();
     },
   });
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (isLoginMode) {
-      login(loginFormData);
-      return;
-    }
-
-    signup(loginFormData);
-  };
 
   return {
     isLoginMode,
