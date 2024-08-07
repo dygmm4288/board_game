@@ -1,41 +1,47 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
-type LoginType = {
-  username: string;
-  password: string;
-  passwordConfirm: string;
-}
+import authApi, { LoginType } from "../api/auth";
+import useStorage, { AUTH } from "./useStorage";
 
 const useLogin = () => {
   const [loginFormData, setLoginFormData] = useState<LoginType>({
-    username:'',
-    password: '',
-    passwordConfirm: '',
+    username: "",
+    password: "",
+    passwordConfirm: "",
   });
+  const { setStorage } = useStorage();
   const [isLoginMode, setLoginMode] = useState(false);
-  
+
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname.includes('login'))  setLoginMode(true);
-  },[location.pathname]);
+    if (location.pathname.includes("login")) setLoginMode(true);
+  }, [location.pathname]);
 
-  const handleChangeValue = (type: keyof LoginType) => (e:ChangeEvent<HTMLInputElement>) => {
-    setLoginFormData(prev => ({...prev, [type]: e.target.value}));
-  };
+  const handleChangeValue =
+    (type: keyof LoginType) => (e: ChangeEvent<HTMLInputElement>) => {
+      setLoginFormData((prev) => ({ ...prev, [type]: e.target.value }));
+    };
 
-  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
-    console.log(loginFormData);
+
+    authApi
+      .login(loginFormData)
+      .then((res) => {
+        const data = res.data;
+        setStorage(AUTH, data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return {
     isLoginMode,
     handleChangeValue,
-    handleSubmit
-  }
+    handleSubmit,
+  };
 };
 
 export default useLogin;
