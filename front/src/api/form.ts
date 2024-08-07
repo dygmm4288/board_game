@@ -1,4 +1,4 @@
-const camel_to_snake = (key: string) => {
+export const camel_to_snake = (key: string) => {
   return key.replace(/[A-Z]/g, (s) => {
     const lower = s.toLowerCase();
     return "_" + lower;

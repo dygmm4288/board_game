@@ -1,4 +1,5 @@
-import axios, { toFormData } from "axios";
+import axios from "axios";
+import { camel_to_snake, toFormData } from "./form";
 
 const authInstance = axios.create({
   baseURL: "http://localhost:8000/api/auth",
@@ -27,7 +28,10 @@ const login = (dict: LoginType) => {
 };
 
 const regist = (dict: SignupType) => {
-  const formData = toFormData(dict);
+  const formData = Object.entries(dict).reduce<{[key:string]: string}>((formData, [key,value]) => {
+    formData[camel_to_snake(key)] = value;
+    return formData;
+  },{});
   return authInstance.post("/regist", formData);
 };
 

@@ -1,16 +1,16 @@
-import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import { ChangeEvent, InputHTMLAttributes } from "react";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   label?: string;
+  value: string;
+  error?: string;
 }
 
-const Input = ({ onChange, label, ...inputProps }: CustomInputProps) => {
-  const [value, setValue] = useState("");
+const Input = ({ onChange, label, value, error, ...inputProps }: CustomInputProps) => {
   const { id } = inputProps;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
     onChange(e);
   };
 
@@ -23,6 +23,7 @@ const Input = ({ onChange, label, ...inputProps }: CustomInputProps) => {
         value={value}
         onChange={handleChange}
       />
+      {error && <p className="text-red-300">{error}</p>}
     </div>
   );
 };
