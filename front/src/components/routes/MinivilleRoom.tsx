@@ -1,6 +1,6 @@
-import PlayerHeader from "./common/PlayerHeader";
-import CardSection from "./section/CardSection";
-import RollSection from "./section/RollSection";
+import PlayerHeader from "../common/PlayerHeader";
+import CardSection from "../section/CardSection";
+import RollSection from "../section/RollSection";
 
 const MinivilleRoom = () => {
   return (
