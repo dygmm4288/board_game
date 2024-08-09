@@ -1,16 +1,18 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
 import NumberInput from "../../form/NumberInput";
 
 const RoomModal = () => {
-  // const { createRoom } = useRoom();
+  const [totalMember, setTotalMember] = useState(2);
+
+  const { createRoom } = useRoom(totalMember);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // createRoom();
+    createRoom();
   };
 
   return (
@@ -18,9 +20,12 @@ const RoomModal = () => {
       <h1 className='text-center title'>방 만들기</h1>
       <form className='flex flex-col gap-[30px]' onSubmit={handleSubmit}>
         <select>
-          <option>Minibill2</option>
+          <option value='miniville'>miniville</option>
         </select>
-        <NumberInput />
+        <NumberInput
+          totalMember={totalMember}
+          setTotalMember={setTotalMember}
+        />
         <button
           type='submit'
           className={cn(

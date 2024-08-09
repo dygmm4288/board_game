@@ -1,20 +1,26 @@
 import _ from "lodash";
-import { useState } from "react";
+
 import MinusIcon from "../../assets/svg/MinusIcon";
 import PlusIcon from "../../assets/svg/PlusIcon";
 import { border_primary } from "../../css/border";
 import { items_center } from "../../css/flex";
 import { cn } from "../../util/cn";
 
+interface NumberInputProps {
+  totalMember: number;
+  setTotalMember: React.Dispatch<React.SetStateAction<number>>;
+}
+
 const MIN = 2;
 const MAX = 4;
 
-const NumberInput = () => {
-  const [value, setValue] = useState(2);
-
+const NumberInput: React.FC<NumberInputProps> = ({
+  totalMember,
+  setTotalMember,
+}) => {
   const updateValue = (delta: number) => {
-    const nextValue = value + delta;
-    if (_.inRange(nextValue, MIN, MAX + 1)) setValue(nextValue);
+    const nextValue = totalMember + delta;
+    if (_.inRange(nextValue, MIN, MAX + 1)) setTotalMember(nextValue);
   };
 
   const plus = () => updateValue(1);
@@ -40,7 +46,7 @@ const NumberInput = () => {
           type='number'
           min={MIN}
           max={MAX}
-          value={value}
+          value={totalMember}
         />
         <button onClick={plus}>
           <PlusIcon />
