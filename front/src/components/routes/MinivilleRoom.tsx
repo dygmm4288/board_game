@@ -1,14 +1,15 @@
 import PlayerHeader from "../common/PlayerHeader";
 import CardSection from "../section/CardSection";
+import GameLogSection from "../section/GameLogSection";
 import RollSection from "../section/RollSection";
 
 const MinivilleRoom = () => {
   return (
-    <div className='relative'>
+    <div className='relative h-screen'>
       <PlayerHeader />
       <RollSection />
       <CardSection />
-      <div>게임 로그</div>
+      <GameLogSection />
     </div>
   );
 };

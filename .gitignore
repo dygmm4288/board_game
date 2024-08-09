@@ -222,4 +222,8 @@ thumb
 sketch
 
 portal.env
+
+# virtual environment
+newvirtualenv/
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,react,python
