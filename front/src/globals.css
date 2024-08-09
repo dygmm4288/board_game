@@ -30,7 +30,7 @@ body {
 }
 
 body > div#root {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 &::-webkit-scrollbar {
