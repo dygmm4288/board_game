@@ -1,4 +1,7 @@
+import { card_roll } from "../../css/card_roll";
 import { _ESTABLISHMENTS } from "../../establishments/metadata";
+import { EstColor } from "../../establishments/types";
+import { cn } from "../../util/cn";
 
 const CardSection = () => {
   const getRandomNum = () => {
@@ -21,9 +24,56 @@ const CardSection = () => {
 
   const RandomCard = () => {
     return getRandomCard.map((item) => {
+      const bgColor = () => {
+        if (item.color === EstColor.Blue) {
+          return "bg-[#D1E0F5]";
+        } else if (item.color === EstColor.Red) {
+          return "bg-[#F5D1D1]";
+        } else if (item.color === EstColor.Green) {
+          return "bg-[#C8E9C8]";
+        } else return "bg-[#E6D1F5]";
+      };
+      const RollsLength = () => {
+        if (item.rolls.length === 1) {
+          return (
+            <div className='flex flex-row gap-[3px] justify-center'>
+              <div className={cn(card_roll)}>{item.rolls}</div>
+            </div>
+          );
+        } else if (item.rolls.length === 2) {
+          return (
+            <div className='flex flex-row gap-[3px] justify-center'>
+              <div className={cn(card_roll)}>{item.rolls[0]}</div>
+              <div className={cn(card_roll)}>{item.rolls[1]}</div>
+            </div>
+          );
+        } else {
+          return (
+            <div className='flex flex-row gap-[3px] justify-center'>
+              <div className={cn(card_roll)}>{item.rolls[0]}</div>
+              <div className={cn(card_roll)}>{item.rolls[1]}</div>
+              <div className={cn(card_roll)}>{item.rolls[2]}</div>
+            </div>
+          );
+        }
+      };
       return (
-        <div key={item._id} className='w-[54px] h-[54px] bg-slate-400'>
-          <div>{item.name}</div>
+        <div
+          key={item._id}
+          className={
+            "relative w-[54px] h-[72px] p-[4px] text-center  " + bgColor()
+          }>
+          <div
+            className={
+              "text-[12px] flex flex-col items-center " +
+              `${item.name.length < 5 ? "gap-[10px]" : "gap-[3px]"}`
+            }>
+            <div>{<RollsLength />}</div>
+            <p className='leading-tight'>{item.name}</p>
+          </div>
+          <p className='absolute bottom-[2px] left-[50%] translate-x-[-50%] text-10 text-[#808080]'>
+            {item.cost}$
+          </p>
         </div>
       );
     });
