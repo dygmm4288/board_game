@@ -2,7 +2,6 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  Routes,
 } from "react-router-dom";
 
 import Login from "../components/routes/Login";
@@ -13,14 +12,18 @@ import MinivilleRoom from "../components/routes/MinivilleRoom";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Routes>
+    <>
       <Route path='/' element={<HomeLayout />}>
         <Route path='/' element={<Home />} />
+      </Route>
+      <Route>
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
       </Route>
-      <Route path='/miniville_room' element={<MinivilleRoom />}></Route>
-    </Routes>
+      <Route>
+        <Route path='/miniville_room' element={<MinivilleRoom />} />
+      </Route>
+    </>
   )
 );
 
