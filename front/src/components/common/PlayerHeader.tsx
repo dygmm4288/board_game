@@ -14,7 +14,7 @@ const PlayerHeader = () => {
     <header
       className={
         "w-full bg-[#f5f5f5] shadow-header-nav pt-[8px] " +
-        (isOpen ? "relative h-[72px]" : "absolute h-[550px]")
+        (isOpen ? "relative h-[72px]" : "absolute h-[550px] z-10")
       }>
       <div className='w-[250px] mx-auto flex justify-between'>
         {players.map((player) => (
