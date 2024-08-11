@@ -21,7 +21,7 @@ const LoginForm = () => {
         value={loginFormData.username}
         type='text'
         id='username'
-        label='유저 이름'
+        label='닉네임'
         onChange={handleChangeValue("username")}
       />
       <Input
