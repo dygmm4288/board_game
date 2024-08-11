@@ -12,6 +12,7 @@ const LoginForm = () => {
     handleChangeValue,
     isLoginMode,
     loginError,
+    isValid,
   } = useLogin();
   const { passwordError } = useLoginError(loginError as AxiosError);
 
@@ -46,7 +47,7 @@ const LoginForm = () => {
         to={isLoginMode ? "/signup" : "/login"}>
         {isLoginMode ? "회원가입 하러가기" : "로그인 하러가기"}
       </Link>
-      <AuthBtn isLoginMode={isLoginMode} />
+      <AuthBtn isLoginMode={isLoginMode} isValid={isValid} />
     </form>
   );
 };

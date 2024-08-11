@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import _ from "lodash";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import authApi, { LoginType, SignupType } from "../api/auth";
@@ -10,6 +11,7 @@ const useLogin = () => {
     password: "",
     passwordConfirm: "",
   });
+  const [isValid, setValid] = useState(false);
 
   const { setStorage } = useStorage();
 
@@ -21,6 +23,17 @@ const useLogin = () => {
   useEffect(() => {
     if (location.pathname.includes("login")) setLoginMode(true);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const keys = new Set(Object.keys(loginFormData));
+
+    if (isLoginMode) keys.delete("passwordConfirm");
+    const getValue = (key: string) => _.get(loginFormData, key);
+    const checkValid = (value: unknown) =>
+      !_.isNull(value) && !_.isUndefined(value) && !_.isEmpty(value);
+
+    setValid(Array.from(keys).every((key) => checkValid(getValue(key))));
+  }, [loginFormData, isLoginMode]);
 
   //-----------------------------
   // relate state...
@@ -84,6 +97,7 @@ const useLogin = () => {
     handleSubmit,
     signupError,
     loginError,
+    isValid,
   };
 };
 
