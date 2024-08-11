@@ -1,4 +1,5 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import { border_primary } from "../../../css/border";
 import { cn } from "../../../util/cn";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -39,7 +40,7 @@ const Input = ({
       )}
       <input
         {...inputProps}
-        className='border border-blue-100 rounded-lg p-2'
+        className={cn(border_primary, "rounded-lg p-2")}
         value={value}
         onChange={handleChange}
         onFocus={handleFocus}
