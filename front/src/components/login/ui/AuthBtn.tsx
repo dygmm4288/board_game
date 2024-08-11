@@ -1,5 +1,5 @@
 const Btn = (type: "로그인" | "회원가입") => (
-  <button className='p-5 bg-indigo-400 rounded-lg' type='submit'>
+  <button className='mt-16 p-5 bg-indigo-400 rounded-lg' type='submit'>
     {type}
   </button>
 );
