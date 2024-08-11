@@ -1,4 +1,5 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import { cn } from "../../../util/cn";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -32,7 +33,7 @@ const Input = ({
   return (
     <div className='flex flex-col gap-2 w-full'>
       {label && (
-        <label htmlFor={id} className=''>
+        <label htmlFor={id} className={cn("label", isFocus ? "focus" : "")}>
           {label}
         </label>
       )}
