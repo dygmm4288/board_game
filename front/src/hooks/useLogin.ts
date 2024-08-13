@@ -3,7 +3,7 @@ import _ from "lodash";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import authApi, { LoginType, SignupType } from "../api/auth";
-import useStorage, { AUTH } from "./useStorage";
+import useAuth from "../zustand/auth";
 
 const useLogin = () => {
   const [loginFormData, setLoginFormData] = useState<SignupType>({
@@ -11,9 +11,8 @@ const useLogin = () => {
     password: "",
     passwordConfirm: "",
   });
+  const { login: loginZustand } = useAuth();
   const [isValid, setValid] = useState(false);
-
-  const { setStorage } = useStorage();
 
   const [isLoginMode, setLoginMode] = useState(false);
 
@@ -72,7 +71,7 @@ const useLogin = () => {
       });
     },
     onSuccess(res) {
-      setStorage(AUTH, res.data);
+      loginZustand(res.data);
       navigate("/");
     },
     onSettled() {
