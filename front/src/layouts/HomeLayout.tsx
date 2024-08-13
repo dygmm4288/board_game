@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
 import FirstVisit from "../components/FirstVisit";
+import Header from "../components/Header";
+import useAuth from "../zustand/auth";
 
 const HomeLayout = () => {
-  const token = true;
-  if (!token) return <FirstVisit />;
+  const { access_token } = useAuth();
+  if (!access_token) return <FirstVisit />;
 
   return (
     <>

@@ -4,9 +4,9 @@ import { getErrorMsg } from "../util/error";
 const useLoginError = (error?: AxiosError) => {
   if (!error) return {};
   const errMsg = getErrorMsg(error);
-  if(errMsg === 'inactive user') {
+  if (errMsg === "inactive user") {
     return {
-      passwordError: '존재하지 않는 사용자입니다.'
+      passwordError: "회원정보가 올바르지 않습니다.",
     };
   }
   return {};
