@@ -1,10 +1,10 @@
+@import "./css/font.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  @import "./css/font.css";
-
   :root {
     --primary-color: #113cb4;
     --primary-background-color: #f9f9f9;

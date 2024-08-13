@@ -1,13 +1,20 @@
 import { AxiosError } from "axios";
+import { Link } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import useLoginError from "../../hooks/useLoginError";
 import AuthBtn from "./ui/AuthBtn";
 import Input from "./ui/Input";
 
 const LoginForm = () => {
-  const { loginFormData,handleSubmit, handleChangeValue, isLoginMode, loginError } =
-    useLogin();
-  const {passwordError} = useLoginError(loginError as AxiosError);
+  const {
+    loginFormData,
+    handleSubmit,
+    handleChangeValue,
+    isLoginMode,
+    loginError,
+    isValid,
+  } = useLogin();
+  const { passwordError } = useLoginError(loginError as AxiosError);
 
   return (
     <form className='flex flex-col gap-4 p-2' onSubmit={handleSubmit}>
@@ -15,7 +22,7 @@ const LoginForm = () => {
         value={loginFormData.username}
         type='text'
         id='username'
-        label='유저 이름'
+        label='닉네임'
         onChange={handleChangeValue("username")}
       />
       <Input
@@ -35,7 +42,12 @@ const LoginForm = () => {
           onChange={handleChangeValue("passwordConfirm")}
         />
       )}
-      <AuthBtn isLoginMode={isLoginMode} />
+      <Link
+        className='text-center w-full'
+        to={isLoginMode ? "/signup" : "/login"}>
+        {isLoginMode ? "회원가입 하러가기" : "로그인 하러가기"}
+      </Link>
+      <AuthBtn isLoginMode={isLoginMode} isValid={isValid} />
     </form>
   );
 };
