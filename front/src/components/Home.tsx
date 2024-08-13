@@ -1,6 +1,6 @@
 import useModal from "../zustand/modal";
 import RoomModal from "./common/modal/RoomCreateModal";
-import React from "react";
+
 import PlusBtnIcon from "../assets/svg/PlusBtnIcon";
 
 import RoomList from "./common/RoomList";
@@ -12,7 +12,7 @@ const Home = () => {
   };
 
   return (
-    <div className='w-full h-screen bg-primary-background-color flex flex-col items-center'>
+    <div className='w-full h-screen flex flex-col items-center'>
       <div>
         <button
           onClick={handleClickCreateRoom}

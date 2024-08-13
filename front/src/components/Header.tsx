@@ -4,7 +4,7 @@ import HomeIcon from "../assets/svg/HomeIcon";
 
 const Header = () => {
   return (
-    <nav className='w-full h-[60px] flex items-center justify-center shadow-header-nav sticky z-10'>
+    <nav className='w-full h-[60px] flex items-center justify-center shadow-header-nav sticky z-20'>
       <li>
         <Link to={"/"} className='flex flex-col items-center justify-center'>
           <HomeIcon width={28} height={28} />
