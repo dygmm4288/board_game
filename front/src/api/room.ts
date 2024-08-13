@@ -18,6 +18,10 @@ export const getRooms = () => {
   return roomInstance.get<Room>("/");
 };
 
-export const createRoom = () => {
-  return roomInstance.post("/");
+export const createRoom = (maxPlayers: number) => {
+  return roomInstance.post<Room>("/", { max_players: maxPlayers });
+};
+
+export const getRoom = (id: string | number) => {
+  return roomInstance.get<Room>(`/${id}`);
 };
