@@ -1,6 +1,8 @@
 import { card_roll } from "../../css/card_roll";
-import { _ESTABLISHMENTS } from "../../establishments/metadata";
-import { EstColor } from "../../establishments/types";
+import { _ESTABLISHMENTS } from "../../miniville_meta_data/establishments/metadata";
+
+import { EstColor } from "../../miniville_meta_data/establishments/types";
+
 import { cn } from "../../util/cn";
 
 const CardSection = () => {
