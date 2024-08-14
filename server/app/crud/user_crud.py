@@ -10,11 +10,13 @@ from typing import Optional
 from jose import jwt, JWTError
 import os
 from dotenv import load_dotenv
+import logging
+logging.basicConfig(level=logging.ERROR, filename='app.log')
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '../../portal.env'))
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/api/auth/login')
 SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = "HS256"
 
@@ -67,12 +69,13 @@ def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme
   )
   try :
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-    username: str = payload.get('sub')
+    username: str = payload.get('username')
 
     if username is None :
       raise credential_exception
     
-  except JWTError :
+  except JWTError as e :
+    logging.error(f"JWTError: {e}")    
     raise credential_exception
   
   user = get_user(db, username)

@@ -11,6 +11,9 @@ router = APIRouter(prefix='/api/room')
 def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)) :
   rooms = get_rooms(db=db)
 
+  print('-'*60)
+  print(f'rooms is : {rooms}')
+  print('-'*60)
   if not rooms :
     return []
 
@@ -43,7 +46,9 @@ def rest_post_room(max_players:int=None, db:Session=Depends(get_db), _user:User=
   room = create_room(max_players=max_players, db=db)
 
   db.commit()
- 
+  print('-'*60)
+  print(f'room id : {room.id}/ room name: {room.name}/ room status: {room.status}/ room max_players: {room.max_players}')
+  print('-'*60)
   return room
 
 @router.put('/{r_id}')
