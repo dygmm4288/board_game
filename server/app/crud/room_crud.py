@@ -5,7 +5,7 @@ import uuid
 
 def create_room(max_players:int, db:Session) :
   room = Room(
-    name=uuid.uuid4(),
+    name=str(uuid.uuid4()),
     status="waiting",
     max_players=max_players
   )
@@ -44,5 +44,5 @@ def get_room(r_id:int, db:Session) :
   return result
   
 def get_rooms(db:Session) :
-  result = db.query(Room).filter(Room.status != 'waiting').all()
+  result = db.query(Room).filter(Room.status == 'waiting').all()
   return result
