@@ -3,16 +3,19 @@ import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
 import NumberInput from "../../form/NumberInput";
+import useAuth from "../../../zustand/auth";
 
 const RoomModal = () => {
   const [totalMember, setTotalMember] = useState(2);
 
-  const { createRoom } = useRoom(totalMember);
+  const { access_token } = useAuth();
+
+  const { create } = useRoom(access_token);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createRoom();
+    return create(totalMember);
   };
 
   return (

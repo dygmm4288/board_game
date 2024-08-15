@@ -1,14 +1,16 @@
 import { createRoom, getRoom, getRooms } from "../api/room";
-const useRoom = () => {
+
+const useRoom = (token: string) => {
   const create = (maxPlayers: number) => {
-    return createRoom(maxPlayers);
+    return createRoom(maxPlayers, token);
   };
 
-  const get = (roomId: number | string) => {
+  const get = async (roomId?: number | string) => {
     if (roomId) {
-      return getRoom(roomId);
+      return getRoom(roomId, token);
     }
-    return getRooms();
+    const rooms = await getRooms(token);
+    return rooms;
   };
 
   return {

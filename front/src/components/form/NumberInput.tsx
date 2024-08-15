@@ -47,6 +47,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
           min={MIN}
           max={MAX}
           value={totalMember}
+          onChange={() => setTotalMember}
         />
         <button onClick={plus}>
           <PlusIcon />
