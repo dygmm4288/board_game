@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import PersonIcon from "../../assets/svg/PersonIcon";
 import RollIcon from "../../assets/svg/RollIcon";
 import useRoom from "../../hooks/useRoom";
-
-import { remove } from "lodash";
 import { Room } from "../../api/room";
 
 const RoomList = () => {

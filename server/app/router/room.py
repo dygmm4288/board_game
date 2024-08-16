@@ -71,3 +71,24 @@ def rest_put_room(r_id:str = None,confirm:str = None, db:Session=Depends(get_db)
   db.commit()
   
   return room
+
+@router.delete('/{r_id}')
+def rest_delete_room(r_id: str, db: Session = Depends(get_db), _user: User = Depends(get_current_user)):
+    if not r_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="잘못된 접근입니다"
+        )
+    
+    room = get_room(r_id=r_id, db=db)
+
+    if not room:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="방을 찾을 수 없습니다"
+        )
+
+    db.delete(room)
+    db.commit()
+
+    return {"detail": "방이 삭제되었습니다."}
