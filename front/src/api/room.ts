@@ -14,6 +14,7 @@ export type Room = {
   name: string;
   status: string;
   max_players: number;
+  gameName: string;
 };
 
 export const getRooms = async (token: string): Promise<Room[]> => {
@@ -38,5 +39,5 @@ export const getRoom = async (
 };
 
 export const deleteRoom = (id: string | number, token: string) => {
-  return roomInstance(token).delete(`/rooms/${id}`);
+  return roomInstance(token).delete(`/${id}`);
 };

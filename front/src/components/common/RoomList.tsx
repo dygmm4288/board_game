@@ -4,13 +4,7 @@ import RollIcon from "../../assets/svg/RollIcon";
 import useRoom from "../../hooks/useRoom";
 
 import { remove } from "lodash";
-
-type Room = {
-  id: string | number;
-  name: string;
-  gameName: string;
-  max_players: number;
-};
+import { Room } from "../../api/room";
 
 const RoomList = () => {
   const getLocalInfo = localStorage.getItem("auth");
@@ -24,7 +18,7 @@ const RoomList = () => {
     const fetchRooms = async () => {
       try {
         const data = await get();
-        console.log(data);
+        setRooms(data);
       } catch (error) {
         console.error("Failed to fetch rooms :", error);
       }
@@ -33,9 +27,12 @@ const RoomList = () => {
     fetchRooms();
   }, [get]);
 
+  const { remove } = useRoom(token);
+
   const handleDelete = async (id: string | number) => {
     try {
-      await remove(token);
+      console.log(`Attempting to delete room with id: ${id}`);
+      await remove(id);
       setRooms((prev) => prev.filter((room) => room.id !== id));
     } catch (error) {
       console.error("fail", error);
