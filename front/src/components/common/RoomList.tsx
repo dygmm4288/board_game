@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import PersonIcon from "../../assets/svg/PersonIcon";
 import RollIcon from "../../assets/svg/RollIcon";
 import useRoom from "../../hooks/useRoom";
-import useAuth from "../../zustand/auth";
+
+import { remove } from "lodash";
 
 type Room = {
   id: string | number;
@@ -12,16 +13,18 @@ type Room = {
 };
 
 const RoomList = () => {
-  const { access_token } = useAuth();
+  const getLocalInfo = localStorage.getItem("auth");
+  const token = JSON.parse(getLocalInfo as string).access_token;
+
   const [rooms, setRooms] = useState<Room[]>([]);
 
-  const { get } = useRoom(access_token);
+  const { get } = useRoom(token);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const data = await get();
-        setRooms(data);
+        console.log(data);
       } catch (error) {
         console.error("Failed to fetch rooms :", error);
       }
@@ -29,6 +32,15 @@ const RoomList = () => {
 
     fetchRooms();
   }, [get]);
+
+  const handleDelete = async (id: string | number) => {
+    try {
+      await remove(token);
+      setRooms((prev) => prev.filter((room) => room.id !== id));
+    } catch (error) {
+      console.error("fail", error);
+    }
+  };
 
   if (rooms.length > 0) {
     return (
@@ -48,6 +60,7 @@ const RoomList = () => {
                 <p>{room.max_players}</p>
               </div>
             </div>
+            <button onClick={() => handleDelete(room.id)}>지우기</button>
           </li>
         ))}
       </ul>

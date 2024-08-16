@@ -18,7 +18,9 @@ const Header = () => {
         </Link>
       </li>
       <li className='absolute right-[22px] top-[50%] translate-y-[-50%]'>
-        <button onClick={handleLogoutBtn}>
+        <button
+          onClick={handleLogoutBtn}
+          className='flex flex-col items-center justify-center'>
           <LogoutIcon />
           <h2>로그아웃</h2>
         </button>

@@ -1,21 +1,26 @@
-import { createRoom, getRoom, getRooms } from "../api/room";
+import { createRoom, getRoom, getRooms, deleteRoom, Room } from "../api/room";
 
 const useRoom = (token: string) => {
   const create = (maxPlayers: number) => {
     return createRoom(maxPlayers, token);
   };
 
-  const get = async (roomId?: number | string) => {
+  const get = async (roomId?: number | string): Promise<Room[]> => {
     if (roomId) {
-      return getRoom(roomId, token);
+      const room = await getRoom(roomId, token);
+      return [room];
     }
-    const rooms = await getRooms(token);
-    return rooms;
+    return await getRooms(token);
+  };
+
+  const remove = (roomId: string | number) => {
+    return deleteRoom(roomId, token);
   };
 
   return {
     create,
     get,
+    remove,
   };
 };
 
