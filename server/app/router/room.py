@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.encoders import jsonable_encoder
+
 from sqlalchemy.orm import Session
 from crud.room_crud import create_room, get_room, get_rooms, put_room
 from database import get_db
@@ -7,17 +9,23 @@ from crud.user_crud import get_current_user
 
 router = APIRouter(prefix='/api/room')
 
+# @router.get('/')
+# def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)) :
+#   rooms = get_rooms(db=db)
+
+#   print('-'*60)
+#   print('-'*60)
+#   if not rooms :
+#     return []
+#   rooms_data = jsonable_encoder(rooms)
+#   print(f'rooms is : {rooms_data}')
+
+#   return rooms 
 @router.get('/')
-def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)) :
-  rooms = get_rooms(db=db)
+def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)):
+    rooms = get_rooms(db=db)
 
-  print('-'*60)
-  print(f'rooms is : {rooms}')
-  print('-'*60)
-  if not rooms :
-    return []
-
-  return rooms 
+    return [room.__dict__ for room in rooms]  # room을 딕셔너리 형태로 변환하여 필드 포함 여부 확인
 
 
 @router.get('/{r_id}')
@@ -40,15 +48,25 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
   
 
 @router.post('/')
-def rest_post_room(max_players:int=None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)) :
+def rest_post_room(
+    max_players: int = None,
+    gameName: str = None,
+    name: str = None,
+    created_by: str=None,
+    db: Session = Depends(get_db),
+    _user: User = Depends(get_current_user)
+) :
+  print(f"Received max_players: {max_players}, gameName: {gameName}, name: {name}")
   if not max_players :
     max_players = 4
-  room = create_room(max_players=max_players, db=db)
+  room = create_room(max_players=max_players, gameName=gameName, created_by=name, db=db)
 
   db.commit()
   print('-'*60)
   print(f'room id : {room.id}/ room name: {room.name}/ room status: {room.status}/ room max_players: {room.max_players}')
   print('-'*60)
+  rooms_data = jsonable_encoder(room)
+  print(f"created room : {rooms_data}")
   return room
 
 @router.put('/{r_id}')

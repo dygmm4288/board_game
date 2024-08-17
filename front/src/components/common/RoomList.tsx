@@ -16,6 +16,7 @@ const RoomList = () => {
     const fetchRooms = async () => {
       try {
         const data = await get();
+        console.log(data);
         setRooms(data);
       } catch (error) {
         console.error("Failed to fetch rooms :", error);
@@ -23,13 +24,12 @@ const RoomList = () => {
     };
 
     fetchRooms();
-  }, [get]);
+  }, []);
 
   const { remove } = useRoom(token);
 
   const handleDelete = async (id: string | number) => {
     try {
-      console.log(`Attempting to delete room with id: ${id}`);
       await remove(id);
       setRooms((prev) => prev.filter((room) => room.id !== id));
     } catch (error) {

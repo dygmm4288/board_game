@@ -27,10 +27,22 @@ class Token(BaseModel) :
   token_type: str
   username: str
 
+class RoomCreate(BaseModel):
+  name:str
+  game_name: str
+  created_by: str
+  max_players: int
+
 class Room(BaseModel) :
+  id:int
   name: str
   status: str
   max_players: int
+  game_name:str
+  created_by:str
+
+  class Config:
+    orm_mode = True
 
   @field_validator('max_players')
   def validate_max_players(cls, v) :

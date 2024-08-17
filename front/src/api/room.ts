@@ -24,8 +24,17 @@ export const getRooms = async (token: string): Promise<Room[]> => {
   return response.data;
 };
 
-export const createRoom = (maxPlayers: number, token: string) => {
-  return roomInstance(token).post<Room>("/", { max_players: maxPlayers });
+export const createRoom = (
+  maxPlayers: number,
+  gameName: string,
+  name: string,
+  token: string
+) => {
+  return roomInstance(token).post<Room>("/", {
+    max_players: maxPlayers,
+    gameName,
+    name,
+  });
 };
 
 export const getRoom = async (

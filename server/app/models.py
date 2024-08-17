@@ -19,5 +19,7 @@ class Room(Base):
   name = Column(String, nullable=False, unique=True)
   status = Column(String, nullable=False, default="대기중")
   max_players = Column(Integer, nullable=False, default=4)
+  game_name = Column(String)
+  created_by = Column(String)
 
   users = relationship('User', back_populates='room')
