@@ -10,7 +10,7 @@ class User(Base) :
   password = Column(String, nullable=False)
   
   room_id = Column(String, ForeignKey('rooms.id'))
-  room = relationship('Room', back_populates='users')
+  room = relationship('Room', back_populates='players')
 
 class Room(Base):
   __tablename__ = 'rooms'
