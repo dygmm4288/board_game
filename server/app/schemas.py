@@ -1,4 +1,5 @@
-from typing import Union
+from typing import List
+from datetime import datetime
 from pydantic import BaseModel, field_validator
 from pydantic_core.core_schema import FieldValidationInfo
 
@@ -29,13 +30,17 @@ class Token(BaseModel) :
   username: str
 
 class Room(BaseModel) :
-  room_num:int
   id:str
   status: str
   max_players: int
+  created_at: datetime
+
   game_name:str
-  created_by:str
-  game : Union[int, Game] = None
+  game_json: str
+  game_status: str
+  turn: int
+
+  players: List[User]
 
   @field_validator('max_players')
   def validate_max_players(cls, v) :
