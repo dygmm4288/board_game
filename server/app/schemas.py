@@ -28,16 +28,6 @@ class Token(BaseModel) :
   token_type: str
   username: str
 
-class Game(BaseModel) :
-  name : str = None
-  turn : int = None
-
-  def init_game(self) :
-    pass
-
-  def end_game(self) :
-    pass 
-
 class Room(BaseModel) :
   room_num:int
   id:str
