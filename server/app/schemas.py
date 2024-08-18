@@ -1,3 +1,4 @@
+from typing import Union
 from pydantic import BaseModel, field_validator
 from pydantic_core.core_schema import FieldValidationInfo
 
@@ -27,10 +28,22 @@ class Token(BaseModel) :
   token_type: str
   username: str
 
+class Game(BaseModel) :
+  name : str = None
+  turn : int = None
+  players: Union[int, User] = None
+
+  def init_game(self) :
+    pass
+
+  def end_game(self) :
+    pass 
+
 class Room(BaseModel) :
   name: str
   status: str
   max_players: int
+  game : Union[int, Game] = None
 
   @field_validator('max_players')
   def validate_max_players(cls, v) :
