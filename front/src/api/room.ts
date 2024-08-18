@@ -1,9 +1,12 @@
 import axios from "axios";
+import { AUTH, getStorage } from "../hooks/useStorage";
+const { access_token } = getStorage(AUTH) || {};
 
 const roomInstance = axios.create({
   baseURL: "http://localhost:8000/api/room",
   headers: {
     "Access-Control-Allow-Origin": "*",
+    Authorization: `Bearer ${access_token}`,
   },
 });
 
