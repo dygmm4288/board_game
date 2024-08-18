@@ -1,30 +1,53 @@
-import axios from "axios";
-import { AUTH, getStorage } from "../hooks/useStorage";
-const { access_token } = getStorage(AUTH) || {};
+import axios, { AxiosResponse } from "axios";
 
-const roomInstance = axios.create({
-  baseURL: "http://localhost:8000/api/room",
-  headers: {
-    "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer ${access_token}`,
-  },
-});
+const roomInstance = (token: string) =>
+  axios.create({
+    baseURL: "http://localhost:8000/api/room",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
 
 export type Room = {
-  id: string | number;
-  name: string;
+  room_num: string | number;
+  id: string;
   status: string;
   max_players: number;
+  game_name: string;
+  created_by: string;
 };
 
-export const getRooms = () => {
-  return roomInstance.get<Room>("/");
+export const getRooms = async (token: string): Promise<Room[]> => {
+  const response: AxiosResponse<Room[]> = await roomInstance(token).get<Room[]>(
+    "/",
+  );
+  return response.data;
 };
 
-export const createRoom = (maxPlayers: number) => {
-  return roomInstance.post<Room>("/", { max_players: maxPlayers });
+export const createRoom = (
+  max_players: number,
+  game_name: string,
+  created_by: string,
+  token: string,
+) => {
+  return roomInstance(token).post<Room>("/", {
+    max_players,
+    game_name,
+    created_by,
+  });
 };
 
-export const getRoom = (id: string | number) => {
-  return roomInstance.get<Room>(`/${id}`);
+export const getRoom = async (
+  id: string | number,
+  token: string,
+): Promise<Room> => {
+  const response: AxiosResponse<Room> = await roomInstance(token).get<Room>(
+    `/${id}`,
+  );
+  return response.data; // response.data를 Room 객체로 반환
+};
+
+export const deleteRoom = (id: string | number, token: string) => {
+  return roomInstance(token).delete(`/${id}`);
 };
