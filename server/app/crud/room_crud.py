@@ -1,26 +1,24 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-import uuid
 from models import Room as SQLRoom
-from schemas import RoomCreate, Room 
+from schemas import Room 
+import uuid
 
-# def create_room(max_players:int, gameName:str, name:str, db:Session) :
-#   room = Room(
-#     name=str(uuid.uuid4()),
-#     game_name=gameName,
-#     created_by=name,
-#     status="waiting",
-#     max_players=max_players
-#   )
-
-#   db.add(room)
-#   db.commit() #데이터베이스에 변경사항 저장
-#   db.refresh(room) #새로 생성된 room의 정보를 갱신 (예:room.id)
-#   print(f"Room stored in DB: {room.__dict__}")  # 저장된 데이터 확인
-#   return room
-
-def create_room(room_data: RoomCreate, db: Session) -> SQLRoom:
-    room = SQLRoom(**room_data.dict())
+def create_room(room_num: int,
+    id:str,
+    status:status,
+    max_players: int,
+    game_name: str,
+    created_by: str,
+    db: Session) -> SQLRoom:
+    room = SQLRoom(
+        room_num=room_num,
+        id=id or str(uuid.uuid4()),  # id가 없을 경우 새로 생성
+        status=status,
+        max_players=max_players,
+        game_name=game_name,
+        created_by=created_by
+    )
 
     db.add(room)
     db.commit()  # 데이터베이스에 변경사항 저장

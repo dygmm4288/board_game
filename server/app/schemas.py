@@ -27,15 +27,9 @@ class Token(BaseModel) :
   token_type: str
   username: str
 
-class RoomCreate(BaseModel):
-  name:str
-  game_name: str
-  created_by: str
-  max_players: int
-
 class Room(BaseModel) :
-  id:int
-  name: str
+  room_num:int
+  id:str
   status: str
   max_players: int
   game_name:str

@@ -1,9 +1,13 @@
 import { createRoom, getRoom, getRooms, deleteRoom, Room } from "../api/room";
 
 const useRoom = (token: string) => {
-  const create = (maxPlayers: number, gameName: string, name: string) => {
-    console.log(maxPlayers, gameName, name);
-    return createRoom(maxPlayers, gameName, name, token);
+  const create = (
+    max_players: number,
+    game_name: string,
+    created_by: string
+  ) => {
+    console.log(max_players, game_name, created_by);
+    return createRoom(max_players, game_name, created_by, token);
   };
 
   const get = async (roomId?: number | string): Promise<Room[]> => {

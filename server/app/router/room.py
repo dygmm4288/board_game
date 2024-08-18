@@ -3,8 +3,9 @@ from fastapi.encoders import jsonable_encoder
 
 from sqlalchemy.orm import Session
 from crud.room_crud import create_room, get_room, get_rooms, put_room
-from database import get_db
+from database import get_db 
 from models import User
+from models import Room as SQLRoom
 from crud.user_crud import get_current_user
 
 router = APIRouter(prefix='/api/room')
@@ -48,22 +49,33 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
   
 
 @router.post('/')
+def generate_next_room_num(db: Session) -> int:
+    # 데이터베이스에서 가장 큰 room_num을 찾아서 +1
+    max_room_num = db.query(SQLRoom.room_num).order_by(SQLRoom.room_num.desc()).first()
+    if max_room_num:
+        return max_room_num[0] + 1
+    else:
+        return 1 
+    
 def rest_post_room(
+    room_num: int = None,
+    id: str = None,
+    status: str = "대기중",
     max_players: int = None,
-    gameName: str = None,
-    name: str = None,
-    created_by: str=None,
+    game_name: str = "None",
+    created_by: str = "None",
     db: Session = Depends(get_db),
     _user: User = Depends(get_current_user)
 ) :
-  print(f"Received max_players: {max_players}, gameName: {gameName}, name: {name}")
   if not max_players :
     max_players = 4
-  room = create_room(max_players=max_players, gameName=gameName, created_by=name, db=db)
+  if not room_num :
+     room_num = generate_next_room_num(db)
+    
+  room = create_room(room_num=room_num,id=id,status=status,max_players=max_players,game_name=game_name,created_by=created_by, db=db)
 
   db.commit()
   print('-'*60)
-  print(f'room id : {room.id}/ room name: {room.name}/ room status: {room.status}/ room max_players: {room.max_players}')
   print('-'*60)
   rooms_data = jsonable_encoder(room)
   print(f"created room : {rooms_data}")

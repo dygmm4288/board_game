@@ -10,11 +10,12 @@ const roomInstance = (token: string) =>
   });
 
 export type Room = {
-  id: string | number;
-  name: string;
+  room_num: string | number;
+  id: string;
   status: string;
   max_players: number;
-  gameName: string;
+  game_name: string;
+  created_by: string;
 };
 
 export const getRooms = async (token: string): Promise<Room[]> => {
@@ -25,15 +26,15 @@ export const getRooms = async (token: string): Promise<Room[]> => {
 };
 
 export const createRoom = (
-  maxPlayers: number,
-  gameName: string,
-  name: string,
+  max_players: number,
+  game_name: string,
+  created_by: string,
   token: string
 ) => {
   return roomInstance(token).post<Room>("/", {
-    max_players: maxPlayers,
-    gameName,
-    name,
+    max_players,
+    game_name,
+    created_by,
   });
 };
 

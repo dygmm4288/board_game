@@ -9,17 +9,18 @@ class User(Base) :
   username = Column(String, nullable=False, unique=True)
   password = Column(String, nullable=False)
   
-  room_id = Column(Integer, ForeignKey('rooms.id'))
+  room_id = Column(String, ForeignKey('rooms.id'))
   room = relationship('Room', back_populates='users')
 
 class Room(Base):
   __tablename__ = 'rooms'
-  
-  id = Column(Integer, primary_key=True, index=True)
-  name = Column(String, nullable=False, unique=True)
+
+  room_num = Column(Integer, index=True, nullable=True)
+  id = Column(String, primary_key=True, nullable=False, unique=True)
   status = Column(String, nullable=False, default="대기중")
   max_players = Column(Integer, nullable=False, default=4)
   game_name = Column(String)
   created_by = Column(String)
+  
 
   users = relationship('User', back_populates='room')
