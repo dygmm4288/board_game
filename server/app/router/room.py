@@ -5,6 +5,7 @@ from crud.room_crud import create_room, get_room, get_rooms, put_room
 from database import get_db 
 from models import User
 from crud.user_crud import get_current_user
+from schemas import RoomCreate
 
 router = APIRouter(prefix='/api/room')
 
@@ -33,15 +34,16 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
 
 @router.post('/')    
 def rest_post_room(
-    max_players: int = 4,
-    game: str = None,
+    request: RoomCreate = None,
     db: Session = Depends(get_db),
     _user: User = Depends(get_current_user)
 ) :
 
-  room = create_room(max_players=max_players, game=game, db=db)
+  room = create_room(
+     max_players=request.max_players, 
+     game_name=request.game_name,
+     db=db)
 
-  db.add(room)
   db.commit()
 
   return room

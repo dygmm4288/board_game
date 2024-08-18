@@ -46,3 +46,7 @@ class Room(BaseModel) :
     if v <= 0 :
       raise ValueError('최대 플레이어 수는 1 이상이어야 합니다.')
     return v
+  
+class RoomCreate(BaseModel) :
+  max_players: int
+  game_name: str

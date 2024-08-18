@@ -6,18 +6,19 @@ from datetime import datetime
 from typing import Dict
 
 def create_room(
-    status:status,
     max_players: int,
-    game: str,
+    game_name: str,
     db: Session) -> SQLRoom:
     now = datetime.now()
 
     room = SQLRoom(
-        status=status,
+        status='waiting',
         max_players=max_players,
         created_at=now,
-        game=game 
+        game_name=game_name,
     )
+    
+    db.add(room)
 
     return room
 
