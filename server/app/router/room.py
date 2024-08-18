@@ -30,7 +30,8 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
     )
 
   return room
-    
+
+@router.post('/')    
 def rest_post_room(
     max_players: int = 4,
     game: str = None,
