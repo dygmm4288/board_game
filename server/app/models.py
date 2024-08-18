@@ -23,6 +23,6 @@ class Room(Base):
   game_name = Column(String, nullable=False)
   game_json = Column(String, nullable=True)
   game_status = Column(String, nullable=True)
-  turn = Column(int, nullable=False, default=0)
+  turn = Column(Integer, nullable=False, default=0)
 
   players = relationship('User', back_populates='room')

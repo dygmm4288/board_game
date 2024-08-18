@@ -30,7 +30,6 @@ class Token(BaseModel) :
   username: str
 
 class Room(BaseModel) :
-  id:str
   status: str
   max_players: int
   created_at: datetime
