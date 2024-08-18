@@ -7,12 +7,12 @@ import NumberInput from "../../form/NumberInput";
 const RoomModal = () => {
   const [totalMember, setTotalMember] = useState(2);
 
-  const { createRoom } = useRoom(totalMember);
+  const { create } = useRoom();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createRoom();
+    create(totalMember);
   };
 
   return (
@@ -30,7 +30,7 @@ const RoomModal = () => {
           type='submit'
           className={cn(
             "w-full h-[40px] bg-secondary-bg-color rounded-[5px]",
-            flex_center
+            flex_center,
           )}>
           만들기
         </button>
