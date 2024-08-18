@@ -31,7 +31,6 @@ class Token(BaseModel) :
 class Game(BaseModel) :
   name : str = None
   turn : int = None
-  players: Union[int, User] = None
 
   def init_game(self) :
     pass
@@ -44,15 +43,9 @@ class Room(BaseModel) :
   id:str
   status: str
   max_players: int
-<<<<<<< HEAD
   game_name:str
   created_by:str
-
-  class Config:
-    orm_mode = True
-=======
   game : Union[int, Game] = None
->>>>>>> b04d5164a55f9b84e7b6c50df3852f9a48a247b0
 
   @field_validator('max_players')
   def validate_max_players(cls, v) :

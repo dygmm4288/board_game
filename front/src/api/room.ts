@@ -1,53 +1,63 @@
 import axios, { AxiosResponse } from "axios";
+import { AUTH, getStorage } from "../hooks/useStorage";
 
-const roomInstance = (token: string) =>
-  axios.create({
-    baseURL: "http://localhost:8000/api/room",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
-
-export type Room = {
-  room_num: string | number;
-  id: string;
-  status: string;
-  max_players: number;
-  game_name: string;
-  created_by: string;
+export type User = {
+  username: string;
 };
 
-export const getRooms = async (token: string): Promise<Room[]> => {
-  const response: AxiosResponse<Room[]> = await roomInstance(token).get<Room[]>(
-    "/",
-  );
+export type Room = {
+  id: number;
+  status: string;
+  max_players: number;
+  game: string;
+  players: User[];
+};
+
+const getToken = () => {
+  const { access_token } = getStorage(AUTH) || {};
+  return access_token;
+};
+
+const roomInstance = axios.create({
+  baseURL: "http://localhost:8000/api/room",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
+});
+
+roomInstance.interceptors.request.use(
+  (config) => {
+    // 요청이 전달되기 전에 작업 수행
+    const token = getToken();
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  },
+);
+
+export const getRooms = async (): Promise<Room[]> => {
+  const response: AxiosResponse<Room[]> = await roomInstance.get<Room[]>("/");
   return response.data;
 };
 
-export const createRoom = (
-  max_players: number,
-  game_name: string,
-  created_by: string,
-  token: string,
-) => {
-  return roomInstance(token).post<Room>("/", {
+export const createRoom = (max_players: number, game: string) => {
+  return roomInstance.post<Room>("/", {
     max_players,
-    game_name,
-    created_by,
+    game,
   });
 };
 
-export const getRoom = async (
-  id: string | number,
-  token: string,
-): Promise<Room> => {
-  const response: AxiosResponse<Room> = await roomInstance(token).get<Room>(
-    `/${id}`,
-  );
+export const getRoom = async (id: number): Promise<Room> => {
+  const response: AxiosResponse<Room> = await roomInstance.get<Room>(`/${id}`);
   return response.data; // response.data를 Room 객체로 반환
 };
 
-export const deleteRoom = (id: string | number, token: string) => {
-  return roomInstance(token).delete(`/${id}`);
+export const putRoom = async (id: number, body: unknown) => {
+  return roomInstance.put(`/${id}`, body);
+};
+
+export const deleteRoom = (id: number) => {
+  return roomInstance.delete(`/${id}`);
 };

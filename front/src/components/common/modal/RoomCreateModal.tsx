@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { putRoom } from "../../../api/room";
 import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
@@ -13,21 +14,18 @@ const RoomModal = () => {
     setSelectedGame(e.target.value);
   };
 
-  const getLocalInfo = localStorage.getItem("auth");
-  const changeToJsonParse = JSON.parse(getLocalInfo as string);
+  const { create } = useRoom();
 
-  const token = changeToJsonParse.access_token;
-
-  const username = changeToJsonParse.username;
-
-  const { create } = useRoom(token);
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       // 서버로 요청을 보냅니다.
-      create(totalMember, selectedGame, username);
+      const res = await create(totalMember, selectedGame);
+
+      const room = res.data;
+
+      putRoom(room.id, { confirm: "참여" });
     } catch (error) {
       console.error("Failed to create room:", error);
     }

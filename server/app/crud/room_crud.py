@@ -1,32 +1,29 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from models import Room as SQLRoom
-from schemas import Room 
-import uuid
+from schemas import Room,User
+from datetime import datetime
 
-def create_room(room_num: int,
-    id:str,
+def create_room(
     status:status,
     max_players: int,
-    game_name: str,
-    created_by: str,
+    game: str,
     db: Session) -> SQLRoom:
+    now = datetime.now()
+
     room = SQLRoom(
-        room_num=room_num,
-        id=id or str(uuid.uuid4()),  # id가 없을 경우 새로 생성
         status=status,
         max_players=max_players,
-        game_name=game_name,
-        created_by=created_by
+        created_at=now,
+        game=game 
     )
 
     db.add(room)
-    db.commit()  # 데이터베이스에 변경사항 저장
-    db.refresh(room)  # 새로 생성된 room의 정보를 갱신 (예: room.id)
-    print(f"Room stored in DB: {room.__dict__}")  # 저장된 데이터 확인
+    db.commit()  
+
     return room
 
-def put_room(confirm:str, _room:Room, db:Session) :
+def put_room(confirm:str, _room:Room, user: User, db:Session) :
   
   if confirm == '게임시작' :
     
@@ -47,6 +44,19 @@ def put_room(confirm:str, _room:Room, db:Session) :
       )
 
     _room.status = 'waiting'
+  
+  elif confirm == '참여' :
+
+    if _room.status != 'waiting' :
+      raise HTTPException(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        detail="잘못된 접근입니다"
+      )
+   
+   # TODO : 기존에 존재하는 유저인지 확인해야함
+    # _user = _room.players
+    
+    _room.players.append(user)
     
   return _room
     
