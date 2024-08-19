@@ -1,19 +1,20 @@
 from sqlalchemy.orm import Session
 from http_exceptions import raise_http_exception
-from models import Room as SQLRoom
+from models import Room as RoomModel
 from models import User as UserModel
 from schemas import Room,User
 from datetime import datetime
 from utils import debug
 from typing import Dict
+import json
 
 def create_room(
     max_players: int,
     game_name: str,
-    db: Session) -> SQLRoom:
+    db: Session) -> RoomModel:
     now = datetime.now()
 
-    room = SQLRoom(
+    room = RoomModel(
         status='waiting',
         max_players=max_players,
         created_at=now,
@@ -74,9 +75,42 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
     
 
 def get_room(r_id:int, db:Session) :
-  result = db.query(SQLRoom).filter(SQLRoom.id == r_id).first()
+  result = db.query(RoomModel).filter(RoomModel.id == r_id).first()
   return result
   
 def get_rooms(db:Session) :
-  result = db.query(SQLRoom).filter(SQLRoom.status == 'waiting').all()
+  result = db.query(RoomModel).filter(RoomModel.status == 'waiting').all()
   return result
+
+def init_game(room:RoomModel) :
+  '''
+  게임 초기화
+  '''
+
+  room.turn = 0
+  room.game_status = 'dice'
+
+  deck_16 = []
+  deck_712 = []
+  deck_landmarks = []
+  
+  field_16 = []
+  field_712 = []
+  field_landmarks = []
+  
+  players = []
+
+  game_status = {
+    'deck_16' : deck_16,
+    'deck_712' : deck_712,
+    'deck_landmarks' : deck_landmarks,
+    
+    'field_16' : field_16,
+    'field_712' : field_712,
+    'field_landmarks' : field_landmarks,
+    
+    'players' : players
+  }
+
+
+  room.game_json = json.dumps(game_status, ensure_ascii=False)

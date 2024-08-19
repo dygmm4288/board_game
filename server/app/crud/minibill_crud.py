@@ -1,0 +1,1 @@
+from schemas.minibill_metadata import establishments, landmarks
