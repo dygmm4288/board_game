@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { AUTH, getStorage } from "../hooks/useStorage";
 
 export type User = {
   username: string;
@@ -13,29 +12,13 @@ export type Room = {
   players: User[];
 };
 
-const getToken = () => {
-  const { access_token } = getStorage(AUTH) || {};
-  return access_token;
-};
-
 const roomInstance = axios.create({
   baseURL: "http://localhost:8000/api/room",
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
+  withCredentials: true,
 });
-
-roomInstance.interceptors.request.use(
-  (config) => {
-    // 요청이 전달되기 전에 작업 수행
-    const token = getToken();
-    config.headers.Authorization = `Bearer ${token}`;
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
 
 export const getRooms = async (): Promise<Room[]> => {
   const response: AxiosResponse<Room[]> = await roomInstance.get<Room[]>("/");
@@ -56,7 +39,7 @@ export const getRoom = async (id: number): Promise<Room> => {
 
 export const putRoom = async (
   id: number,
-  body: { confirm: string; updates: Record<string, string> }
+  body: { confirm: string; updates: Record<string, string> },
 ) => {
   return await roomInstance.put(`/${id}`, body);
 };

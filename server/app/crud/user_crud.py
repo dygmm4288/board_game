@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from database import get_db
 from sqlalchemy.orm import Session
@@ -11,6 +11,7 @@ from jose import jwt, JWTError
 import os
 from dotenv import load_dotenv
 import logging
+from utils import debug
 logging.basicConfig(level=logging.ERROR, filename='app.log')
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '../../portal.env'))
@@ -61,12 +62,18 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) :
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
   return encoded_jwt
 
-def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
+def get_current_user(request: Request, db:Session=Depends(get_db)):
   credential_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="inactive user",
     headers={'WWW-Authenticate': "Bearer"}
   )
+  debug(request)
+  token = request.cookies.get('access_token')
+  debug(token)
+  if not token :
+    raise credential_exception
+
   try :
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     username: str = payload.get('username')
