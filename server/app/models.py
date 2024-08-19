@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship 
 from database import Base
 
@@ -15,12 +15,19 @@ class User(Base) :
 class Room(Base):
   __tablename__ = 'rooms'
 
-  room_num = Column(Integer, index=True, nullable=True)
-  id = Column(String, primary_key=True, nullable=False, unique=True)
+  id = Column(Integer, primary_key=True, nullable=False, unique=True)
   status = Column(String, nullable=False, default="대기중")
   max_players = Column(Integer, nullable=False, default=4)
-  game_name = Column(String)
-  created_by = Column(String)
-  
+  created_at = Column(DateTime, nullable=False)
+  game = Column(String, nullable=False)
 
-  users = relationship('User', back_populates='room')
+  players = relationship('User', back_populates='room')
+
+class Game(Base) :
+  __tablename__ = 'games'
+  
+  id = Column(Integer, primary_key=True, nullable=False, unique=True)
+  name = Column(String, nullable=False)
+  turn = Column(Integer, nullable=False, default=0) 
+  game_type = Column(String) # 게임 종류 
+

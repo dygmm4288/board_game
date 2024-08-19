@@ -10,24 +10,10 @@ from crud.user_crud import get_current_user
 
 router = APIRouter(prefix='/api/room')
 
-# @router.get('/')
-# def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)) :
-#   rooms = get_rooms(db=db)
-
-#   print('-'*60)
-#   print('-'*60)
-#   if not rooms :
-#     return []
-#   rooms_data = jsonable_encoder(rooms)
-#   print(f'rooms is : {rooms_data}')
-
-#   return rooms 
 @router.get('/')
 def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)):
     rooms = get_rooms(db=db)
-
-    return [room.__dict__ for room in rooms]  # room을 딕셔너리 형태로 변환하여 필드 포함 여부 확인
-
+    return rooms
 
 @router.get('/{r_id}')
 def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
@@ -46,39 +32,20 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
     )
 
   return room
-  
-
-@router.post('/')
-def generate_next_room_num(db: Session) -> int:
-    # 데이터베이스에서 가장 큰 room_num을 찾아서 +1
-    max_room_num = db.query(SQLRoom.room_num).order_by(SQLRoom.room_num.desc()).first()
-    if max_room_num:
-        return max_room_num[0] + 1
-    else:
-        return 1 
     
 def rest_post_room(
-    room_num: int = None,
-    id: str = None,
     status: str = "대기중",
     max_players: int = None,
-    game_name: str = "None",
-    created_by: str = "None",
+    game: str = None,
     db: Session = Depends(get_db),
     _user: User = Depends(get_current_user)
 ) :
   if not max_players :
     max_players = 4
-  if not room_num :
-     room_num = generate_next_room_num(db)
     
-  room = create_room(room_num=room_num,id=id,status=status,max_players=max_players,game_name=game_name,created_by=created_by, db=db)
+  room = create_room(status=status, max_players=max_players, game=game, db=db)
 
   db.commit()
-  print('-'*60)
-  print('-'*60)
-  rooms_data = jsonable_encoder(room)
-  print(f"created room : {rooms_data}")
   return room
 
 @router.put('/{r_id}')
@@ -96,7 +63,7 @@ def rest_put_room(r_id:str = None,confirm:str = None, db:Session=Depends(get_db)
       detail="잘못된 접근입니다"
     )
   
-  room = put_room(confirm=confirm,_room=_room, db=db)
+  room = put_room(confirm=confirm,_room=_room, user=_user, db=db)
   
   db.commit()
   

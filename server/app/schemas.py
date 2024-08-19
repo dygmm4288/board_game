@@ -31,7 +31,6 @@ class Token(BaseModel) :
 class Game(BaseModel) :
   name : str = None
   turn : int = None
-  players: Union[int, User] = None
 
   def init_game(self) :
     pass
