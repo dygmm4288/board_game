@@ -1,12 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.encoders import jsonable_encoder
-
+from typing import Dict
 from sqlalchemy.orm import Session
 from crud.room_crud import create_room, get_room, get_rooms, put_room
 from database import get_db 
 from models import User
-from models import Room as SQLRoom
 from crud.user_crud import get_current_user
+from schemas import RoomCreate
 
 router = APIRouter(prefix='/api/room')
 
@@ -32,24 +31,25 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
     )
 
   return room
-    
+
+@router.post('/')    
 def rest_post_room(
-    status: str = "대기중",
-    max_players: int = None,
-    game: str = None,
+    request: RoomCreate = None,
     db: Session = Depends(get_db),
     _user: User = Depends(get_current_user)
 ) :
-  if not max_players :
-    max_players = 4
-    
-  room = create_room(status=status, max_players=max_players, game=game, db=db)
+
+  room = create_room(
+     max_players=request.max_players, 
+     game_name=request.game_name,
+     db=db)
 
   db.commit()
+
   return room
 
 @router.put('/{r_id}')
-def rest_put_room(r_id:str = None,confirm:str = None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+def rest_put_room(r_id:str = None, confirm:str = None, updates: Dict[str, str] = None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
   if not confirm or not r_id: 
     raise HTTPException(
       status_code=status.HTTP_400_BAD_REQUEST,
@@ -63,7 +63,7 @@ def rest_put_room(r_id:str = None,confirm:str = None, db:Session=Depends(get_db)
       detail="잘못된 접근입니다"
     )
   
-  room = put_room(confirm=confirm,_room=_room, user=_user, db=db)
+  room = put_room(confirm=confirm, _room=_room, updates=updates, user=_user, db=db)
   
   db.commit()
   

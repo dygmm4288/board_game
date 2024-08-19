@@ -3,27 +3,26 @@ from fastapi import HTTPException, status
 from models import Room as SQLRoom
 from schemas import Room,User
 from datetime import datetime
+from typing import Dict
 
 def create_room(
-    status:status,
     max_players: int,
-    game: str,
+    game_name: str,
     db: Session) -> SQLRoom:
     now = datetime.now()
 
     room = SQLRoom(
-        status=status,
+        status='waiting',
         max_players=max_players,
         created_at=now,
-        game=game 
+        game_name=game_name,
     )
-
+    
     db.add(room)
-    db.commit()  
 
     return room
 
-def put_room(confirm:str, _room:Room, user: User, db:Session) :
+def put_room(confirm:str, _room:Room, user: User, updates: Dict, db:Session) :
   
   if confirm == '게임시작' :
     

@@ -45,7 +45,7 @@ export const getRooms = async (): Promise<Room[]> => {
 export const createRoom = (max_players: number, game: string) => {
   return roomInstance.post<Room>("/", {
     max_players,
-    game,
+    game_name: game,
   });
 };
 
