@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from http_exceptions import raise_http_exception
 from models import Room as SQLRoom
+from models import User as UserModel
 from schemas import Room,User
 from datetime import datetime
 from utils import debug
@@ -24,7 +25,7 @@ def create_room(
     return room
   
 
-def put_room(confirm:str, _room:Room, user: User, updates: Dict, db:Session) :
+def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session) :
   
   if confirm == '게임시작' :
     
@@ -42,13 +43,32 @@ def put_room(confirm:str, _room:Room, user: User, updates: Dict, db:Session) :
   
   elif confirm == '참여' :
 
-    if _room.status != 'waiting' :
-      raise_http_exception()
-
-    if user in _room.players :
+    if _room.status != 'waiting' or user in _room.players :
       raise_http_exception()
     
     _room.players.append(user)
+  
+  elif confirm == '방나가기': 
+
+    if not user.room_id :
+      raise_http_exception()
+      
+    _room.players.remove(user)
+  
+  #--------------------------------------
+  # 게임 룰
+  #--------------------------------------
+  elif confirm == '게임초기화' :
+    pass
+  
+  elif confirm == '주사위굴리기':
+    pass
+  
+  elif confirm == '구매하기' :
+    pass
+  
+  elif confirm == '다음턴넘기기' :
+    pass
     
   return _room
     
