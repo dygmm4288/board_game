@@ -61,7 +61,7 @@ def put_room(confirm:str, _room:Room, user: User, updates: Dict, db:Session) :
     
 
 def get_room(r_id:int, db:Session) :
-  result = db.query(Room).filter(Room.id == r_id).first()
+  result = db.query(SQLRoom).filter(SQLRoom.id == r_id).first()
   return result
   
 def get_rooms(db:Session) :

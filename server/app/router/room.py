@@ -15,7 +15,7 @@ def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current
     return rooms
 
 @router.get('/{r_id}')
-def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+def rest_get_room(r_id: int, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
   if not r_id :
     raise HTTPException(
       status_code=status.HTTP_404_NOT_FOUND,
@@ -54,8 +54,8 @@ def rest_post_room(
     }
 
 @router.put('/{r_id}')
-def rest_put_room(r_id:str = None, confirm:str = None, updates: Dict[str, str] = None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
-  if not confirm or not r_id: 
+def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+  if not confirm or not r_id or not updates: 
     raise HTTPException(
       status_code=status.HTTP_400_BAD_REQUEST,
       detail="잘못된 접근입니다"
@@ -75,7 +75,7 @@ def rest_put_room(r_id:str = None, confirm:str = None, updates: Dict[str, str] =
   return room
 
 @router.delete('/{r_id}')
-def rest_delete_room(r_id: str, db: Session = Depends(get_db), _user: User = Depends(get_current_user)):
+def rest_delete_room(r_id: int, db: Session = Depends(get_db), _user: User = Depends(get_current_user)):
     if not r_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

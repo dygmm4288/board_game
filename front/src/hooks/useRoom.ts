@@ -1,4 +1,4 @@
-import { Room, createRoom, deleteRoom, getRoom, getRooms } from "../api/room";
+import { Room, createRoom, deleteRoom, getRooms } from "../api/room";
 
 const useRoom = () => {
   const create = (max_players: number, game: string) => {

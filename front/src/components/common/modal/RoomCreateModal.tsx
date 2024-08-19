@@ -22,10 +22,11 @@ const RoomModal = () => {
     try {
       // 서버로 요청을 보냅니다.
       const res = await create(totalMember, selectedGame);
-      console.log(res.data.game, res.data.max_players, res.data.id);
+
       const room = res.data;
+
+      putRoom(room.id, { confirm: "참여", updates: { key: "value" } });
       getRoom(room.id);
-      putRoom(room.id, { confirm: "참여" });
     } catch (error) {
       console.error("Failed to create room:", error);
     }

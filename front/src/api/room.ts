@@ -54,8 +54,11 @@ export const getRoom = async (id: number): Promise<Room> => {
   return response.data; // response.data를 Room 객체로 반환
 };
 
-export const putRoom = (id: number, body: unknown) => {
-  return roomInstance.put(`/${id}`, body);
+export const putRoom = async (
+  id: number,
+  body: { confirm: string; updates: Record<string, string> }
+) => {
+  return await roomInstance.put(`/${id}`, body);
 };
 
 export const deleteRoom = (id: number) => {
