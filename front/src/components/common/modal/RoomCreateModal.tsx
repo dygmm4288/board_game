@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { getRoom, putRoom } from "../../../api/room";
+import { putRoom } from "../../../api/room";
 import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
@@ -26,7 +26,6 @@ const RoomModal = () => {
       const room = res.data;
 
       putRoom(room.id, { confirm: "참여", updates: { key: "value" } });
-      getRoom(room.id);
     } catch (error) {
       console.error("Failed to create room:", error);
     }

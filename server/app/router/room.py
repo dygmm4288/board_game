@@ -6,11 +6,14 @@ from database import get_db
 from models import User
 from crud.user_crud import get_current_user
 from schemas import RoomCreate
+from http_exceptions import raise_http_exception
 
 router = APIRouter(prefix='/api/room')
 
 @router.get('/')
 def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)):
+    if _user and _user.room_id :
+      raise_http_exception(status.HTTP_307_TEMPORARY_REDIRECT, '이미 참여한 방이 존재합니다.')
     rooms = get_rooms(db=db)
     return rooms
 
@@ -21,6 +24,9 @@ def rest_get_room(r_id: int, db:Session=Depends(get_db), _user:User=Depends(get_
       status_code=status.HTTP_404_NOT_FOUND,
       detail="잘못된 접근입니다"
     )
+
+  if _user and _user.room_id != r_id :
+     raise_http_exception()
 
   room = get_room(r_id=r_id, db=db)
 
@@ -46,12 +52,8 @@ def rest_post_room(
 
   db.commit()
   db.refresh(room)  
-  return {
-        "id": room.id,
-        "game": room.game_name,
-        "max_players": room.max_players,
-        "players": [player.username for player in room.players]  # 필요한 경우
-    }
+  
+  return room
 
 @router.put('/{r_id}')
 def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
