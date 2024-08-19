@@ -2,7 +2,7 @@
 // Types for establishments.
 //
 
-import type { Expansion, Version } from '../types';
+import type { Expansion, Version } from "../../types";
 
 /**
  * Interface for establishment metadata.
@@ -59,10 +59,10 @@ export interface EstablishmentData {
  * Establishment color enum.
  */
 export const EstColor = {
-  Blue: 'Blue',
-  Green: 'Green',
-  Purple: 'Purple',
-  Red: 'Red',
+  Blue: "Blue",
+  Green: "Green",
+  Purple: "Purple",
+  Red: "Red",
 } as const;
 
 export type EstColor = (typeof EstColor)[keyof typeof EstColor];
@@ -75,12 +75,12 @@ export type EstColor = (typeof EstColor)[keyof typeof EstColor];
  * The following are the keywords used to identify each icon (padded with ::).
  */
 export const EstType = {
-  Animal: '::cruelty_free::',
-  Cup: '::coffee::',
-  Gear: '::settings::',
-  Shop: '::house::',
-  Wheat: '::psychiatry::',
-  Fruit: '::nutrition::',
+  Animal: "::cruelty_free::",
+  Cup: "::coffee::",
+  Gear: "::settings::",
+  Shop: "::house::",
+  Wheat: "::psychiatry::",
+  Fruit: "::nutrition::",
 } as const;
 
 export type EstType = (typeof EstType)[keyof typeof EstType];

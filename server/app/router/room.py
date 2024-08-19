@@ -45,8 +45,13 @@ def rest_post_room(
      db=db)
 
   db.commit()
-
-  return room
+  db.refresh(room)  
+  return {
+        "id": room.id,
+        "game": room.game_name,
+        "max_players": room.max_players,
+        "players": [player.username for player in room.players]  # 필요한 경우
+    }
 
 @router.put('/{r_id}')
 def rest_put_room(r_id:str = None, confirm:str = None, updates: Dict[str, str] = None, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):

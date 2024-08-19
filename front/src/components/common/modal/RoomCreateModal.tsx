@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { putRoom } from "../../../api/room";
+import { getRoom, putRoom } from "../../../api/room";
 import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
@@ -22,9 +22,9 @@ const RoomModal = () => {
     try {
       // 서버로 요청을 보냅니다.
       const res = await create(totalMember, selectedGame);
-
+      console.log(res.data.game, res.data.max_players, res.data.id);
       const room = res.data;
-
+      getRoom(room.id);
       putRoom(room.id, { confirm: "참여" });
     } catch (error) {
       console.error("Failed to create room:", error);
@@ -46,7 +46,7 @@ const RoomModal = () => {
           type='submit'
           className={cn(
             "w-full h-[40px] bg-secondary-bg-color rounded-[5px]",
-            flex_center,
+            flex_center
           )}>
           만들기
         </button>

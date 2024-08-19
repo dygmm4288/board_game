@@ -34,7 +34,7 @@ roomInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 export const getRooms = async (): Promise<Room[]> => {
@@ -54,7 +54,7 @@ export const getRoom = async (id: number): Promise<Room> => {
   return response.data; // response.data를 Room 객체로 반환
 };
 
-export const putRoom = async (id: number, body: unknown) => {
+export const putRoom = (id: number, body: unknown) => {
   return roomInstance.put(`/${id}`, body);
 };
 

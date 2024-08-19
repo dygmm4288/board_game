@@ -5,18 +5,15 @@ import useRoom from "../../hooks/useRoom";
 import { Room } from "../../api/room";
 
 const RoomList = () => {
-  const getLocalInfo = localStorage.getItem("auth");
-  const token = JSON.parse(getLocalInfo as string).access_token;
-
   const [rooms, setRooms] = useState<Room[]>([]);
 
-  const { get } = useRoom(token);
+  const { get } = useRoom();
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const data = await get();
-        console.log(data);
+        setRooms(data);
       } catch (error) {
         console.error("Failed to fetch rooms :", error);
       }
@@ -25,9 +22,9 @@ const RoomList = () => {
     fetchRooms();
   }, []);
 
-  const { remove } = useRoom(token);
+  const { remove } = useRoom();
 
-  const handleDelete = async (id: string | number) => {
+  const handleDelete = async (id: number) => {
     try {
       await remove(id);
       setRooms((prev) => prev.filter((room) => room.id !== id));
@@ -43,11 +40,11 @@ const RoomList = () => {
           <li
             key={room.id}
             className='w-[150px] h-[80px] bg-white border border-solid border-primary-font-color rounded-10 pt-[5px] pl-[12px] text-[14px]'>
-            <h3 className='text-[16px]'>room number {room.room_num}</h3>
+            <h3 className='text-[16px]'>room number {room.id}</h3>
             <div className='flex flex-col justify-center text-primary-font-color'>
               <div className='flex flex-row gap-[4px]'>
                 <RollIcon />
-                <p>{room.game_name}</p>
+                <p>{room.game}</p>
               </div>
               <div className='flex flex-row gap-[6px]'>
                 <PersonIcon />

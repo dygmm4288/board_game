@@ -5,12 +5,8 @@ const useRoom = () => {
     return createRoom(max_players, game);
   };
 
-  const get = async (roomId: number): Promise<Room[]> => {
-    if (roomId) {
-      const room = await getRoom(roomId);
-      return [room];
-    }
-    return await getRooms();
+  const get = (): Promise<Room[]> => {
+    return getRooms();
   };
 
   const remove = (roomId: number) => {
