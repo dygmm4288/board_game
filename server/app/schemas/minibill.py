@@ -18,3 +18,8 @@ class LandMark() :
   coins: int = None
   cost: List[int] = None
   activate: function = None
+
+class PlayerInfo() :
+  id:int = None
+  coin:int = None
+  cards: List[int] = None

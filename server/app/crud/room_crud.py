@@ -86,19 +86,19 @@ def init_game(room:RoomModel) :
   '''
   게임 초기화
   '''
-
+  from minibill_crud import get_deck,set_field,shuffle_deck, init_players
   room.turn = 0
   room.game_status = 'dice'
 
-  deck_16 = []
-  deck_712 = []
-  deck_landmarks = []
+  deck_16 = shuffle_deck(get_deck('est16'))
+  deck_712 = shuffle_deck(get_deck('est712'))
+  deck_landmarks = shuffle_deck(get_deck('landmark'))
   
-  field_16 = []
-  field_712 = []
-  field_landmarks = []
+  field_16 = set_field(deck_16)
+  field_712 = set_field(deck_712)
+  field_landmarks = set_field(deck_landmarks)
   
-  players = []
+  players = init_players(room.players)
 
   game_status = {
     'deck_16' : deck_16,
