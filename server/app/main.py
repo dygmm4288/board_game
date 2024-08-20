@@ -2,9 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from router import auth, room
-import os
+import os,sys
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '../portal.env'))
+print(sys.path)
 
 app = FastAPI()
 

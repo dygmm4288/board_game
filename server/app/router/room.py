@@ -7,6 +7,7 @@ from models import User
 from crud.user_crud import get_current_user
 from schemas import RoomCreate
 from http_exceptions import raise_http_exception
+from utils import debug
 
 router = APIRouter(prefix='/api/room')
 
@@ -18,16 +19,14 @@ def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current
     return rooms
 
 @router.get('/{r_id}')
-def rest_get_room(r_id: int, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
   if not r_id :
     raise HTTPException(
       status_code=status.HTTP_404_NOT_FOUND,
       detail="잘못된 접근입니다"
     )
-
   if _user and _user.room_id != r_id :
      raise_http_exception()
-
   room = get_room(r_id=r_id, db=db)
 
   if not room :
@@ -56,8 +55,8 @@ def rest_post_room(
   return room
 
 @router.put('/{r_id}')
-def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
-  if not confirm or not r_id or not updates: 
+def rest_put_room(r_id:str , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+  if not confirm and not r_id :
     raise HTTPException(
       status_code=status.HTTP_400_BAD_REQUEST,
       detail="잘못된 접근입니다"
@@ -71,9 +70,10 @@ def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=
     )
   
   room = put_room(confirm=confirm, _room=_room, updates=updates, user=_user, db=db)
-  
+  debug(room)
+
   db.commit()
-  
+  db.refresh(room)  
   return room
 
 @router.delete('/{r_id}')

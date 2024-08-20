@@ -1,5 +1,5 @@
 from typing import List
-from schemas.minibill import Establishment, LandMark
+from schema.minibill import Establishment, LandMark
 
 establishments = [
     Establishment(

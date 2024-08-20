@@ -1,5 +1,5 @@
-from schemas.minibill_metadata import establishments, landmarks
-from schemas.minibill import Establishment, LandMark, PlayerInfo
+from schema.minibill_metadata import establishments,landmarks
+from schema.minibill import Establishment, LandMark, PlayerInfo
 from typing import List, Union
 from random import randint
 
@@ -7,11 +7,11 @@ def get_deck(type:str) :
   deck = []
   dices = [1,2,3,4,5,6] if type == 'est16' else [7, 8, 9, 10, 11, 12]
   if type == 'landmark' :
-    deck = landmarks.copy()
+    deck = list(map(lambda x: x.id, landmarks.copy()))
   else :
     for establishment in establishments :
       if any(dice in establishment.rolls for dice in dices) :
-        deck.extend(establishment * establishment.initial)
+        deck.extend([establishment.id] * establishment.initial)
   return deck
 
 def shuffle_deck(deck:Union[List[LandMark], List[Establishment]]) :
@@ -47,14 +47,14 @@ def set_field(field, deck:Union[List[LandMark], List[Establishment]]) :
       break
 
     if card.id not in field :
-      field[card.id] = 1
+      field[id] = 1
 
       if len(field) ==  MAX_SAME_CARD_ON_FIELD_COUNT:
         break
 
       continue
 
-    field[card.id] += 1
+    field[id] += 1
 
   return field
 
@@ -68,7 +68,7 @@ def init_players(players) :
         id=player.id,
         coins=START_COIN,
         cards=[],
-      )
+      ).to_dict()
     )
   
   return player_infos
