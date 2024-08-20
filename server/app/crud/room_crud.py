@@ -27,22 +27,7 @@ def create_room(
   
 
 def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session) :
-  
-  if confirm == '게임시작' :
-    
-    if _room.status != 'waiting' :
-      raise_http_exception()
-
-    _room.status = 'in-progress'
-
-  elif confirm == '게임종료' :
-    
-    if _room.status != 'in-progress' :
-      raise_http_exception()
-
-    _room.status = 'waiting'
-  
-  elif confirm == '참여' :
+  if confirm == '참여' :
 
     if _room.status != 'waiting' or user in _room.players :
       raise_http_exception()
@@ -59,8 +44,13 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
   #--------------------------------------
   # 게임 룰
   #--------------------------------------
-  elif confirm == '게임초기화' :
-    pass
+  elif confirm == '게임시작' :
+    MIN_PLAYERS = 2
+    if len(_room.players) < MIN_PLAYERS :
+      raise_http_exception()
+    _room = init_game(_room)
+
+    _room.status = 'in-progress'
   
   elif confirm == '주사위굴리기':
     pass
@@ -71,6 +61,8 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
   elif confirm == '다음턴넘기기' :
     pass
     
+  db.refresh(_room)
+
   return _room
     
 
@@ -114,3 +106,5 @@ def init_game(room:RoomModel) :
 
 
   room.game_json = json.dumps(game_status, ensure_ascii=False)
+
+  return room
