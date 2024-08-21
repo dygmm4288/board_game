@@ -6,7 +6,7 @@ from schemas import Room
 from datetime import datetime
 from utils import debug
 from typing import Dict, Tuple
-from minibill_crud import *
+from crud.minibill_crud import *
 import json
 
 def create_room(

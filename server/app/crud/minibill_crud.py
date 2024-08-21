@@ -83,7 +83,7 @@ def get_game_status(room:RoomModel) :
 
   return game_status 
 
-def roll_dice(game_json, turn: int, cnt: int = 1) -> Tuple(int, bool) :
+def roll_dice(game_json, turn: int, cnt: int = 1) -> Tuple[int, bool] :
   game_status = game_json
 
   if type(game_json) == str :
