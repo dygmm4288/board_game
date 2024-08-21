@@ -70,6 +70,7 @@ def init_players(players) :
         id=player.id,
         coins=START_COIN,
         cards=[],
+        landmarks=[],
       ).to_dict()
     )
   
@@ -129,3 +130,6 @@ def check_purple_card(room:RoomModel,roll_player, dice) :
 def check_landmark_card(room:RoomModel) :
   # TODO : Landmark별 게임 처리
   return room
+
+def is_more_4_landmarks(player) :
+  return len(player.landmarks) == 4 

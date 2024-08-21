@@ -47,6 +47,7 @@ class Room(BaseModel) :
   #  id : int, 
   #  coins : number,
   #  cards: List[int]
+  #  landmarks: List[int]
   # }
 
   game_json: str

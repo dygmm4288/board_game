@@ -32,15 +32,17 @@ class LandMark:
             return NotImplemented
 
 class PlayerInfo:
-    def __init__(self, id: int, coins: int, cards: List[int]):
+    def __init__(self, id: int, coins: int, cards: List[int], landmarks: List[int]):
         self.id = id
         self.coins = coins
         self.cards = cards
+        self.landmarks = landmarks
 
     def to_dict(self):
         return {
             "id": self.id,
             "coins": self.coins,
-            "cards": self.cards
+            "cards": self.cards,
+            "landmarks" :self.landmarks
         }
 

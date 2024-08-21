@@ -75,6 +75,9 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
     
     _room = purchase(_room, field_name, field_card, deck_name)
     _room.status = 'dice' 
+
+    if check_end_game(_room) :
+      _room.status = 'end-game'
     
   return _room
     
@@ -163,4 +166,11 @@ def purchase(room:RoomModel, field_name:str, field_card:int, deck_name: str) :
   room.game_json = json.dumps(game_status, ensure_ascii=False, default=lambda x: x)
     
   return room
+
    
+def check_end_game(room:RoomModel) :
+  game_status = get_game_status(room)
+  
+  players = game_status['players']
+  
+  return any(map(is_more_4_landmarks, players))
