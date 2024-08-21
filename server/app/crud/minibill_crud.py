@@ -18,11 +18,11 @@ def shuffle_deck(deck:Union[List[LandMark], List[Establishment]]) :
   shuffled_deck = []
   rest_deck = deck.copy()
   
-  for _ in range(len(shuffled_deck)) :
+  for _ in range(len(rest_deck)) :
     length = len(rest_deck)
     pick = randint(0, length - 1)
-    
-    shuffled_deck.append(rest_deck.pop(pick))
+    card = rest_deck.pop(pick)
+    shuffled_deck.append(card)
 
   return shuffled_deck
   
@@ -46,15 +46,15 @@ def set_field(field, deck:Union[List[LandMark], List[Establishment]]) :
     if not card :
       break
 
-    if card.id not in field :
-      field[id] = 1
+    if card not in field :
+      field[card] = 1
 
       if len(field) ==  MAX_SAME_CARD_ON_FIELD_COUNT:
         break
 
       continue
 
-    field[id] += 1
+    field[card] += 1
 
   return field
 

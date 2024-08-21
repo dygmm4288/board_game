@@ -81,6 +81,8 @@ def init_game(room:RoomModel) :
   room.turn = 0
   room.game_status = 'dice'
 
+  debug(get_deck('est16'))
+
   deck_16 = shuffle_deck(get_deck('est16'))
   deck_712 = shuffle_deck(get_deck('est712'))
   deck_landmarks = shuffle_deck(get_deck('landmark'))
