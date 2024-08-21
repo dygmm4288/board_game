@@ -57,6 +57,7 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
   elif confirm == '주사위굴리기':
     NOT_ROLL_TURN = 0
     roll_cnt = updates['roll_cnt']
+
     if _room.game_status != 'dice' or not roll_cnt : raise_http_exception()
 
     dice_result = roll_dice(_room.game_json, _room.turn, roll_cnt)
@@ -68,6 +69,11 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
     _room.status = 'purchase'
   
   elif confirm == '구매하기' :
+    if _room.status != 'purchase' : raise_http_exception()
+
+    field_name, field_card, deck_name = updates
+    
+    _room = purchase(_room, field_name, field_card, deck_name)
     _room.status = 'dice' 
     
   return _room
@@ -129,6 +135,7 @@ def roll_turn(roll_result:Tuple[int, bool], room: RoomModel) :
     cur_player = room.players[roll_player + i]
 
     room = check_red_card(room, roll_player, cur_player, dice) 
+    
  # 주사위 돌린 사람 포함
   for i in range(length_player) :
     cur_player = room.players[roll_player + i]
