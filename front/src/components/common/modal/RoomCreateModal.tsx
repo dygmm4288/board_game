@@ -24,6 +24,7 @@ const RoomModal = () => {
       const res = await create(totalMember, selectedGame);
 
       const room = res.data;
+      console.log(room.id);
 
       putRoom(room.id, { confirm: "참여", updates: { key: "value" } });
     } catch (error) {

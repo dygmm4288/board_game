@@ -75,12 +75,13 @@ export type EstColor = (typeof EstColor)[keyof typeof EstColor];
  * The following are the keywords used to identify each icon (padded with ::).
  */
 export const EstType = {
-  Animal: "::cruelty_free::",
-  Cup: "::coffee::",
-  Gear: "::settings::",
-  Shop: "::house::",
-  Wheat: "::psychiatry::",
-  Fruit: "::nutrition::",
+  Animal: "cruelty_free",
+  Cup: "coffee",
+  Gear: "settings",
+  Shop: "house",
+  Wheat: "psychiatry",
+  Fruit: "nutrition",
+  None: "",
 } as const;
 
 export type EstType = (typeof EstType)[keyof typeof EstType];
