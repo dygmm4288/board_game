@@ -55,12 +55,13 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
     _room.status = 'in-progress'
   
   elif confirm == '주사위굴리기':
+    NOT_ROLL_TURN = 0
     roll_cnt = updates['roll_cnt']
     if _room.game_status != 'dice' or not roll_cnt : raise_http_exception()
 
     dice_result = roll_dice(_room.game_json, _room.turn, roll_cnt)
     
-    if dice_result[0] == 0 : pass
+    if dice_result[0] == NOT_ROLL_TURN : pass
     
     _room = roll_turn(dice_result,_room)
     
@@ -139,5 +140,15 @@ def roll_turn(roll_result:Tuple[int, bool], room: RoomModel) :
   
   return room
   
+def purchase(room:RoomModel, field_name:str, field_card:int) :
+  game_status = get_game_status(room)
   
+  game_status[field_name][field_card] -= 1
+
+  if game_status[field_name][field_card] == 0 :
+    game_status = set_field(game_status[field_name], game_status[deck_name])
   
+  room.game_json = game_status
+    
+  return room
+   
