@@ -7,7 +7,7 @@ import { cn } from "../../util/cn";
 
 const CardSection = () => {
   const getRandomNum = () => {
-    const totalCard = 39;
+    const totalCard = 20;
     const randomNums = new Set();
 
     while (randomNums.size < 15) {
@@ -47,14 +47,6 @@ const CardSection = () => {
             <div className='flex flex-row gap-[3px] justify-center'>
               <div className={cn(card_roll)}>{item.rolls[0]}</div>
               <div className={cn(card_roll)}>{item.rolls[1]}</div>
-            </div>
-          );
-        } else {
-          return (
-            <div className='flex flex-row gap-[3px] justify-center'>
-              <div className={cn(card_roll)}>{item.rolls[0]}</div>
-              <div className={cn(card_roll)}>{item.rolls[1]}</div>
-              <div className={cn(card_roll)}>{item.rolls[2]}</div>
             </div>
           );
         }
