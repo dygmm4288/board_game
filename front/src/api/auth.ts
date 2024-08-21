@@ -6,7 +6,6 @@ const authInstance = axios.create({
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
-  withCredentials: true,
 });
 
 export type SignupType = {

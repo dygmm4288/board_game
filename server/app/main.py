@@ -11,7 +11,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 모든 도메인 허용, 특정 도메인만 허용하려면 ["http://example.com"] 형식으로 변경
+    allow_origins=["http://localhost:5173"],  # 모든 도메인 허용, 특정 도메인만 허용하려면 ["http://example.com"] 형식으로 변경
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드 허용
     allow_headers=["*"],  # 모든 HTTP 헤더 허용
