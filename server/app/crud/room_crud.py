@@ -63,12 +63,11 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
     if dice_result[0] == 0 : pass
     
     _room = roll_turn(dice_result,_room)
+    
+    _room.status = 'purchase'
   
   elif confirm == '구매하기' :
-    pass
-  
-  elif confirm == '다음턴넘기기' :
-    pass
+    _room.status = 'dice' 
     
   return _room
     
