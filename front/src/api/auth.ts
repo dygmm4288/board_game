@@ -6,6 +6,7 @@ const authInstance = axios.create({
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
+  withCredentials: true,
 });
 
 export type SignupType = {
@@ -28,10 +29,13 @@ const login = (dict: LoginType) => {
 };
 
 const regist = (dict: SignupType) => {
-  const formData = Object.entries(dict).reduce<{[key:string]: string}>((formData, [key,value]) => {
-    formData[camel_to_snake(key)] = value;
-    return formData;
-  },{});
+  const formData = Object.entries(dict).reduce<{ [key: string]: string }>(
+    (formData, [key, value]) => {
+      formData[camel_to_snake(key)] = value;
+      return formData;
+    },
+    {}
+  );
   return authInstance.post("/regist", formData);
 };
 

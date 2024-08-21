@@ -60,7 +60,7 @@ const CardSection = () => {
           <div
             className={
               "text-[12px] flex flex-col items-center " +
-              `${item.name.length < 5 ? "gap-[10px]" : "gap-[3px]"}`
+              `${item.name.length < 6 ? "gap-[10px]" : "gap-[3px]"}`
             }>
             <div>{<RollsLength />}</div>
             <p className='leading-tight'>{item.name}</p>
@@ -74,7 +74,7 @@ const CardSection = () => {
   };
 
   return (
-    <section className='grid grid-cols-5 gap-[12px] pt-[10px] px-[21px]'>
+    <section className='grid grid-cols-5 justify-items-center gap-[12px] pt-[10px] px-[21px]'>
       <RandomCard />
     </section>
   );
