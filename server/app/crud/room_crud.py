@@ -140,15 +140,20 @@ def roll_turn(roll_result:Tuple[int, bool], room: RoomModel) :
   
   return room
   
-def purchase(room:RoomModel, field_name:str, field_card:int) :
+def purchase(room:RoomModel, field_name:str, field_card:int, deck_name: str) :
   game_status = get_game_status(room)
   
   game_status[field_name][field_card] -= 1
 
   if game_status[field_name][field_card] == 0 :
-    game_status = set_field(game_status[field_name], game_status[deck_name])
+    game_status[field_name] = set_field(game_status[field_name], game_status[deck_name])
+
+
+  roll_player = get_current_player_index(room)
   
-  room.game_json = game_status
+  game_status['players'][roll_player].cards.append(field_card)
+  
+  room.game_json = json.dumps(game_status, ensure_ascii=False, default=lambda x: x)
     
   return room
    
