@@ -2,6 +2,7 @@ from schema.minibill_metadata import establishments,landmarks
 from schema.minibill import Establishment, LandMark, PlayerInfo
 from typing import List, Union
 from random import randint
+import json
 
 def get_deck(type:str) :
   deck = []
@@ -72,3 +73,20 @@ def init_players(players) :
     )
   
   return player_infos
+
+def roll_dice(game_json, turn: int, cnt: int = 1) :
+  game_status = game_json
+
+  if type(game_json) == str :
+    game_status = json.loads(game_json)
+  
+  if is_purchase_turn(game_status, turn) : return 0
+
+  return randint(1, 6) if cnt == 1 else randint(1, 12)
+
+def is_purchase_turn(game_status, turn:int ) :
+  PURCHASE_TURN = 3 # 각자의 턴이 3턴까지는 주사위를 던지지 않는다.
+
+  len_players = len(game_status['players'])
+
+  return int(turn / len_players) < PURCHASE_TURN
