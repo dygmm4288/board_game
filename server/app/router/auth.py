@@ -10,6 +10,7 @@ from datetime import timedelta
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
+DOMAIN = 'localhost'
 router = APIRouter(prefix='/api/auth')
 
 @router.post('/regist')
@@ -35,10 +36,15 @@ def login_for_access_token(response:Response, form_data: OAuth2PasswordRequestFo
     data={'sub':str(user.id),'username': user.username}, expires_delta=access_token_expires
   )
 
-  response.set_cookie(key='access_token', value=access_token, httponly=True)
+  response.set_cookie(key='access_token', value=access_token, httponly=True, samesite=None, domain=DOMAIN, expires=ACCESS_TOKEN_EXPIRE_MINUTES)
 
   return {
      'access_token':access_token,
      'token_type':'bearer',
      'username' : user.username
     }
+
+@router.post('/logout')
+def logout(response:Response) :
+   response.delete_cookie(key='access_token')
+   return {}

@@ -39,7 +39,7 @@ export const getRoom = async (id: number): Promise<Room> => {
 
 export const putRoom = async (
   id: number,
-  body: { confirm: string; updates: Record<string, string> }
+  body: { confirm: string; updates: Record<string, string> },
 ) => {
   return await roomInstance.put(`/${id}`, body);
 };

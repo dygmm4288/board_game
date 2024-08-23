@@ -35,6 +35,21 @@ class Room(BaseModel) :
   created_at: datetime
 
   game_name:str
+  # deck_16 : List[int]
+  # deck_712 : List[int]
+  # deck_landmarks: List[int]
+  # 
+  # field_16: List[int]
+  # field_712: List[int]
+  # field_landmarks: List[int]
+
+  # players: {
+  #  id : int, 
+  #  coins : number,
+  #  cards: List[int]
+  #  landmarks: List[int]
+  # }
+
   game_json: str
   game_status: str
   turn: int
