@@ -55,7 +55,7 @@ def rest_post_room(
   return room
 
 @router.put('/{r_id}')
-def rest_put_room(r_id:str , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
+def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=Depends(get_db), _user:User=Depends(get_current_user)):
   if not confirm and not r_id :
     raise HTTPException(
       status_code=status.HTTP_400_BAD_REQUEST,
