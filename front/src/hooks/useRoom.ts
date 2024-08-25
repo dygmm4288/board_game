@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import roomApi from "../api/room";
 import { getErrorMsg } from "../util/error";
 import useAuth from "../zustand/auth";
@@ -9,11 +10,17 @@ const GET_ROOM = "room/get";
 
 const useRoom = () => {
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const onError = (err: AxiosError) => {
-    const msg = getErrorMsg(err);
+    const errorMsg = getErrorMsg(err);
 
-    if (msg === "inactive user") logout();
+    if (errorMsg === "inactive user") logout();
+    // Redirect : 이미 참여한 방이 존재할 경우에 id값을 같이 넘겨줌
+    if (typeof errorMsg === "object" && "id" in errorMsg) {
+      const goto = `/miniville_room/${errorMsg.id}`;
+      navigate(goto);
+    }
   };
 
   const { data: rooms, error: getRoomsError } = useQuery({

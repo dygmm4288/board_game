@@ -14,7 +14,7 @@ router = APIRouter(prefix='/api/room')
 @router.get('/')
 def rest_get_rooms(db: Session = Depends(get_db), _user:User=Depends(get_current_user)):
     if _user and _user.room_id :
-      raise_http_exception(status.HTTP_307_TEMPORARY_REDIRECT, '이미 참여한 방이 존재합니다.')
+      raise_http_exception(status.HTTP_307_TEMPORARY_REDIRECT, {'msg': '이미 참여한 방이 존재합니다.', 'id': _user.room_id})
     rooms = get_rooms(db=db)
     return rooms
 
