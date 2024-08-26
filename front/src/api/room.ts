@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 
-export type User = {
+type User = {
   username: string;
 };
 
-export type Room = {
+type Room = {
   id: number;
   status: string;
   max_players: number;
@@ -20,24 +20,23 @@ const roomInstance = axios.create({
   withCredentials: true,
 });
 
-export const getRooms = async (): Promise<Room[]> => {
-  const response: AxiosResponse<Room[]> = await roomInstance.get<Room[]>("/");
-  return response.data;
+const getRooms = () => {
+  return roomInstance.get<Room[]>("/");
 };
 
-export const createRoom = (max_players: number, game: string) => {
+const createRoom = (max_players: number, game: string) => {
   return roomInstance.post<Room>("/", {
     max_players,
     game_name: game,
   });
 };
 
-export const getRoom = async (id: number): Promise<Room> => {
+const getRoom = async (id: number): Promise<Room> => {
   const response: AxiosResponse<Room> = await roomInstance.get<Room>(`/${id}`);
   return response.data; // response.data를 Room 객체로 반환
 };
 
-export const putRoom = async (
+const putRoom = async (
   id: number,
   body: { confirm: string; updates: Record<string, string> }
 ) => {
@@ -45,6 +44,16 @@ export const putRoom = async (
   return await roomInstance.put(`/${id}?${params.toString()}`, body.updates);
 };
 
-export const deleteRoom = (id: number) => {
+const deleteRoom = (id: number) => {
   return roomInstance.delete(`/${id}`);
 };
+
+const roomApi = {
+  getRoom,
+  getRooms,
+  createRoom,
+  putRoom,
+  deleteRoom,
+};
+
+export default roomApi;
