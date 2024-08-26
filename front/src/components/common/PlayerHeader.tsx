@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useRoom from "../../hooks/useRoom";
 import NablaIcon from "../../assets/svg/NablaIcon";
 import PolygonIcon from "../../assets/svg/PolygonIcon";
+import LogoutIcon from "../../assets/svg/LogoutIcon";
 
 const PlayerHeader = () => {
   const players = ["mirae", "mirae2", "mirae3", "player123456789"];
@@ -8,6 +11,24 @@ const PlayerHeader = () => {
   const [isOpen, setOpen] = useState(true);
   const isClicked = () => {
     setOpen(!isOpen);
+  };
+
+  const { put, remove } = useRoom();
+  const navigate = useNavigate();
+
+  const params = useParams();
+
+  const roomId = Number(params.id);
+
+  const handleExitRoom = async () => {
+    try {
+      put({
+        id: roomId,
+        body: { confirm: "방나가기", updates: { key: "value" } },
+      });
+      await remove(roomId);
+      navigate("/");
+    } catch (error) {}
   };
 
   return (
@@ -34,6 +55,12 @@ const PlayerHeader = () => {
           </div>
         ))}
       </div>
+      <button
+        className='absolute right-[5px] top-[10px] text-[10px] text-primary-font-color flex flex-col items-center'
+        onClick={handleExitRoom}>
+        <LogoutIcon />
+        <p>방나가기</p>
+      </button>
       <div className='absolute left-[50%] translate-x-[-50%] bottom-0 w-[326px] h-[22px] flex flex-col items-center gap-[4px] '>
         <hr className='w-full' />
         <button onClick={isClicked}>
