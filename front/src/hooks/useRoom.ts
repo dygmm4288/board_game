@@ -48,7 +48,7 @@ const useRoom = () => {
   const { mutateAsync: put } = useMutation({
     mutationFn: (data: {
       id: number;
-      body: { confirm: string; updates: Record<string, string> };
+      body: { confirm: string; updates?: Record<string, string> };
     }) => roomApi.putRoom(data.id, data.body),
   });
 

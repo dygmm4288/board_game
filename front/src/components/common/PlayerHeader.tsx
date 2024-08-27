@@ -22,9 +22,9 @@ const PlayerHeader = () => {
 
   const handleExitRoom = async () => {
     try {
-      put({
+      await put({
         id: roomId,
-        body: { confirm: "방나가기", updates: { key: "value" } },
+        body: { confirm: "방나가기" },
       });
       navigate("/");
     } catch (error) {

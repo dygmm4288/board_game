@@ -38,7 +38,7 @@ const getRoom = async (id: number): Promise<Room> => {
 
 const putRoom = async (
   id: number,
-  body: { confirm: string; updates: Record<string, string> }
+  body: { confirm: string; updates?: Record<string, string> },
 ) => {
   const params = new URLSearchParams({ confirm: body.confirm });
   return await roomInstance.put(`/${id}?${params.toString()}`, body.updates);
