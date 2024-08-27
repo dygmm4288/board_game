@@ -26,7 +26,7 @@ const RoomModal = () => {
 
       const room = res.data;
 
-      put({
+      await put({
         id: room.id,
         body: { confirm: "참여", updates: { key: "value" } },
       });
