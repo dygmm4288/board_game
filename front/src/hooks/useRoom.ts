@@ -23,7 +23,11 @@ const useRoom = () => {
     }
   };
 
-  const { data: rooms, error: getRoomsError } = useQuery({
+  const {
+    data: rooms,
+    isPending: roomsIsPending,
+    error: getRoomsError,
+  } = useQuery({
     queryKey: [GET_ROOM],
     queryFn: () => roomApi.getRooms(),
   });
@@ -56,6 +60,7 @@ const useRoom = () => {
     create,
     put,
     rooms,
+    roomsIsPending,
     remove,
   };
 };
