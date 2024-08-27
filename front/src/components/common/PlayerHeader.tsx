@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useRoom from "../../hooks/useRoom";
+import LogoutIcon from "../../assets/svg/LogoutIcon";
 import NablaIcon from "../../assets/svg/NablaIcon";
 import PolygonIcon from "../../assets/svg/PolygonIcon";
-import LogoutIcon from "../../assets/svg/LogoutIcon";
+import useRoom from "../../hooks/useRoom";
 
 const PlayerHeader = () => {
   const players = ["mirae", "mirae2", "mirae3", "player123456789"];
@@ -13,7 +13,7 @@ const PlayerHeader = () => {
     setOpen(!isOpen);
   };
 
-  const { put, remove } = useRoom();
+  const { put } = useRoom();
   const navigate = useNavigate();
 
   const params = useParams();
@@ -26,9 +26,10 @@ const PlayerHeader = () => {
         id: roomId,
         body: { confirm: "방나가기", updates: { key: "value" } },
       });
-      await remove(roomId);
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

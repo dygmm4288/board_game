@@ -6,7 +6,7 @@ from schemas import Room
 from datetime import datetime
 from utils import debug
 from typing import Dict, Tuple
-from server.app.crud.miniville_crud import *
+from crud.miniville_crud import *
 import json
 
 def create_room(
@@ -41,6 +41,11 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
       raise_http_exception()
       
     _room.players.remove(user)
+
+    if len(_room.players) == 0 :
+      db.delete(_room)
+      return
+      
   
   #--------------------------------------
   # 게임 룰

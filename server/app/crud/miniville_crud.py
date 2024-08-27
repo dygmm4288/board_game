@@ -1,5 +1,5 @@
-from server.app.schema.miniville_metadata import establishments,landmarks
-from server.app.schema.miniville import Establishment, LandMark, PlayerInfo
+from schema.miniville_metadata import establishments,landmarks
+from schema.miniville import Establishment, LandMark, PlayerInfo
 from typing import List, Union, Tuple
 from random import randint
 from models import Room as RoomModel

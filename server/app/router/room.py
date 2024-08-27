@@ -70,10 +70,10 @@ def rest_put_room(r_id:int , confirm:str , updates: Dict[str, str] , db:Session=
     )
   
   room = put_room(confirm=confirm, _room=_room, updates=updates, user=_user, db=db)
-  debug(room)
 
   db.commit()
-  db.refresh(room)  
+  if room : 
+    db.refresh(room)  
   return room
 
 @router.delete('/{r_id}')
