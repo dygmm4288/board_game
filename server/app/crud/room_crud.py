@@ -6,7 +6,7 @@ from schemas import Room
 from datetime import datetime
 from utils import debug
 from typing import Dict, Tuple
-from server.app.crud.minivill_crud import *
+from server.app.crud.miniville_crud import *
 import json
 
 def create_room(
@@ -94,7 +94,7 @@ def init_game(room:RoomModel) :
   '''
   게임 초기화
   '''
-  from server.app.crud.minivill_crud import get_deck,set_field,shuffle_deck, init_players
+  from server.app.crud.miniville_crud import get_deck,set_field,shuffle_deck, init_players
   room.turn = 0
   room.game_status = 'dice'
 
