@@ -1,19 +1,26 @@
+import { MouseEvent } from "react";
 import PersonIcon from "../../assets/svg/PersonIcon";
 import RollIcon from "../../assets/svg/RollIcon";
 import useLoading from "../../hooks/useLoading";
 import useRoom from "../../hooks/useRoom";
 
 const RoomList = () => {
-  const { rooms, roomsIsPending, remove } = useRoom();
+  const { rooms, roomsIsPending, remove, put } = useRoom();
 
   useLoading({ isShow: roomsIsPending });
 
-  const handleDelete = async (id: number) => {
-    try {
-      await remove(id);
-    } catch (error) {
-      console.error("fail", error);
-    }
+  const handleDelete =
+    (id: number) => async (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      try {
+        await remove(id);
+      } catch (error) {
+        console.error("fail", error);
+      }
+    };
+
+  const handleClick = (id: number) => () => {
+    put({ id, body: { confirm: "참여" } });
   };
 
   return (
@@ -21,7 +28,8 @@ const RoomList = () => {
       {rooms?.data?.map((room) => (
         <li
           key={room.id}
-          className='w-[150px] h-[80px] bg-white border border-solid border-primary-font-color rounded-10 pt-[5px] pl-[12px] text-[14px]'>
+          className='w-[150px] h-[80px] bg-white border border-solid border-primary-font-color rounded-10 pt-[5px] pl-[12px] text-[14px] cursor-pointer'
+          onClick={handleClick(room.id)}>
           <h3 className='text-[16px]'>room number {room.id}</h3>
           <div className='flex flex-col justify-center text-primary-font-color'>
             <div className='flex flex-row gap-[4px]'>
@@ -33,7 +41,7 @@ const RoomList = () => {
               <p>{room.max_players}</p>
             </div>
           </div>
-          <button onClick={() => handleDelete(room.id)}>지우기</button>
+          <button onClick={handleDelete(room.id)}>지우기</button>
         </li>
       ))}
     </ul>

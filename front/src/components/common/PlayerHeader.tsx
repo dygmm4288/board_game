@@ -1,24 +1,23 @@
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LogoutIcon from "../../assets/svg/LogoutIcon";
 import NablaIcon from "../../assets/svg/NablaIcon";
 import PolygonIcon from "../../assets/svg/PolygonIcon";
+import useLoading from "../../hooks/useLoading";
 import useRoom from "../../hooks/useRoom";
+import useToggle from "../../hooks/useToggle";
+import useMiniville from "../../zustand/miniville";
 
 const PlayerHeader = () => {
-  const players = ["mirae", "mirae2", "mirae3", "player123456789"];
+  const { players } = useMiniville();
+  const [isOpen, handleToggleOpen] = useToggle(true);
+  const { put, putIsPanding } = useRoom();
 
-  const [isOpen, setOpen] = useState(true);
-  const isClicked = () => {
-    setOpen(!isOpen);
-  };
-
-  const { put } = useRoom();
   const navigate = useNavigate();
-
   const params = useParams();
 
   const roomId = Number(params.id);
+
+  useLoading({ isShow: putIsPanding });
 
   const handleExitRoom = async () => {
     try {
@@ -40,8 +39,10 @@ const PlayerHeader = () => {
       }>
       <div className='w-[250px] mx-auto flex justify-between'>
         {players.map((player) => (
-          <div key={player} className='w-[60px] flex flex-col items-center'>
-            <p className='w-full text-center text-14 truncate ...'>{player}</p>
+          <div key={player.id} className='w-[60px] flex flex-col items-center'>
+            <p className='w-full text-center text-14 truncate ...'>
+              {player.name}
+            </p>
             <p className='text-14 text-[#E18F00]'>3$</p>
             {isOpen ? (
               ""
@@ -64,7 +65,7 @@ const PlayerHeader = () => {
       </button>
       <div className='absolute left-[50%] translate-x-[-50%] bottom-0 w-[326px] h-[22px] flex flex-col items-center gap-[4px] '>
         <hr className='w-full' />
-        <button onClick={isClicked}>
+        <button onClick={handleToggleOpen}>
           {isOpen ? <NablaIcon /> : <PolygonIcon />}
         </button>
       </div>

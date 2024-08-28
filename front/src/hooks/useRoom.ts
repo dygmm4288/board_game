@@ -45,11 +45,12 @@ const useRoom = () => {
     retry: false,
   });
 
-  const { mutateAsync: put } = useMutation({
+  const { mutateAsync: put, isPending: putIsPanding } = useMutation({
     mutationFn: (data: {
       id: number;
       body: { confirm: string; updates?: Record<string, string> };
     }) => roomApi.putRoom(data.id, data.body),
+    onError,
   });
 
   useEffect(() => {
@@ -61,6 +62,7 @@ const useRoom = () => {
     put,
     rooms,
     roomsIsPending,
+    putIsPanding,
     remove,
   };
 };
