@@ -1,15 +1,18 @@
 import axios, { AxiosResponse } from "axios";
+import { MinivilleState } from "../zustand/miniville";
 
 type User = {
   username: string;
 };
 
-type Room = {
+export type Room = {
   id: number;
+  game_name: string;
   status: string;
+  game_status: MinivilleState | null;
   max_players: number;
-  game: string;
   players: User[];
+  turn: number;
 };
 
 const roomInstance = axios.create({

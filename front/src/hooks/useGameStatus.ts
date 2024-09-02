@@ -1,10 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import useMiniville, { useMinivilleRoom } from "../zustand/miniville";
 
 const useGameStatus = (id: string | undefined) => {
-  const queryClient = useQueryClient();
-  const url = `http://localhost:8000/api/room/sse/${id}`;
+  const url = import.meta.env.VITE_API_URL + `/room/sse/${id}`;
   const { setter } = useMiniville();
   const { setter: roomSetter } = useMinivilleRoom();
 
@@ -16,25 +14,16 @@ const useGameStatus = (id: string | undefined) => {
       const data = JSON.parse(event.data);
 
       if (data && data.gameStatus) {
-        queryClient.setQueryData(
-          ["SSE_DATA"],
-          () => setter(data.gameStatus),
-          data,
-        );
+        setter(data);
       } else {
-        queryClient.setQueryData(["SSE_DATA"], () => roomSetter(data));
+        roomSetter(data);
       }
 
       return () => {
         eventSource.close();
       };
     };
-  }, [id, queryClient]);
-
-  return useQuery({
-    queryKey: ["SSE_DATA"],
-    enabled: false,
-  });
+  }, [id]);
 };
 
 export default useGameStatus;

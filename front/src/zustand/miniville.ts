@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { Room } from "../api/room";
 import { Establishment } from "../miniville_meta_data/establishments/types";
 import { Landmark } from "../miniville_meta_data/landmarks/types";
 
@@ -10,7 +11,7 @@ interface PlayerInfo {
   name: string;
 }
 
-interface MinivilleState {
+export interface MinivilleState {
   field16: number[];
   field712: number[];
   fieldLandmarks: number[];
@@ -19,15 +20,8 @@ interface MinivilleState {
 
   setter: (state: MinivilleState) => void;
 }
-interface MinivilleRoomState {
-  game_name: string;
-  game_status: MinivilleState | null;
-  max_players: number;
-  players: string[];
-  status: string;
-  turn: number;
-
-  setter: (state: MinivilleRoomState) => void;
+interface MinivilleRoomState extends Room {
+  setter: (state: Room) => void;
 }
 
 const useMiniville = create<MinivilleState>()((set) => ({
@@ -39,6 +33,7 @@ const useMiniville = create<MinivilleState>()((set) => ({
 }));
 
 export const useMinivilleRoom = create<MinivilleRoomState>()((set) => ({
+  id: -1,
   game_name: "",
   game_status: null,
   max_players: 0,

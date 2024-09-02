@@ -59,8 +59,18 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
       status_code=status.HTTP_404_NOT_FOUND,
       detail="잘못된 접근입니다"
     )
-
-  return room
+  room_data = {
+        "id": room.id,
+        "status": room.status,
+        "max_players": room.max_players,
+        "created_at": room.created_at,
+        "game_name": room.game_name,
+        "game_json": room.game_json,
+        "game_status": room.game_status,
+        "turn": room.turn,
+        "players": [player.username for player in room.players]  # 플레이어 username 직렬화
+    }
+  return room_data
 
 @router.get('/sse/{r_id}')
 async def sse_room_updates(r_id: str):
