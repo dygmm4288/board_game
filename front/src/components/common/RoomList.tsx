@@ -5,7 +5,7 @@ import useLoading from "../../hooks/useLoading";
 import useRoom from "../../hooks/useRoom";
 
 const RoomList = () => {
-  const { rooms, roomsIsPending, remove, put } = useRoom();
+  const { rooms, roomsIsPending, remove, put } = useRoom({ isRoomFetch: true });
 
   useLoading({ isShow: roomsIsPending });
 

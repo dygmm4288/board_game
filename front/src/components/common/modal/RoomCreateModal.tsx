@@ -15,7 +15,7 @@ const RoomModal = () => {
     setSelectedGame(e.target.value);
   };
 
-  const { create, put } = useRoom();
+  const { create, put } = useRoom({});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

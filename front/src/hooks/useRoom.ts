@@ -8,7 +8,7 @@ import useAuth from "../zustand/auth";
 
 const GET_ROOM = "room/get";
 
-const useRoom = () => {
+const useRoom = ({ isRoomFetch = false }: { isRoomFetch?: boolean }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ const useRoom = () => {
   } = useQuery({
     queryKey: [GET_ROOM],
     queryFn: () => roomApi.getRooms(),
+    enabled: isRoomFetch,
   });
 
   const { mutateAsync: create } = useMutation({

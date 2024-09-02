@@ -13,7 +13,10 @@ const useLoading = ({
 
   useEffect(() => {
     if (isShow) {
-      show({ component: <LoadingSpinner content={content} /> });
+      show({
+        component: <LoadingSpinner content={content} />,
+        isCloseClick: false,
+      });
       return;
     }
 

@@ -10,7 +10,7 @@ import useMiniville from "../../zustand/miniville";
 const PlayerHeader = () => {
   const { players } = useMiniville();
   const [isOpen, handleToggleOpen] = useToggle(true);
-  const { put, putIsPanding } = useRoom();
+  const { put, putIsPanding } = useRoom({});
 
   const navigate = useNavigate();
   const params = useParams();
