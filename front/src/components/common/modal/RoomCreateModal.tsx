@@ -15,7 +15,7 @@ const RoomModal = () => {
     setSelectedGame(e.target.value);
   };
 
-  const { create, put } = useRoom();
+  const { create, put } = useRoom({});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ const RoomModal = () => {
         id: room.id,
         body: { confirm: "참여", updates: { key: "value" } },
       });
-      navigate("/miniville_room/${errorMsg.id}");
+      navigate(`/miniville_room/${room.id}`);
     } catch (error) {
       console.error("Failed to create room:", error);
     }

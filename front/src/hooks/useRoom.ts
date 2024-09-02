@@ -6,9 +6,16 @@ import roomApi from "../api/room";
 import { getErrorMsg } from "../util/error";
 import useAuth from "../zustand/auth";
 
+const GET_ROOMS = "rooms/get";
 const GET_ROOM = "room/get";
 
-const useRoom = () => {
+const useRoom = ({
+  isRoomsFetch = false,
+  id,
+}: {
+  isRoomsFetch?: boolean;
+  id?: number;
+}) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -28,8 +35,16 @@ const useRoom = () => {
     isPending: roomsIsPending,
     error: getRoomsError,
   } = useQuery({
-    queryKey: [GET_ROOM],
+    queryKey: [GET_ROOMS],
     queryFn: () => roomApi.getRooms(),
+    enabled: isRoomsFetch,
+  });
+
+  const { data: room, error: getRoomError } = useQuery({
+    queryKey: [GET_ROOM],
+    queryFn: () => roomApi.getRoom(id!),
+    enabled: !!id,
+    retry: false,
   });
 
   const { mutateAsync: create } = useMutation({
@@ -45,23 +60,27 @@ const useRoom = () => {
     retry: false,
   });
 
-  const { mutateAsync: put } = useMutation({
+  const { mutateAsync: put, isPending: putIsPanding } = useMutation({
     mutationFn: (data: {
       id: number;
-      body: { confirm: string; updates: Record<string, string> };
+      body: { confirm: string; updates?: Record<string, string> };
     }) => roomApi.putRoom(data.id, data.body),
+    onError,
   });
 
   useEffect(() => {
-    if (getRoomsError) onError(getRoomsError as AxiosError);
-  }, [getRoomsError]);
+    if (getRoomsError || getRoomError)
+      onError((getRoomsError || getRoomError) as AxiosError);
+  }, [getRoomsError, getRoomError]);
 
   return {
     create,
     put,
     rooms,
     roomsIsPending,
+    putIsPanding,
     remove,
+    room,
   };
 };
 
