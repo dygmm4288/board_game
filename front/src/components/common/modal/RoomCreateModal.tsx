@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
 import { cn } from "../../../util/cn";
@@ -8,6 +9,7 @@ const RoomModal = () => {
   const [totalMember, setTotalMember] = useState(2);
 
   const [selectedGame, setSelectedGame] = useState("miniville"); // 기본값 설정
+  const navigate = useNavigate();
 
   const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGame(e.target.value);
@@ -26,10 +28,11 @@ const RoomModal = () => {
 
       const room = res.data;
 
-      put({
+      await put({
         id: room.id,
         body: { confirm: "참여", updates: { key: "value" } },
       });
+      navigate("/miniville_room/${errorMsg.id}");
     } catch (error) {
       console.error("Failed to create room:", error);
     }

@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import FirstVisit from "../components/FirstVisit";
 import Header from "../components/Header";
+import { Modal } from "../components/common/modal/Modal";
 import useAuth from "../zustand/auth";
 
 const HomeLayout = () => {
@@ -11,6 +12,7 @@ const HomeLayout = () => {
     <>
       <Header />
       <Outlet />
+      <Modal />
     </>
   );
 };
