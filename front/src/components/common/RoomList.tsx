@@ -4,17 +4,9 @@ import useLoading from "../../hooks/useLoading";
 import useRoom from "../../hooks/useRoom";
 
 const RoomList = () => {
-  const { rooms, roomsIsPending, remove } = useRoom();
+  const { rooms, roomsIsPending } = useRoom();
 
   useLoading({ isShow: roomsIsPending });
-
-  const handleDelete = async (id: number) => {
-    try {
-      await remove(id);
-    } catch (error) {
-      console.error("fail", error);
-    }
-  };
 
   return (
     <ul className='w-[315px] flex flex-wrap justify-between gap-y-[20px]'>
@@ -33,7 +25,6 @@ const RoomList = () => {
               <p>{room.max_players}</p>
             </div>
           </div>
-          <button onClick={() => handleDelete(room.id)}>지우기</button>
         </li>
       ))}
     </ul>
