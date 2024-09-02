@@ -5,10 +5,11 @@ import PolygonIcon from "../../assets/svg/PolygonIcon";
 import useLoading from "../../hooks/useLoading";
 import useRoom from "../../hooks/useRoom";
 import useToggle from "../../hooks/useToggle";
-import useMiniville from "../../zustand/miniville";
+import useMiniville, { useMinivilleRoom } from "../../zustand/miniville";
 
 const PlayerHeader = () => {
-  const { players } = useMiniville();
+  const { players: minivillePlayers } = useMiniville();
+  const { players: roomPlayers } = useMinivilleRoom();
   const [isOpen, handleToggleOpen] = useToggle(true);
   const { put, putIsPanding } = useRoom({});
 
@@ -30,6 +31,7 @@ const PlayerHeader = () => {
       console.error(error);
     }
   };
+  const players = roomPlayers || minivillePlayers;
 
   return (
     <header
@@ -39,10 +41,10 @@ const PlayerHeader = () => {
       }>
       <div className='w-[250px] mx-auto flex justify-between'>
         {players.map((player) => (
-          <div key={player.id} className='w-[60px] flex flex-col items-center'>
-            <p className='w-full text-center text-14 truncate ...'>
-              {player.name}
-            </p>
+          <div
+            key={`player:${player}`}
+            className='w-[60px] flex flex-col items-center'>
+            <p className='w-full text-center text-14 truncate ...'>{player}</p>
             <p className='text-14 text-[#E18F00]'>3$</p>
             {isOpen ? (
               ""

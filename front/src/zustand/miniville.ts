@@ -19,12 +19,32 @@ interface MinivilleState {
 
   setter: (state: MinivilleState) => void;
 }
+interface MinivilleRoomState {
+  game_name: string;
+  game_status: MinivilleState | null;
+  max_players: number;
+  players: string[];
+  status: string;
+  turn: number;
+
+  setter: (state: MinivilleRoomState) => void;
+}
 
 const useMiniville = create<MinivilleState>()((set) => ({
   field16: [],
   field712: [],
   fieldLandmarks: [],
   players: [],
+  setter: (newState) => set({ ...newState }),
+}));
+
+export const useMinivilleRoom = create<MinivilleRoomState>()((set) => ({
+  game_name: "",
+  game_status: null,
+  max_players: 0,
+  status: "",
+  players: [],
+  turn: 0,
   setter: (newState) => set({ ...newState }),
 }));
 

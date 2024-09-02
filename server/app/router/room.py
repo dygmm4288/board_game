@@ -113,7 +113,8 @@ def rest_put_room(r_id:int , confirm:str ,background_tasks:BackgroundTasks, upda
         }
     print('here', data)
     debug(data)
-    background_tasks.add_task(notify_room_subscribers, r_id, data)
+    debug(subscribers)
+    background_tasks.add_task(notify_room_subscribers, str(r_id), data)
   return room
 
 @router.delete('/{r_id}')
