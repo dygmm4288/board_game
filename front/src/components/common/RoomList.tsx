@@ -1,4 +1,5 @@
 import { MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import PersonIcon from "../../assets/svg/PersonIcon";
 import RollIcon from "../../assets/svg/RollIcon";
 import useLoading from "../../hooks/useLoading";
@@ -7,6 +8,7 @@ import useRoom from "../../hooks/useRoom";
 const RoomList = () => {
   const { rooms, roomsIsPending, remove, put } = useRoom({ isRoomFetch: true });
 
+  const navigate = useNavigate();
   useLoading({ isShow: roomsIsPending });
 
   const handleDelete =
@@ -19,8 +21,9 @@ const RoomList = () => {
       }
     };
 
-  const handleClick = (id: number) => () => {
-    put({ id, body: { confirm: "참여" } });
+  const handleClick = (id: number) => async () => {
+    await put({ id, body: { confirm: "참여" } });
+    navigate(`/miniville_room/${id}`);
   };
 
   return (
