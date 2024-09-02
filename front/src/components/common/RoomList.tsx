@@ -41,7 +41,7 @@ const RoomList = () => {
               <p>{room.max_players}</p>
             </div>
           </div>
-          <button onClick={handleDelete(room.id)}>지우기</button>
+          <button onClick={() => handleDelete(room.id)}>지우기</button>
         </li>
       ))}
     </ul>
