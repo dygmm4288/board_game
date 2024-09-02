@@ -44,7 +44,9 @@ const PlayerHeader = () => {
           <div
             key={`player:${player}`}
             className='w-[60px] flex flex-col items-center'>
-            <p className='w-full text-center text-14 truncate ...'>{player}</p>
+            <p className='w-full text-center text-14 truncate ...'>
+              {player.username}
+            </p>
             <p className='text-14 text-[#E18F00]'>3$</p>
             {isOpen ? (
               ""

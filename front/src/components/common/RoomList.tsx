@@ -39,7 +39,7 @@ const RoomList = () => {
           <div className='flex flex-col justify-center text-primary-font-color'>
             <div className='flex flex-row gap-[4px]'>
               <RollIcon />
-              <p>{room.game}</p>
+              <p>{room.game_name}</p>
             </div>
             <div className='flex flex-row gap-[6px]'>
               <PersonIcon />
