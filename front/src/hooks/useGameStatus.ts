@@ -3,7 +3,7 @@ import useMiniville, { useMinivilleRoom } from "../zustand/miniville";
 
 const useGameStatus = (id: string | undefined) => {
   const url = import.meta.env.VITE_API_URL + `/room/sse/${id}`;
-  const { setter } = useMiniville();
+  const { setter: gameSetter } = useMiniville();
   const { setter: roomSetter } = useMinivilleRoom();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const useGameStatus = (id: string | undefined) => {
       const data = JSON.parse(event.data);
 
       if (data && data.gameStatus) {
-        setter(data);
+        gameSetter(data);
       } else {
         roomSetter(data);
       }

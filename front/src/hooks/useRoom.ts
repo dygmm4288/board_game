@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import roomApi from "../api/room";
 import { getErrorMsg } from "../util/error";
@@ -18,6 +18,7 @@ const useRoom = ({
 }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const [queryError, setQueryError] = useState<AxiosError | null>(null);
 
   const onError = (err: AxiosError) => {
     const errorMsg = getErrorMsg(err);
@@ -28,6 +29,8 @@ const useRoom = ({
       const goto = `/miniville_room/${errorMsg.id}`;
       navigate(goto);
     }
+
+    if (queryError) setQueryError(null);
   };
 
   const {
@@ -69,8 +72,11 @@ const useRoom = ({
   });
 
   useEffect(() => {
-    if (getRoomsError || getRoomError)
-      onError((getRoomsError || getRoomError) as AxiosError);
+    if (getRoomsError || getRoomError) {
+      const err = getRoomsError || getRoomError;
+      onError(err as AxiosError);
+      setQueryError(err as AxiosError);
+    }
   }, [getRoomsError, getRoomError]);
 
   const handleStartGame = () => {
