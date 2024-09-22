@@ -99,7 +99,6 @@ def init_game(room:RoomModel) :
   '''
   게임 초기화
   '''
-  from server.app.crud.miniville_crud import get_deck,set_field,shuffle_deck, init_players
   room.turn = 0
   room.game_status = 'dice'
 

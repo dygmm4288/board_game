@@ -73,6 +73,16 @@ const useRoom = ({
       onError((getRoomsError || getRoomError) as AxiosError);
   }, [getRoomsError, getRoomError]);
 
+  const handleStartGame = () => {
+    if (!id) {
+      console.error("id가 없습니다.");
+      return;
+    }
+    return put({ id, body: { confirm: "게임시작" } });
+  };
+
+  const is_room_waiting = room && room.status === "waiting";
+
   return {
     create,
     put,
@@ -81,6 +91,8 @@ const useRoom = ({
     putIsPanding,
     remove,
     room,
+    is_room_waiting,
+    handleStartGame,
   };
 };
 
