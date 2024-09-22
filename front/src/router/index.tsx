@@ -15,13 +15,11 @@ const router = createBrowserRouter(
     <>
       <Route path='/' element={<HomeLayout />}>
         <Route path='/' element={<Home />} />
+        <Route path='/miniville_room/:id' element={<MinivilleRoom />} />
       </Route>
       <Route>
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
-      </Route>
-      <Route>
-        <Route path='/miniville_room/:id' element={<MinivilleRoom />} />
       </Route>
     </>,
   ),
