@@ -12,9 +12,9 @@ interface PlayerInfo {
 }
 
 export interface MinivilleState {
-  field16: number[];
-  field712: number[];
-  fieldLandmarks: number[];
+  field_16: { [key: number]: number };
+  field_712: { [key: number]: number };
+  field_landmarks: number[];
 
   players: PlayerInfo[];
 
@@ -25,17 +25,20 @@ interface MinivilleRoomState extends Room {
 }
 
 const useMiniville = create<MinivilleState>()((set) => ({
-  field16: [],
-  field712: [],
-  fieldLandmarks: [],
+  field_16: [],
+  field_712: [],
+  field_landmarks: [],
   players: [],
-  setter: (newState) => set({ ...newState }),
+  setter: (newState) => {
+    set({ ...newState });
+  },
 }));
 
 export const useMinivilleRoom = create<MinivilleRoomState>()((set) => ({
   id: -1,
   game_name: "",
   game_status: null,
+  game_json: "",
   max_players: 0,
   status: "",
   players: [],

@@ -74,6 +74,7 @@ def rest_get_room(r_id: str, db:Session=Depends(get_db), _user:User=Depends(get_
 
 @router.get('/sse/{r_id}')
 async def sse_room_updates(r_id: str):
+    debug(r_id)
     return StreamingResponse(event_stream(r_id), media_type="text/event-stream")
 
 @router.post('/')    

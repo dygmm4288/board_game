@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import roomApi from "../api/room";
 import { getErrorMsg } from "../util/error";
 import useAuth from "../zustand/auth";
+import useMiniville, { useMinivilleRoom } from "../zustand/miniville";
 
 const GET_ROOMS = "rooms/get";
 const GET_ROOM = "room/get";
@@ -19,6 +20,8 @@ const useRoom = ({
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [queryError, setQueryError] = useState<AxiosError | null>(null);
+  const { setter } = useMinivilleRoom();
+  const { setter: gameSetter } = useMiniville();
 
   const onError = (err: AxiosError) => {
     const errorMsg = getErrorMsg(err);
@@ -78,6 +81,16 @@ const useRoom = ({
       setQueryError(err as AxiosError);
     }
   }, [getRoomsError, getRoomError]);
+
+  useEffect(() => {
+    if (!room) return;
+    setter(room);
+    if (room.game_json) {
+      gameSetter(JSON.parse(room.game_json));
+    }
+  }, [room]);
+
+  useEffect(() => {}, [room]);
 
   const handleStartGame = () => {
     if (!id) {

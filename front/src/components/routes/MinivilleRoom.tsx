@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useGameStatus from "../../hooks/useGameStatus";
+import useGameJson from "../../hooks/useGameStatus";
 import useRoom from "../../hooks/useRoom";
-import { useMinivilleRoom } from "../../zustand/miniville";
 import PlayerHeader from "../common/PlayerHeader";
 import CardSection from "../section/CardSection";
 import GameLogSection from "../section/GameLogSection";
@@ -11,17 +9,10 @@ import RollSection from "../section/RollSection";
 const MinivilleRoom = () => {
   const params = useParams();
   const { id } = params;
-  useGameStatus(id);
-  const { room, handleStartGame, is_room_waiting } = useRoom({
+  useGameJson(id);
+  const { handleStartGame, is_room_waiting } = useRoom({
     id: Number(id),
   });
-  const { setter } = useMinivilleRoom();
-
-  useEffect(() => {
-    if (room) {
-      setter(room);
-    }
-  }, [room]);
 
   return (
     <div className='relative h-screen'>

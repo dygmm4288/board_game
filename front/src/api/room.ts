@@ -6,6 +6,7 @@ export type Room = {
   game_name: string;
   status: string;
   game_status: MinivilleState | null;
+  game_json: string;
   max_players: number;
   players: string[];
   turn: number;
@@ -37,7 +38,7 @@ const getRoom = async (id: number): Promise<Room> => {
 
 const putRoom = async (
   id: number,
-  body: { confirm: string; updates?: Record<string, string> }
+  body: { confirm: string; updates?: Record<string, string> },
 ) => {
   const params = new URLSearchParams({ confirm: body.confirm });
   return await roomInstance.put(`/${id}?${params.toString()}`, body.updates);

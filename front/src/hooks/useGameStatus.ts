@@ -1,29 +1,29 @@
 import { useEffect } from "react";
-import useMiniville, { useMinivilleRoom } from "../zustand/miniville";
+import useMiniville from "../zustand/miniville";
 
-const useGameStatus = (id: string | undefined) => {
+const useGameJson = (id: string | undefined) => {
   const url = import.meta.env.VITE_API_URL + `/room/sse/${id}`;
   const { setter: gameSetter } = useMiniville();
-  const { setter: roomSetter } = useMinivilleRoom();
+
+  const handleOnMessage = (event: MessageEvent) => {
+    const data = JSON.parse(event.data);
+
+    if (data && data.game_json) {
+      gameSetter(data);
+    }
+  };
 
   useEffect(() => {
     if (!id) return;
-    const eventSource = new EventSource(url);
+    const eventSource = new EventSource(url, { withCredentials: true });
 
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+    eventSource.addEventListener("message", handleOnMessage);
 
-      if (data && data.gameStatus) {
-        gameSetter(data);
-      } else {
-        roomSetter(data);
-      }
-
-      return () => {
-        eventSource.close();
-      };
+    return () => {
+      if (eventSource.OPEN || eventSource.CONNECTING) eventSource.close();
+      eventSource.removeEventListener("message", handleOnMessage);
     };
   }, [id]);
 };
 
-export default useGameStatus;
+export default useGameJson;
