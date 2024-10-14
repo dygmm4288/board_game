@@ -2,7 +2,7 @@
 // Types for landmarks.
 //
 
-import type { Expansion, Version } from '../types';
+import type { Expansion, Version } from "../../types";
 
 /**
  * Interface for landmark metadata.

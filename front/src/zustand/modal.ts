@@ -3,6 +3,7 @@ import { create } from "zustand";
 type ShowProps = {
   component: React.ReactNode;
   isCloseEscKey?: boolean;
+  isCloseClick?: boolean;
 };
 
 type ShowType = (props: ShowProps) => void;
@@ -17,8 +18,8 @@ interface ModalState extends ShowProps {
 
 const useModal = create<ModalState>()((set) => ({
   isOpen: false,
-  show: ({ component, isCloseEscKey = false }) =>
-    set(() => ({ isOpen: true, component, isCloseEscKey })),
+  show: ({ component, isCloseClick = true, isCloseEscKey = false }) =>
+    set(() => ({ isOpen: true, component, isCloseEscKey, isCloseClick })),
   hide: () => set(() => ({ isOpen: false })),
   component: null,
 }));

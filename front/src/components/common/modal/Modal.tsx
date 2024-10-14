@@ -2,7 +2,7 @@ import { KeyboardEvent } from "react";
 import useModal from "../../../zustand/modal";
 
 export const Modal = () => {
-  const { isOpen, hide, component, isCloseEscKey } = useModal();
+  const { isOpen, hide, component, isCloseEscKey, isCloseClick } = useModal();
 
   if (!isOpen) return null;
 
@@ -19,7 +19,7 @@ export const Modal = () => {
   return (
     <div
       className='w-screen h-screen flex justify-center items-center  z-50 absolute inset-0'
-      onClick={() => hide()}
+      onClick={() => isCloseClick && hide()}
       onKeyDown={handleKeyDown}>
       <div
         className='z-10'

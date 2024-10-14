@@ -8,16 +8,15 @@ import { Expansion, Version } from "../../types";
 export const SushiBar: Establishment = {
   _id: 0,
   version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "스시바",
-  description:
-    'If you have a "Harbor", take 3 coins from the player who just rolled.',
+  expansion: Expansion.Base,
+  name: "초밥집",
+  description: "방금 주사위를 굴린 플레이어로부터 동전 3개를 가져옵니다.",
   cost: 2,
-  earn: 3, // only if player has Harbor
+  earn: 3,
   rolls: [1],
   color: EstColor.Red,
   type: EstType.Cup,
-  _initial: 6,
+  _initial: 5,
 };
 
 export const WheatField: Establishment = {
@@ -25,571 +24,269 @@ export const WheatField: Establishment = {
   version: Version.MK1,
   expansion: Expansion.Base,
   name: "밀밭",
-  description: "Get 1 coin from the bank.",
+  description: "은행으로부터 동전 1개를 받습니다.",
   cost: 1,
   earn: 1,
-  rolls: [1],
+  rolls: [1, 2],
   color: EstColor.Blue,
   type: EstType.Wheat,
-  _initial: 6,
-};
-
-export const Ranch: Establishment = {
-  _id: 2,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "농장",
-  description: "Get 1 coin from the bank.",
-  cost: 1,
-  earn: 1,
-  rolls: [2],
-  color: EstColor.Blue,
-  type: EstType.Animal,
-  _initial: 6,
-};
-
-export const GeneralStore: Establishment = {
-  _id: 3,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "잡화점",
-  description:
-    "If you have less than 2 landmarks built, get 2 coins from the bank.",
-  cost: 0,
-  earn: 2, // only if player has < 2 landmarks built
-  rolls: [2],
-  color: EstColor.Green,
-  type: EstType.Shop,
-  _initial: 6,
-};
-
-export const Bakery: Establishment = {
-  _id: 4,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "빵집",
-  description: "Get 1 coin from the bank.",
-  cost: 1,
-  earn: 1,
-  rolls: [2, 3],
-  color: EstColor.Green,
-  type: EstType.Shop,
-  _initial: 6,
-};
-
-export const Cafe: Establishment = {
-  _id: 5,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "카페",
-  description: "Take 1 coin from the player who just rolled.",
-  cost: 2,
-  earn: 1,
-  rolls: [3],
-  color: EstColor.Red,
-  type: EstType.Cup,
-  _initial: 6,
-};
-
-export const CornField: Establishment = {
-  _id: 6,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "옥수수밭",
-  description:
-    "If you have less than 2 landmarks built, get 1 coin from the bank.",
-  cost: 2,
-  earn: 1, // only if player has < 2 landmarks built
-  rolls: [3, 4],
-  color: EstColor.Blue,
-  type: EstType.Wheat,
-  _initial: 6,
-};
-
-export const FlowerGarden: Establishment = {
-  _id: 7,
-  version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "꽃밭",
-  description: "Get 1 coin from the bank.",
-  cost: 2,
-  earn: 1,
-  rolls: [4],
-  color: EstColor.Blue,
-  type: EstType.Wheat,
-  _initial: 6,
-};
-
-export const ConvenienceStore: Establishment = {
-  _id: 8,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "편의점",
-  description: "Get 3 coins from the bank.",
-  cost: 2,
-  earn: 3,
-  rolls: [4],
-  color: EstColor.Green,
-  type: EstType.Shop,
-  _initial: 6,
-};
-
-export const DemolitionCompany: Establishment = {
-  _id: 9,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "철거회사",
-  description:
-    "If possible, you must demolish one of your built landmarks. When you do, get 8 coins from the bank.",
-  cost: 2,
-  earn: 8, // only if demolished a landmark
-  rolls: [4],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const FrenchRestaurant: Establishment = {
-  _id: 10,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "프렌치레스토랑",
-  description:
-    "If the player who just rolled has 2 or more landmarks built, take 5 coins from them.",
-  cost: 3,
-  earn: 5, // only if player who rolled has >= 2 landmarks built
-  rolls: [5],
-  color: EstColor.Red,
-  type: EstType.Cup,
-  _initial: 6,
-};
-
-export const Forest: Establishment = {
-  _id: 11,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "숲",
-  description: "Get 1 coin from the bank.",
-  cost: 3,
-  earn: 1,
-  rolls: [5],
-  color: EstColor.Blue,
-  type: EstType.Gear,
-  _initial: 6,
-};
-
-export const LoanOffice: Establishment = {
-  _id: 12,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "대출사무소",
-  description: "Pay 2 coins to the bank.",
-  cost: -5,
-  earn: -2,
-  rolls: [5, 6],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const FlowerShop: Establishment = {
-  _id: 13,
-  version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "꽃집",
-  description:
-    'Get 1 coin from the bank for each "Flower Garden" establishment you own.',
-  cost: 1,
-  earn: 1, // coins earned per `FlowerGarden` establishment
-  rolls: [6],
-  color: EstColor.Green,
-  type: EstType.Shop,
-  _initial: 6,
-};
-
-export const PizzaJoint: Establishment = {
-  _id: 14,
-  version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "피자가게",
-  description: "Take 1 coin from the player who just rolled.",
-  cost: 1,
-  earn: 1,
-  rolls: [7],
-  color: EstColor.Red,
-  type: EstType.Cup,
-  _initial: 6,
+  _initial: 5,
 };
 
 export const Vineyard: Establishment = {
-  _id: 15,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "포도원",
-  description: "Get 3 coins from the bank.",
-  cost: 3,
-  earn: 3,
-  rolls: [7],
-  color: EstColor.Blue,
-  type: EstType.Wheat,
-  _initial: 6,
-};
-
-export const CheeseFactory: Establishment = {
-  _id: 16,
+  _id: 2,
   version: Version.MK1,
   expansion: Expansion.Base,
-  name: "치즈공장",
-  description:
-    "Get 3 coins from the bank for each " +
-    EstType.Animal +
-    " establishment you own.",
-  cost: 5,
-  earn: 3, // coins earned per Animal establishment
-  rolls: [7],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
+  name: "포도밭",
+  description: "은행으로부터 동전 2개를 받습니다.",
+  cost: 1,
+  earn: 2,
+  rolls: [2],
+  color: EstColor.Blue,
+  type: EstType.Fruit,
+  _initial: 5,
 };
 
-export const HamburgerStand: Establishment = {
-  _id: 17,
+export const Bakery: Establishment = {
+  _id: 3,
   version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "햄버거가판대",
-  description: "Take 1 coin from the player who just rolled.",
+  expansion: Expansion.Base,
+  name: "빵집",
+  description: "은행으로부터 동전 2개를 받습니다.",
   cost: 1,
-  earn: 1,
-  rolls: [8],
+  earn: 2,
+  rolls: [2, 3],
+  color: EstColor.Green,
+  type: EstType.Shop,
+  _initial: 5,
+};
+
+export const Cafe: Establishment = {
+  _id: 4,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "카페",
+  description: "방금 주사위를 굴린 플레이어로부터 동전 2개를 가져옵니다.",
+  cost: 1,
+  earn: 2,
+  rolls: [3],
   color: EstColor.Red,
   type: EstType.Cup,
-  _initial: 6,
+  _initial: 5,
 };
 
-export const MackerelBoat: Establishment = {
-  _id: 18,
+export const FlowerGarden: Establishment = {
+  _id: 5,
   version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "고등어배",
-  description: 'If you have a "Harbor", get 3 coins from the bank.',
+  expansion: Expansion.Base,
+  name: "꽃밭",
+  description: "은행으로부터 동전 2개를 받습니다.",
   cost: 2,
-  earn: 3, // only if player has Harbor
-  rolls: [8],
+  earn: 2,
+  rolls: [4],
   color: EstColor.Blue,
-  type: null,
-  _initial: 6,
+  type: EstType.None,
+  _initial: 5,
 };
 
-export const FurnitureFactory: Establishment = {
-  _id: 19,
+export const ConvenienceStore: Establishment = {
+  _id: 6,
   version: Version.MK1,
   expansion: Expansion.Base,
-  name: "가구공장",
-  description:
-    "Get 3 coins from the bank for each " +
-    EstType.Gear +
-    " establishment you own.",
-  cost: 3,
-  earn: 3, // coins earned per Gear establishment
-  rolls: [8],
+  name: "편의점",
+  description: "은행으로부터 동전 3개를 받습니다.",
+  cost: 1,
+  earn: 3,
+  rolls: [4],
   color: EstColor.Green,
-  type: null,
-  _initial: 6,
+  type: EstType.Shop,
+  _initial: 5,
 };
 
-export const Mine: Establishment = {
-  _id: 20,
+export const Forest: Establishment = {
+  _id: 7,
   version: Version.MK1,
   expansion: Expansion.Base,
-  name: "광산",
-  description: "Get 5 coins from the bank.",
-  cost: 6,
-  earn: 5,
-  rolls: [9],
+  name: "숲",
+  description: "은행으로부터 동전 2개를 받습니다.",
+  cost: 3,
+  earn: 2,
+  rolls: [5],
   color: EstColor.Blue,
   type: EstType.Gear,
-  _initial: 6,
+  _initial: 5,
 };
 
-export const Winery: Establishment = {
-  _id: 21,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "포도주양조장",
-  description:
-    'Get 6 coins from the bank for each "Vineyard" establishment you own. ' +
-    "Then, close this establishment for renovations.",
-  cost: 3,
-  earn: 6, // coins earned per `Vineyard` establishment
-  rolls: [9],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const FamilyRestaurant: Establishment = {
-  _id: 22,
+export const FlowerShop: Establishment = {
+  _id: 8,
   version: Version.MK1,
   expansion: Expansion.Base,
-  name: "패밀리레스토랑",
-  description: "Take 2 coins from the player who just rolled.",
-  cost: 3,
-  earn: 2,
-  rolls: [9, 10],
-  color: EstColor.Red,
-  type: EstType.Cup,
-  _initial: 6,
-};
-
-export const MovingCompany: Establishment = {
-  _id: 23,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "이삿짐센터",
+  name: "꽃집",
   description:
-    "Give a non-Major establishment to an opponent. Then get 4 coins from the bank.",
-  cost: 2,
-  earn: 4,
-  rolls: [9, 10],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const AppleOrchard: Establishment = {
-  _id: 24,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "사과농장",
-  description: "Get 3 coins from the bank.",
-  cost: 3,
+    '자신이 소유한 "꽃밭" 건물 개수마다 은행으로부터 동전 3개를 받습니다.',
+  cost: 1,
   earn: 3,
-  rolls: [10],
-  color: EstColor.Blue,
-  type: EstType.Wheat,
-  _initial: 6,
-};
-
-export const SodaBottlingPlant: Establishment = {
-  _id: 25,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "소다병입공장",
-  description:
-    "Get 1 coin from the bank for each " +
-    EstType.Cup +
-    " establishment owned by all players.",
-  cost: 5,
-  earn: 1, // coins earned per Cup establishment
-  rolls: [11],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const FarmersMarket: Establishment = {
-  _id: 26,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "농산물시장",
-  description:
-    "Get 2 coins from the bank for each " +
-    EstType.Wheat +
-    " establishment you own.",
-  cost: 2,
-  earn: 2, // coins earned per Wheat establishment
-  rolls: [11, 12],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const FoodWarehouse: Establishment = {
-  _id: 27,
-  version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "식품창고",
-  description:
-    "Get 2 coins from the bank for each " +
-    EstType.Cup +
-    " establishment you own.",
-  cost: 2,
-  earn: 2, // coins earned per Cup establishment
-  rolls: [12, 13],
-  color: EstColor.Green,
-  type: null,
-  _initial: 6,
-};
-
-export const MembersOnlyClub: Establishment = {
-  _id: 28,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "회원전용시설",
-  description:
-    "If the player who just rolled has 3 or more landmarks built, take all their coins.",
-  cost: 4,
-  earn: 0, // (special case; determined by opponent coins)
-  rolls: [12, 13, 14],
-  color: EstColor.Red,
-  type: EstType.Cup,
-  _initial: 6,
-};
-
-export const TunaBoat: Establishment = {
-  _id: 29,
-  version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "참치배",
-  description:
-    'Roll 2 dice. If you have a "Harbor", get as many coins as the dice total from the bank.',
-  cost: 5,
-  earn: 0, // (special case; determined by tuna boat roll)
-  rolls: [12, 13, 14],
-  color: EstColor.Blue,
-  type: null,
-  _initial: 6,
-};
-
-export const Stadium: Establishment = {
-  _id: 30,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "종합경기장",
-  description: "Take 2 coins from each opponent.",
-  cost: 6,
-  earn: 2,
   rolls: [6],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  color: EstColor.Green,
+  type: EstType.None,
+  _initial: 3,
 };
 
-export const TVStation: Establishment = {
-  _id: 31,
+export const BusinessCenter: Establishment = {
+  _id: 9,
   version: Version.MK1,
   expansion: Expansion.Base,
-  name: "방송국",
-  description: "Take 5 coins from an opponent of your choice.",
-  cost: 7,
-  earn: 5,
-  rolls: [6],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
-};
-
-export const Office: Establishment = {
-  _id: 32,
-  version: Version.MK1,
-  expansion: Expansion.Base,
-  name: "임대사무실",
-  description: "Exchange a non-Major establishment with an opponent.",
-  cost: 8,
+  name: "비즈니스 센터",
+  description: "상대방과 건물을 교환할 수 있습니다.",
+  cost: 3,
   earn: 0,
   rolls: [6],
   color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  type: EstType.None,
+  _initial: 3,
 };
 
-export const Publisher: Establishment = {
-  _id: 33,
+export const CornField: Establishment = {
+  _id: 10,
   version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "출판사",
-  description:
-    "Take 1 coin from each opponent for each " +
-    EstType.Cup +
-    " and " +
-    EstType.Shop +
-    " establishment they own.",
-  cost: 5,
-  earn: 1, // coins earned per Cup and Shop establishment
+  expansion: Expansion.Base,
+  name: "옥수수밭",
+  description: "은행으로부터 동전 3개를 받습니다.",
+  cost: 2,
+  earn: 3,
+  rolls: [7],
+  color: EstColor.Blue,
+  type: EstType.Wheat,
+  _initial: 5,
+};
+
+export const Stadium: Establishment = {
+  _id: 11,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "경기장",
+  description: "각 상대방으로부터 동전 3개를 가져옵니다.",
+  cost: 3,
+  earn: 3,
   rolls: [7],
   color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  type: EstType.None,
+  _initial: 3,
 };
 
-export const RenovationCompany: Establishment = {
-  _id: 34,
+export const BurgerJoint: Establishment = {
+  _id: 12,
   version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "보수공사업체",
-  description:
-    "Choose a non-Major establishment. " +
-    "All establishments owned by any player of that type are closed for renovations. " +
-    "Get 1 coin from each opponent for each of their buildings closed for renovations.",
-  cost: 4,
-  earn: 1, // coins earned per establishment closed for renovations
+  expansion: Expansion.Base,
+  name: "햄버거 가게",
+  description: "방금 주사위를 굴린 플레이어로부터 동전 2개를 가져옵니다.",
+  cost: 1,
+  earn: 2,
   rolls: [8],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  color: EstColor.Red,
+  type: EstType.Cup,
+  _initial: 5,
 };
 
-export const TaxOffice: Establishment = {
-  _id: 35,
+export const FurnitureFactory: Establishment = {
+  _id: 13,
   version: Version.MK1,
-  expansion: Expansion.Harbor,
-  name: "세무서",
+  expansion: Expansion.Base,
+  name: "가구 공장",
   description:
-    "From each opponent who has 10 or more coins, take half, rounded down.",
+    "자신이 소유한 Gear 건물 개수마다 은행으로부터 동전 4개를 받습니다.",
   cost: 4,
-  earn: 0, // (special case; determined by opponent coins)
+  earn: 4,
+  rolls: [8],
+  color: EstColor.Green,
+  type: EstType.None,
+  _initial: 3,
+};
+
+export const ShoppingDistrict: Establishment = {
+  _id: 14,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "쇼핑 거리",
+  description: "동전이 10개 이상인 각 상대방으로부터 절반을 가져옵니다 (내림).",
+  cost: 3,
+  earn: 0,
   rolls: [8, 9],
   color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  type: EstType.None,
+  _initial: 3,
 };
 
-export const TechStartup: Establishment = {
-  _id: 36,
+export const FamilyRestaurant: Establishment = {
+  _id: 15,
   version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "기술스타트업",
-  description:
-    "At the end of each of your turns, you may place 1 coin on this card. " +
-    "The total placed here is your investment. " +
-    "When activated, take an amount equal to your investment from each opponent.",
-  cost: 1,
-  earn: 0, // (special case; determined by investment)
-  rolls: [10],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  expansion: Expansion.Base,
+  name: "패밀리 레스토랑",
+  description: "방금 주사위를 굴린 플레이어로부터 동전 2개를 가져옵니다.",
+  cost: 2,
+  earn: 2,
+  rolls: [9, 10],
+  color: EstColor.Red,
+  type: EstType.Cup,
+  _initial: 5,
 };
 
-export const ExhibitHall: Establishment = {
-  _id: 37,
+export const Winery: Establishment = {
+  _id: 16,
   version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "전시장",
+  expansion: Expansion.Base,
+  name: "와인공장",
   description:
-    "You may choose to activate another of your non-Major establishments in place of this one. " +
-    "If you do, return this card to the market.",
-  cost: 7,
-  earn: 0, // (special case; determined by activated establishment)
-  rolls: [10],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
-};
-
-export const Park: Establishment = {
-  _id: 38,
-  version: Version.MK1,
-  expansion: Expansion.Million,
-  name: "공원",
-  description:
-    "Redistribute all players' coins as evenly as possible, making up any difference with coins from the bank.",
+    "자신이 소유한 Fruit 건물 개수마다 은행으로부터 동전 3개를 받습니다.",
   cost: 3,
-  earn: 0, // (special case; coins are redistributed)
-  rolls: [11, 12, 13],
-  color: EstColor.Purple,
-  type: null,
-  _initial: null,
+  earn: 3,
+  rolls: [9],
+  color: EstColor.Green,
+  type: EstType.None,
+  _initial: 3,
+};
+
+export const AppleOrchard: Establishment = {
+  _id: 17,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "사과 과수원",
+  description: "은행으로부터 동전 3개를 받습니다.",
+  cost: 1,
+  earn: 3,
+  rolls: [10],
+  color: EstColor.Blue,
+  type: EstType.Fruit,
+  _initial: 5,
+};
+
+export const FoodWarehouse: Establishment = {
+  _id: 18,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "식품 창고",
+  description:
+    "자신이 소유한 Cup 건물 개수마다 은행으로부터 동전 2개를 받습니다.",
+  cost: 2,
+  earn: 2,
+  rolls: [10, 11],
+  color: EstColor.Green,
+  type: EstType.None,
+  _initial: 3,
+};
+
+export const Mine: Establishment = {
+  _id: 19,
+  version: Version.MK1,
+  expansion: Expansion.Base,
+  name: "광산",
+  description: "은행으로부터 동전 6개를 받습니다.",
+  cost: 4,
+  earn: 6,
+  rolls: [11, 12],
+  color: EstColor.Blue,
+  type: EstType.Gear,
+  _initial: 5,
 };
 
 /**
@@ -598,43 +295,24 @@ export const Park: Establishment = {
 export const _ESTABLISHMENTS = [
   SushiBar,
   WheatField,
-  Ranch,
-  GeneralStore,
+  Vineyard,
   Bakery,
   Cafe,
-  CornField,
   FlowerGarden,
   ConvenienceStore,
-  DemolitionCompany,
-  FrenchRestaurant,
   Forest,
-  LoanOffice,
   FlowerShop,
-  PizzaJoint,
-  Vineyard,
-  CheeseFactory,
-  HamburgerStand,
-  MackerelBoat,
-  FurnitureFactory,
-  Mine,
-  Winery,
-  FamilyRestaurant,
-  MovingCompany,
-  AppleOrchard,
-  SodaBottlingPlant,
-  FarmersMarket,
-  FoodWarehouse,
-  MembersOnlyClub,
-  TunaBoat,
+  BusinessCenter,
+  CornField,
   Stadium,
-  TVStation,
-  Office,
-  Publisher,
-  RenovationCompany,
-  TaxOffice,
-  TechStartup,
-  ExhibitHall,
-  Park,
+  BurgerJoint,
+  FurnitureFactory,
+  ShoppingDistrict,
+  FamilyRestaurant,
+  Winery,
+  AppleOrchard,
+  FoodWarehouse,
+  Mine,
 ];
 
 /**
