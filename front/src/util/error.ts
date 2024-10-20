@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { isArray } from 'lodash';
+import { isArray } from "lodash";
 
 interface FastAPIError {
   data: {

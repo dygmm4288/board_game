@@ -37,7 +37,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
           items_center,
           border_primary
         )}>
-        <button onClick={minus}>
+        <button type='button' onClick={minus}>
           <MinusIcon />
         </button>
         <input
@@ -47,8 +47,9 @@ const NumberInput: React.FC<NumberInputProps> = ({
           min={MIN}
           max={MAX}
           value={totalMember}
+          onChange={() => setTotalMember}
         />
-        <button onClick={plus}>
+        <button type='button' onClick={plus}>
           <PlusIcon />
         </button>
       </div>

@@ -2,8 +2,14 @@
 // Types for Machi Koro game.
 //
 
-import type { Establishment, EstablishmentData } from "./establishments/types";
-import type { Landmark, LandmarkData } from "./landmarks/types";
+import type {
+  Establishment,
+  EstablishmentData,
+} from "./miniville_meta_data/establishments/types";
+import type {
+  Landmark,
+  LandmarkData,
+} from "./miniville_meta_data/landmarks/types";
 // import type { LogEvent } from './log';
 
 /**

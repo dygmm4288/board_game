@@ -1,4 +1,5 @@
-from typing import Union
+from typing import List
+from datetime import datetime
 from pydantic import BaseModel, field_validator
 from pydantic_core.core_schema import FieldValidationInfo
 
@@ -28,25 +29,39 @@ class Token(BaseModel) :
   token_type: str
   username: str
 
-class Game(BaseModel) :
-  name : str = None
-  turn : int = None
-  players: Union[int, User] = None
-
-  def init_game(self) :
-    pass
-
-  def end_game(self) :
-    pass 
-
 class Room(BaseModel) :
-  name: str
   status: str
   max_players: int
-  game : Union[int, Game] = None
+  created_at: datetime
+
+  game_name:str
+  # deck_16 : List[int]
+  # deck_712 : List[int]
+  # deck_landmarks: List[int]
+  # 
+  # field_16: List[int]
+  # field_712: List[int]
+  # field_landmarks: List[int]
+
+  # players: {
+  #  id : int, 
+  #  coins : number,
+  #  cards: List[int]
+  #  landmarks: List[int]
+  # }
+
+  game_json: str
+  game_status: str
+  turn: int
+
+  players: List[User]
 
   @field_validator('max_players')
   def validate_max_players(cls, v) :
     if v <= 0 :
       raise ValueError('최대 플레이어 수는 1 이상이어야 합니다.')
     return v
+  
+class RoomCreate(BaseModel) :
+  max_players: int
+  game_name: str
