@@ -28,7 +28,7 @@ const EstablishmentCard = ({ id }: Card) => {
   return (
     <div
       className={cn(
-        "relative w-[54px] h-[72px] p-[4px] text-center",
+        "relative w-[54px] h-[72px] p-[4px] text-center rounded-lg",
         bgColor(card.color),
       )}
       onMouseEnter={handleHover}
