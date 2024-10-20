@@ -41,6 +41,7 @@ const useRoom = ({
     queryKey: [GET_ROOMS],
     queryFn: () => roomApi.getRooms(),
     enabled: isRoomsFetch,
+    gcTime: 0, // cache remove
   });
 
   const { data: room, error: getRoomError } = useQuery({
@@ -48,6 +49,7 @@ const useRoom = ({
     queryFn: () => roomApi.getRoom(id!),
     enabled: !!id,
     retry: false,
+    gcTime: 0, // cache remove
   });
 
   const { mutateAsync: create } = useMutation({
