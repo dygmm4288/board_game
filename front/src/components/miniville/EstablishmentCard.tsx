@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { card_roll } from "../../css/card_roll";
 import { _ESTABLISHMENTS } from "../../miniville_meta_data/establishments/metadata";
-import { EstColor } from "../../miniville_meta_data/establishments/types";
+import {
+  Establishment,
+  EstColor,
+} from "../../miniville_meta_data/establishments/types";
 import { cn } from "../../util/cn";
 
 interface Card {
@@ -45,7 +48,7 @@ const EstablishmentCard = ({ id }: Card) => {
       <p className='absolute bottom-[2px] left-[50%] translate-x-[-50%] text-10 text-[#808080]'>
         {card.cost}$
       </p>
-      {isShowDescription && <div>{card.description}</div>}
+      {isShowDescription && <CardDescription card={card} />}
     </div>
   );
 };
@@ -56,6 +59,20 @@ const RollInfo = ({ rolls }: { rolls: number[] }) => {
       {rolls.map((roll) => (
         <div className={cn(card_roll)}>{roll}</div>
       ))}
+    </div>
+  );
+};
+
+const CardDescription = ({ card }: { card: Establishment }) => {
+  return (
+    <div className='relative z-10'>
+      <section className='p-2 bg-slate-400 w-52 -translate-x-1/2 rounded-lg flex flex-col gap-3'>
+        <h3 className='text-xl flex flex-row gap-1 justify-center'>
+          <span className='text-inherit'>{card.name}</span>
+          <span className='text-md'>({card.cost}$)</span>
+        </h3>
+        <p>{card.description} </p>
+      </section>
     </div>
   );
 };
