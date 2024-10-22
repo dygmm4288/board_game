@@ -1,10 +1,8 @@
 import _ from "lodash";
 import { useParams } from "react-router-dom";
+import useErrorModal from "../../hooks/useErrorModal";
 import useGameJson from "../../hooks/useGameStatus";
 import useRoom from "../../hooks/useRoom";
-import { getErrorMsg } from "../../util/error";
-import useModal from "../../zustand/modal";
-import AlertModal from "../common/modal/AlertModal";
 import PlayerHeader from "../common/PlayerHeader";
 import CardSection from "../section/CardSection";
 import GameLogSection from "../section/GameLogSection";
@@ -17,7 +15,7 @@ const MinivilleRoom = () => {
   const { put /* is_show_start_btn */ } = useRoom({
     id,
   });
-  const { show } = useModal();
+  const { showError } = useErrorModal();
 
   const handleStartGame = () => {
     console.log(id);
@@ -26,11 +24,9 @@ const MinivilleRoom = () => {
       return;
     }
 
-    put({ id, body: { confirm: "게임시작" } }).catch((err) => {
-      show({
-        component: <AlertModal title={"실패"} content={getErrorMsg(err)} />,
-      });
-    });
+    put({ id, body: { confirm: "게임시작" } }).catch((error) =>
+      showError(error, "게임시작 실패"),
+    );
   };
 
   return (
