@@ -19,7 +19,7 @@ const MinivilleRoom = () => {
 
   const handleStartGame = () => {
     if (!id) {
-      console.error("id가 없습니다.");
+      showError("올바르지 않은 접근입니다.", "실패");
       return;
     }
 
