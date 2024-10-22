@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { flex_center } from "../../../css/flex";
 import useRoom from "../../../hooks/useRoom";
+import { flex_center } from "../../../style/flex";
 import { cn } from "../../../util/cn";
 import NumberInput from "../../form/NumberInput";
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { card_roll } from "../../css/card_roll";
 import { _ESTABLISHMENTS } from "../../miniville_meta_data/establishments/metadata";
 import {
   Establishment,
   EstColor,
 } from "../../miniville_meta_data/establishments/types";
+import { card_roll } from "../../style/card_roll";
 import { cn } from "../../util/cn";
 
 interface Card {

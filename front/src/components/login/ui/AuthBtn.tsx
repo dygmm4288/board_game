@@ -1,4 +1,4 @@
-import { border_primary } from "../../../css/border";
+import { border_primary } from "../../../style/border";
 import { cn } from "../../../util/cn";
 
 const activeBtnCSS = cn("bg-primary-color text-white", border_primary);

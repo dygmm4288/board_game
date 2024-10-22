@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { roll_flex } from "../../css/flex_roll";
-import { roll_style } from "../../css/roll_style";
+import { roll_flex } from "../../style/flex_roll";
+import { roll_style } from "../../style/roll_style";
 import { cn } from "../../util/cn";
 
 const getRandomRoll = () => Math.floor(Math.random() * 6 + 1);
