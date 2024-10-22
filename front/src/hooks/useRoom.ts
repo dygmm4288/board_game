@@ -94,7 +94,7 @@ const useRoom = ({
       console.error("id가 없습니다.");
       return;
     }
-    return put({ id, body: { confirm: "게임시작" } }).catch(() => {});
+    return put({ id, body: { confirm: "게임시작" } }).catch((err) => {});
   };
 
   const is_room_waiting = room && room.status === "waiting";

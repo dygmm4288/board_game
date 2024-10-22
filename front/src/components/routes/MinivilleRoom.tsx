@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { useParams } from "react-router-dom";
 import useGameJson from "../../hooks/useGameStatus";
 import useRoom from "../../hooks/useRoom";
@@ -8,11 +9,20 @@ import RollSection from "../section/RollSection";
 
 const MinivilleRoom = () => {
   const params = useParams();
-  const { id } = params;
+  const id = _.toNumber(_.pick(params, "id"));
   useGameJson(id);
-  const { handleStartGame, is_show_start_btn } = useRoom({
-    id: Number(id),
+  const { put, is_show_start_btn } = useRoom({
+    id,
   });
+
+  const handleStartGame = () => {
+    if (!id) {
+      console.error("id가 없습니다.");
+      return;
+    }
+
+    put({ id, body: { confirm: "게임시작" } });
+  };
 
   return (
     <div className='relative h-screen'>
