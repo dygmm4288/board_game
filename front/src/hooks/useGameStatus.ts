@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useMiniville from "../zustand/miniville";
 
-const useGameJson = (id: string | undefined) => {
+const useGameJson = (id: string | number | undefined) => {
   const url = import.meta.env.VITE_API_URL + `/room/sse/${id}`;
   const { setter: gameSetter } = useMiniville();
 
