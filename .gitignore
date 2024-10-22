@@ -226,4 +226,8 @@ portal.env
 # virtual environment
 newvirtualenv/
 
+alembic/
+
+__init__.py
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,react,python

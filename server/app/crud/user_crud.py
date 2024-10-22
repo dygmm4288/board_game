@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Request, Response
 from fastapi.security import OAuth2PasswordBearer
 from database import get_db
 from sqlalchemy.orm import Session
@@ -7,10 +7,11 @@ from models import User
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Optional
-from jose import jwt, JWTError
+from jose import jwt, JWTError,ExpiredSignatureError
 import os
 from dotenv import load_dotenv
 import logging
+from utils import debug
 logging.basicConfig(level=logging.ERROR, filename='app.log')
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '../../portal.env'))
@@ -61,21 +62,30 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) :
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
   return encoded_jwt
 
-def get_current_user(db:Session=Depends(get_db), token:str=Depends(oauth2_scheme)):
+def get_current_user(request: Request, response:Response, db:Session=Depends(get_db)):
   credential_exception = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
     detail="inactive user",
     headers={'WWW-Authenticate': "Bearer"}
   )
+  token = request.cookies.get('access_token')
+  if not token :
+    raise credential_exception
+
   try :
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     username: str = payload.get('username')
-
     if username is None :
       raise credential_exception
-    
+  except ExpiredSignatureError:
+        logging.error("Token has expired")
+        response.delete_cookie('access_token',domain='http://localhost:5173',path="/") 
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Expired token"
+        ) 
   except JWTError as e :
-    logging.error(f"JWTError: {e}")    
+    logging.error(f"JWTError: {e}")
     raise credential_exception
   
   user = get_user(db, username)
