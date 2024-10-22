@@ -18,7 +18,6 @@ const MinivilleRoom = () => {
   const { showError } = useErrorModal();
 
   const handleStartGame = () => {
-    console.log(id);
     if (!id) {
       console.error("id가 없습니다.");
       return;

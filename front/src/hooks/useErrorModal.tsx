@@ -11,6 +11,7 @@ const useErrorModal = () => {
   const showError: ShowErrorType = (error, title = "실패") => {
     show({
       component: <AlertModal title={title} content={getErrorMsg(error)} />,
+      isCloseClick: false,
     });
   };
 
