@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import roomApi from "../api/room";
-import { getErrorMsg } from "../util/error";
+import { getError } from "../util/error";
 import useAuth from "../zustand/auth";
 import useMiniville, { useMinivilleRoom } from "../zustand/miniville";
 
@@ -24,7 +24,7 @@ const useRoom = ({
   const { setter: gameSetter } = useMiniville();
 
   const onError = (err: AxiosError) => {
-    const errorMsg = getErrorMsg(err);
+    const errorMsg = getError(err);
 
     if (errorMsg === "inactive user") logout();
     // Redirect : 이미 참여한 방이 존재할 경우에 id값을 같이 넘겨줌
@@ -94,7 +94,7 @@ const useRoom = ({
       console.error("id가 없습니다.");
       return;
     }
-    return put({ id, body: { confirm: "게임시작" } }).catch((err) => {});
+    return put({ id, body: { confirm: "게임시작" } });
   };
 
   const is_room_waiting = room && room.status === "waiting";
