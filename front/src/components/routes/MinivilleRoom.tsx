@@ -10,7 +10,7 @@ const MinivilleRoom = () => {
   const params = useParams();
   const { id } = params;
   useGameJson(id);
-  const { handleStartGame, is_room_waiting } = useRoom({
+  const { handleStartGame, is_show_start_btn } = useRoom({
     id: Number(id),
   });
 
@@ -19,7 +19,7 @@ const MinivilleRoom = () => {
       <PlayerHeader />
       <RollSection />
       <CardSection />
-      {is_room_waiting && (
+      {is_show_start_btn && (
         <section className='w-full h-[100px] relative my-10'>
           <button
             className='w-[100px] h-[43px] bg-primary-color text-white rounded-[5px] absolute right-[8px] bottom-0'

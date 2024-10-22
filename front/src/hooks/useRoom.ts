@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import _ from "lodash";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import roomApi from "../api/room";
@@ -93,10 +94,11 @@ const useRoom = ({
       console.error("id가 없습니다.");
       return;
     }
-    return put({ id, body: { confirm: "게임시작" } });
+    return put({ id, body: { confirm: "게임시작" } }).catch(() => {});
   };
 
   const is_room_waiting = room && room.status === "waiting";
+  const is_show_start_btn = is_room_waiting && _.gte(room.players.length, 2);
 
   return {
     create,
@@ -106,7 +108,7 @@ const useRoom = ({
     putIsPanding,
     remove,
     room,
-    is_room_waiting,
+    is_show_start_btn,
     handleStartGame,
   };
 };
