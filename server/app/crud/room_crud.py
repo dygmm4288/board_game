@@ -52,9 +52,8 @@ def put_room(confirm:str, _room:Room, user: UserModel, updates: Dict, db:Session
   #--------------------------------------
   elif confirm == '게임시작' :
     MIN_PLAYERS = 2
-    debug(len(_room.players))
     if len(_room.players) < MIN_PLAYERS :
-      raise_http_exception()
+      raise_http_exception(detail="플레이어 수가 부족합니다.")
     _room = init_game(_room)
 
     _room.status = 'in-progress'
