@@ -14,3 +14,7 @@ export const setStorage = <T>(key: string, value: T) => {
   localStorage.setItem(key, jsonValue);
   return value;
 };
+
+export const deleteStorage = (key: string) => {
+  localStorage.removeItem(key);
+};

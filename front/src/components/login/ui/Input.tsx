@@ -1,5 +1,5 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
-import { border_primary } from "../../../css/border";
+import { border_primary } from "../../../style/border";
 import { cn } from "../../../util/cn";
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {

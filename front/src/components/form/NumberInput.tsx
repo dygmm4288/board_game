@@ -2,8 +2,8 @@ import _ from "lodash";
 
 import MinusIcon from "../../assets/svg/MinusIcon";
 import PlusIcon from "../../assets/svg/PlusIcon";
-import { border_primary } from "../../css/border";
-import { items_center } from "../../css/flex";
+import { border_primary } from "../../style/border";
+import { items_center } from "../../style/flex";
 import { cn } from "../../util/cn";
 
 interface NumberInputProps {
@@ -35,9 +35,9 @@ const NumberInput: React.FC<NumberInputProps> = ({
         className={cn(
           "max-w-[52px] min-w-[52px] justify-evenly label text-primary-font-color",
           items_center,
-          border_primary
+          border_primary,
         )}>
-        <button onClick={minus}>
+        <button type='button' onClick={minus}>
           <MinusIcon />
         </button>
         <input
@@ -47,8 +47,9 @@ const NumberInput: React.FC<NumberInputProps> = ({
           min={MIN}
           max={MAX}
           value={totalMember}
+          onChange={() => setTotalMember}
         />
-        <button onClick={plus}>
+        <button type='button' onClick={plus}>
           <PlusIcon />
         </button>
       </div>

@@ -1,6 +1,9 @@
 const config = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    opacity: Object.fromEntries(
+      Array.from({ length: 101 }, (_, index) => [index, `${index / 100}`]),
+    ),
     extend: {
       fontSize: {
         10: "10px",
@@ -18,6 +21,15 @@ const config = {
       },
       borderRadius: {
         10: "10px",
+      },
+      animation: {
+        "spinner-fade": "spinner-fade 1s infinite",
+      },
+      keyframes: {
+        ["spinner-fade"]: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
     },
   },
