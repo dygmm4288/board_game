@@ -13,7 +13,8 @@
       "jinja": true,
       "env": {
         "PYTHONPATH": "${workspaceFolder}/server/app"
-      }
+      },
+      "cwd": "${workspaceFolder}/server/app"
     },
     {
       "name": "current_file",
