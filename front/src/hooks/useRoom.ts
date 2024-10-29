@@ -97,8 +97,8 @@ const useRoom = ({
     return put({ id, body: { confirm: "게임시작" } });
   };
 
-  const is_room_waiting = room && room.status === "waiting";
-  const is_show_start_btn = is_room_waiting && _.gte(room.players.length, 2);
+  const isRoomWaiting = room && room.status === "waiting";
+  const isShowStartBtn = isRoomWaiting && _.gte(room.players.length, 2);
 
   return {
     create,
@@ -108,7 +108,7 @@ const useRoom = ({
     putIsPanding,
     remove,
     room,
-    is_show_start_btn,
+    isShowStartBtn,
     handleStartGame,
   };
 };

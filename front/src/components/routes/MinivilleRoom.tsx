@@ -14,7 +14,7 @@ const MinivilleRoom = () => {
   const params = useParams();
   const id = _.toNumber(_.get(params, "id"));
   useGameJson(id);
-  const { put /* is_show_start_btn */ } = useRoom({
+  const { put, isShowStartBtn } = useRoom({
     id,
   });
   const { showError } = useErrorModal();
@@ -35,7 +35,7 @@ const MinivilleRoom = () => {
       <PlayerHeader />
       <RollSection />
       <CardSection />
-      {
+      {isShowStartBtn && (
         <section className='w-full h-[100px] relative my-10'>
           <button
             className={cn(p_btn, "absolute right-[8px] bottom-0")}
@@ -43,7 +43,7 @@ const MinivilleRoom = () => {
             게임시작
           </button>
         </section>
-      }
+      )}
       <GameLogSection />
     </div>
   );
